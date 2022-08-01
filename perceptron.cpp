@@ -52,7 +52,7 @@ void perceptron() {
 
     std::vector<DataItem> dataItems(dataCount); // temp
     int barrier = 10;
-    for (auto dataItem : dataItems) {
+    for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);
             perceptron.setInputNode(i, dataItem.pixels[i] / 255);
@@ -60,6 +60,8 @@ void perceptron() {
         read<uint8_t>(&dataItem.label, trainingLabels);
 
         perceptron.calculateOutput();
+        perceptron.backpropagate(dataItem.label);
+
         std::cout << std::format("Answer {} for label {} (cost: {})\n", 
             perceptron.getHighestOutputNode(), dataItem.label, perceptron.calculateCost(dataItem.label));
 
