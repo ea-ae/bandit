@@ -51,12 +51,25 @@ void perceptron() {
     std::cout << std::format("Label count: {}\n", labelCount);
 
     std::vector<DataItem> dataItems(dataCount); // temp
-    int barrier = 10;
+    int barrier = 3;
     for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);
-            perceptron.setInputNode(i, dataItem.pixels[i] / 255);
+            double nodeValue = dataItem.pixels[i] / 255.0;
+
+            /*if (nodeValue > 0.8) {
+                std::cout << "X";
+            } else if (nodeValue > 0.2) {
+                std::cout << "x";
+            } else {
+                std::cout << "_";
+            }
+            if (i % dataRows == 0) std::cout << "\n";*/
+
+            perceptron.setInputNode(i, nodeValue);
         }
+        //std::cout << "\n\n";
+
         read<uint8_t>(&dataItem.label, trainingLabels);
 
         perceptron.calculateOutput();
