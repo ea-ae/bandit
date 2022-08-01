@@ -39,6 +39,9 @@
     <ClCompile Include="ActivationFunctions\Relu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="perceptron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActivationFunctions\Relu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="perceptron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

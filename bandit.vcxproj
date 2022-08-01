@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +148,7 @@
     <ClCompile Include="Neuron.cpp" />
     <ClCompile Include="OutputLayer.cpp" />
     <ClCompile Include="ActivationFunctions\Relu.cpp" />
+    <ClCompile Include="perceptron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Neuron.h" />
     <ClInclude Include="OutputLayer.h" />
     <ClInclude Include="ActivationFunctions\Relu.h" />
+    <ClInclude Include="perceptron.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
