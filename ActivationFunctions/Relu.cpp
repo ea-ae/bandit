@@ -9,7 +9,7 @@ double Relu::map(double input) const
 }
 
 double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const {
-    const auto r = std::sqrt(12 / (connectionsIn + connectionsOut));
+    const double r = std::sqrt(12.0 / (connectionsIn + connectionsOut));
 
     std::random_device rd;
     std::mt19937 mt(rd());

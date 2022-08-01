@@ -9,3 +9,12 @@ Layer::Layer(const ActivationFunction& activationFunction, int32_t layerSize, La
         return std::make_unique<Neuron>(activationFunction, previousLayer, nextLayer);
     });
 }
+
+void Layer::calculateNodeValues() {
+    if (previousLayer) {
+        for (auto& neuron : neurons) {
+            neuron->calculate(*previousLayer);
+        }
+    }
+    if (nextLayer) nextLayer->calculateNodeValues();
+}

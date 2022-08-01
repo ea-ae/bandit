@@ -14,4 +14,5 @@ public:
     Layer* nextLayer;
 public:
     Layer(const ActivationFunction& activationFunction, int32_t layerSize, Layer* previousLayer, Layer* nextLayer);
+    void calculateNodeValues();
 };

@@ -14,4 +14,7 @@ private:
 public:
     NeuralNetwork(const ActivationFunction& activationFunction, 
         int32_t inputs, int32_t outputs, int32_t hiddenLayers, int32_t hiddenLayerNeurons);
+    void calculateOutput();
+    int32_t getHighestOutputNode();
+    void setInputNode(int32_t inputNode, double value);
 };

@@ -14,3 +14,11 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const Layer* previo
         });
     }
 }
+
+void Neuron::calculate(const Layer& previousLayer) {
+    double sum = bias;
+    for (int i = 0; i < previousLayer.layerSize; i++) {
+        sum += previousLayer.neurons[i]->value * weights[i];
+    }
+    value = sum;
+}
