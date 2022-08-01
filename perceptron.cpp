@@ -4,7 +4,7 @@
 #include <format>
 #include <algorithm>
 #include <array>
-#include "NeuralNetwork.h"
+#include "SupervisedNeuralNetwork.h"
 #include "ActivationFunctions/Relu.h"
 
 template <class T> // ty, stackoverflow
@@ -31,7 +31,7 @@ void perceptron() {
     const auto inputNodes = 784;
     const auto outputNodes = 10;
 
-    auto perceptron = NeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
+    auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
 
     auto trainingData = std::ifstream("./training-images.idx3-ubyte", std::ios::binary);
     auto trainingLabels = std::ifstream("./training-labels.idx1-ubyte", std::ios::binary);
@@ -55,12 +55,13 @@ void perceptron() {
     for (auto dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);
-            perceptron.setInputNode(i, dataItem.pixels[i]);
+            perceptron.setInputNode(i, dataItem.pixels[i] / 255);
         }
         read<uint8_t>(&dataItem.label, trainingLabels);
 
         perceptron.calculateOutput();
-        std::cout << std::format("Answer {} for label {}\n", perceptron.getHighestOutputNode(), dataItem.label);
+        std::cout << std::format("Answer {} for label {} (cost: {})\n", 
+            perceptron.getHighestOutputNode(), dataItem.label, perceptron.calculateCost(dataItem.label));
 
         if (--barrier == 0) break; // exit early, temp
     }

@@ -149,6 +149,7 @@
     <ClCompile Include="OutputLayer.cpp" />
     <ClCompile Include="ActivationFunctions\Relu.cpp" />
     <ClCompile Include="perceptron.cpp" />
+    <ClCompile Include="SupervisedNeuralNetwork.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="OutputLayer.h" />
     <ClInclude Include="ActivationFunctions\Relu.h" />
     <ClInclude Include="perceptron.h" />
+    <ClInclude Include="SupervisedNeuralNetwork.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

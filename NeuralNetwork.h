@@ -7,7 +7,7 @@
 #include "HiddenLayer.h"
 
 class NeuralNetwork {
-private:
+protected:
     std::unique_ptr<InputLayer> inputLayer;
     std::unique_ptr<OutputLayer> outputLayer;
     std::vector<std::unique_ptr<HiddenLayer>> hiddenLayers;
@@ -15,6 +15,5 @@ public:
     NeuralNetwork(const ActivationFunction& activationFunction, 
         int32_t inputs, int32_t outputs, int32_t hiddenLayers, int32_t hiddenLayerNeurons);
     void calculateOutput();
-    int32_t getHighestOutputNode();
     void setInputNode(int32_t inputNode, double value);
 };
