@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +141,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bandit.cpp" />
+    <ClCompile Include="HiddenLayer.cpp" />
+    <ClCompile Include="InputLayer.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="NeuralNetwork.cpp" />
+    <ClCompile Include="Neuron.cpp" />
+    <ClCompile Include="OutputLayer.cpp" />
+    <ClCompile Include="ActivationFunctions\Relu.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
+    <ClInclude Include="HiddenLayer.h" />
+    <ClInclude Include="InputLayer.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="NeuralNetwork.h" />
+    <ClInclude Include="Neuron.h" />
+    <ClInclude Include="OutputLayer.h" />
+    <ClInclude Include="ActivationFunctions\Relu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,8 +4,9 @@
 #include "Neuron.h"
 #include "ActivationFunctions/ActivationFunction.h"
 
-class Layer
-{
+class Neuron;
+
+class Layer {
 public:
     const int32_t layerSize;
     std::vector<std::unique_ptr<Neuron>> neurons;

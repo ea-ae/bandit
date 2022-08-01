@@ -6,6 +6,9 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-    const auto activationFunc = Relu();
-    const auto net = NeuralNetwork(activationFunc, 3, 3, 0, 0);
+    const auto activationFunction = Relu();
+    const auto inputNodes = 3;
+    const auto outputNodes = 3;
+
+    auto net = NeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
 }

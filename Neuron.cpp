@@ -1,7 +1,7 @@
 #include "Neuron.h"
 #include <algorithm>
 
-Neuron::Neuron(const ActivationFunction& activationFunction, Layer* previousLayer, Layer* nextLayer)
+Neuron::Neuron(const ActivationFunction& activationFunction, const Layer* previousLayer, const Layer* nextLayer)
     : activationFunction(activationFunction)
 {
     if (previousLayer) {
