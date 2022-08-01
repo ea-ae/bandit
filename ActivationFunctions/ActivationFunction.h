@@ -1,5 +1,7 @@
 #pragma once
 
 class ActivationFunction {
-    virtual double map(double input) = 0;
+public:
+    virtual double map(double input) const = 0;
+    virtual double generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const = 0;
 };
