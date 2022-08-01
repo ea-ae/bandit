@@ -10,7 +10,7 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const Layer* previo
 
         weights = std::vector<double>(previousLayer->layerSize);
         std::generate(weights.begin(), weights.end(), [&]() {
-            return activationFunction.generateRandomWeight(connectionsIn, connectionsOut);
+            return activationFunction.generateRandomWeight(connectionsIn, connectionsOut); // initialize weights
         });
     }
 }

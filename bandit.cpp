@@ -11,4 +11,6 @@ int main()
     const auto outputNodes = 3;
 
     auto net = NeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
+
+    std::cout << "Finishing\n";
 }
