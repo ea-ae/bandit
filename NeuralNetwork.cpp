@@ -21,7 +21,7 @@ NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction,
 }
 
 void NeuralNetwork::calculateOutput() {
-    outputLayer->calculateNodeValues();
+    inputLayer->calculateNodeValues();
 }
 
 void NeuralNetwork::setInputNode(int32_t inputNode, double value) {

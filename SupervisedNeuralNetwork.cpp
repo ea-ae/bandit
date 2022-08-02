@@ -31,6 +31,6 @@ void SupervisedNeuralNetwork::backpropagate(int32_t label) {
     }
 }
 
-void SupervisedNeuralNetwork::update(int32_t batchSize) {
-    outputLayer->update(batchSize);
+void SupervisedNeuralNetwork::update(int32_t batchSize, double learningRate) {
+    outputLayer->update(batchSize, learningRate);
 }

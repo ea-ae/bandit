@@ -17,5 +17,5 @@ public:
     Layer(int32_t layerSize, Layer* previousLayer);
     void initializeNodeValues(const ActivationFunction& activationFunction);
     void calculateNodeValues();
-    void update(int32_t batchSize);
+    void update(int32_t batchSize, double learningRate);
 };

@@ -22,12 +22,10 @@ void Layer::calculateNodeValues() {
     if (nextLayer) nextLayer->calculateNodeValues();
 }
 
-void Layer::update(int32_t batchSize) {
+void Layer::update(int32_t batchSize, double learningRate) {
     if (!previousLayer) return; // don't update input nodes
-
-    const double learningRate = 0.01; // todo: adjust later & stick this somewhere else!
 
     for (auto& neuron : neurons) neuron->update(batchSize, learningRate);
 
-    previousLayer->update(batchSize); // move onto next layer
+    previousLayer->update(batchSize, learningRate); // move onto next layer
 }

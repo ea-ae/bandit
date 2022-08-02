@@ -48,7 +48,6 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
             auto preValueDerivedByActivation = weights[i].weight;
             auto costDerivedByActivation = preValueDerivedByActivation * costDerivedByPreValue;
 
-            std::cout << "backpropagate\n";
             previousLayer.neurons[i]->backpropagate(*previousLayer.previousLayer, {}, costDerivedByActivation);
         }
     }

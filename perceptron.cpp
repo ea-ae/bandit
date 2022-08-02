@@ -31,10 +31,12 @@ void perceptron() {
     const auto activationFunction = Relu();
     const auto inputNodes = 784;
     const auto outputNodes = 10;
-    const auto hiddenLayers = 2;
-    const auto hiddenLayerNeurons = 500;
+    const auto hiddenLayers = 1;
+    const auto hiddenLayerNeurons = 30;
+    const auto batchSize = 32;
+    const auto learningRate = 1.0;
 
-    auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
+    auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
 
     auto trainingData = std::ifstream("./training-images.idx3-ubyte", std::ios::binary);
     auto trainingLabels = std::ifstream("./training-labels.idx1-ubyte", std::ios::binary);
@@ -75,14 +77,13 @@ void perceptron() {
 
     std::cout << std::format("Finished reading {} data items into memory\n", dataItems.size());
 
-    int32_t batchSize = 32, epoch = 1, done = 0, correctGuesses = 0;
+    int32_t epoch = 1, done = 0, correctGuesses = 0;
     while (true) {
         for (auto& dataItem : dataItems) {
             for (int i = 0; i < dataItem.pixels.size(); i++) {
                 double value = dataItem.pixels[i] / 255.0; // [0, 1]
                 perceptron.setInputNode(i, value);
             }
-
             perceptron.calculateOutput();
             perceptron.backpropagate(dataItem.label);
 
@@ -90,7 +91,7 @@ void perceptron() {
 
             if (++done == batchSize) {
                 done = 0;
-                perceptron.update(batchSize);
+                perceptron.update(batchSize, learningRate);
             }
         }
         auto correct = std::ceil((correctGuesses / (double)dataItems.size()) * 10000.0) / 100.0;

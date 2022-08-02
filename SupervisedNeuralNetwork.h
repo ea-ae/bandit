@@ -7,5 +7,5 @@ public:
     int32_t getHighestOutputNode();
     double calculateCost(int32_t label);
     void backpropagate(int32_t label);
-    void update(int32_t batchSize);
+    void update(int32_t batchSize, double learningRate);
 };
