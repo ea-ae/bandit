@@ -30,6 +30,8 @@ void perceptron() {
     const auto activationFunction = Relu();
     const auto inputNodes = 784;
     const auto outputNodes = 10;
+    const auto hiddenLayers = 0;
+    const auto hiddenLayerNeurons = 100;
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
 
@@ -50,12 +52,10 @@ void perceptron() {
     std::cout << std::format("Training labels magic number: {}\n", labelMagic);
     std::cout << std::format("Label count: {}\n", labelCount);
 
-    std::vector<DataItem> dataItems(dataCount); // temp
-    int barrier = 3;
+    std::vector<DataItem> dataItems(dataCount);
     for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);
-            double nodeValue = dataItem.pixels[i] / 255.0;
 
             /*if (nodeValue > 0.8) {
                 std::cout << "X";
@@ -66,22 +66,38 @@ void perceptron() {
             }
             if (i % dataRows == 0) std::cout << "\n";*/
 
-            perceptron.setInputNode(i, nodeValue);
         }
         //std::cout << "\n\n";
 
         read<uint8_t>(&dataItem.label, trainingLabels);
-
-        perceptron.calculateOutput();
-        perceptron.backpropagate(dataItem.label);
-
-        std::cout << std::format("Answer {} for label {} (cost: {})\n", 
-            perceptron.getHighestOutputNode(), dataItem.label, perceptron.calculateCost(dataItem.label));
-
-        if (--barrier == 0) break; // exit early, temp
     }
 
-    std::cout << std::format("Read {} data items into memory\n", dataItems.size());
+    std::cout << std::format("Finished reading {} data items into memory\n", dataItems.size());
 
+    int32_t batchSize = 32, epoch = 1, step = 0, done = 0, correctGuesses = 0;
+    while (true) {
+        for (auto& dataItem : dataItems) {
+            for (int i = 0; i < dataItem.pixels.size(); i++) {
+                double value = dataItem.pixels[i] / 255.0; // [0, 1]
+                perceptron.setInputNode(i, value);
+            }
 
+            perceptron.calculateOutput();
+            perceptron.backpropagate(dataItem.label);
+
+            if (perceptron.getHighestOutputNode() == dataItem.label) correctGuesses++;
+
+            if (++done == batchSize) {
+                if (++step % 1000 == 0) {
+                    std::cout << std::format("Epoch #{} batch #{} done ({}/{} correct)\n", 
+                        epoch, step, correctGuesses, batchSize * 1000);
+                    correctGuesses = 0;
+                }
+
+                done = 0;
+                perceptron.update(batchSize);
+            }
+        }
+        epoch++;
+    }
 }

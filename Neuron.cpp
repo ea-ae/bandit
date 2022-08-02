@@ -52,6 +52,17 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
             previousLayer.neurons[i]->backpropagate(*previousLayer.previousLayer, {}, costDerivedByActivation);
         }
     }
+}
 
-    int x = 666;
+void Neuron::update(double batchSize, double learningRate) {
+    bias -= (biasGradient / batchSize) * learningRate;
+    //std::cout << "bias now " << bias << " reduced by " << (biasGradient / batchSize) * learningRate << "\n";
+    biasGradient = 0;
+
+    for (auto& weight : weights) {
+        weight.weight -= (weight.gradient / batchSize) * learningRate;
+        //std::cout << "wght now " << bias << " reduced by " << (weight.gradient / batchSize) * learningRate << "\n";
+        weight.gradient = 0;
+    }
+
 }

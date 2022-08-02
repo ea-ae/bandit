@@ -30,3 +30,7 @@ void SupervisedNeuralNetwork::backpropagate(int32_t label) {
         neuron->backpropagate(*outputLayer->previousLayer, label); // todo: move this stuff into Layer??
     }
 }
+
+void SupervisedNeuralNetwork::update(int32_t batchSize) {
+    outputLayer->update(batchSize);
+}

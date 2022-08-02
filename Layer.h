@@ -10,9 +10,12 @@ class Layer {
 public:
     const int32_t layerSize;
     std::vector<std::unique_ptr<Neuron>> neurons;
-    Layer* previousLayer;
-    Layer* nextLayer;
+
+    Layer* previousLayer = nullptr;
+    Layer* nextLayer = nullptr;
 public:
-    Layer(const ActivationFunction& activationFunction, int32_t layerSize, Layer* previousLayer, Layer* nextLayer);
+    Layer(int32_t layerSize, Layer* previousLayer);
+    void initializeNodeValues(const ActivationFunction& activationFunction);
     void calculateNodeValues();
+    void update(int32_t batchSize);
 };

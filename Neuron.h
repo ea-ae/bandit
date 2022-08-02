@@ -28,4 +28,5 @@ public:
     Neuron(const ActivationFunction& activationFunction, const Layer* previousLayer, const Layer* nextLayer);
     void calculate(const Layer& previousLayer);
     void backpropagate(Layer& previousLayer, std::optional<double> expectedValue = {}, double activationDerivative = 1);
+    void update(double batchSize, double learningRate);
 };
