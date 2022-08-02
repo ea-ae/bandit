@@ -3,6 +3,7 @@
 #include <fstream>
 #include <format>
 #include <algorithm>
+#include <cmath>
 #include <array>
 #include "SupervisedNeuralNetwork.h"
 #include "ActivationFunctions/Relu.h"
@@ -30,8 +31,8 @@ void perceptron() {
     const auto activationFunction = Relu();
     const auto inputNodes = 784;
     const auto outputNodes = 10;
-    const auto hiddenLayers = 0;
-    const auto hiddenLayerNeurons = 100;
+    const auto hiddenLayers = 2;
+    const auto hiddenLayerNeurons = 500;
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, 0, 0);
 
@@ -74,7 +75,7 @@ void perceptron() {
 
     std::cout << std::format("Finished reading {} data items into memory\n", dataItems.size());
 
-    int32_t batchSize = 32, epoch = 1, step = 0, done = 0, correctGuesses = 0;
+    int32_t batchSize = 32, epoch = 1, done = 0, correctGuesses = 0;
     while (true) {
         for (auto& dataItem : dataItems) {
             for (int i = 0; i < dataItem.pixels.size(); i++) {
@@ -88,16 +89,13 @@ void perceptron() {
             if (perceptron.getHighestOutputNode() == dataItem.label) correctGuesses++;
 
             if (++done == batchSize) {
-                if (++step % 1000 == 0) {
-                    std::cout << std::format("Epoch #{} batch #{} done ({}/{} correct)\n", 
-                        epoch, step, correctGuesses, batchSize * 1000);
-                    correctGuesses = 0;
-                }
-
                 done = 0;
                 perceptron.update(batchSize);
             }
         }
+        auto correct = std::ceil((correctGuesses / (double)dataItems.size()) * 10000.0) / 100.0;
+        std::cout << std::format("Epoch {} ({}% correct)\n", epoch, correct);
+        correctGuesses = 0;
         epoch++;
     }
 }
