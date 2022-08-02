@@ -26,8 +26,9 @@ double SupervisedNeuralNetwork::calculateCost(int32_t label) {
 }
 
 void SupervisedNeuralNetwork::backpropagate(int32_t label) {
-    for (auto& neuron : outputLayer->neurons) {
-        neuron->backpropagate(*outputLayer->previousLayer, label); // todo: move this stuff into Layer??
+    for (int i = 0; i < outputLayer->layerSize; i++) {
+        // neuron->backpropagate(*outputLayer->previousLayer, label);
+        outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, i == label ? 1 : 0);
     }
 }
 

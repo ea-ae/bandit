@@ -34,7 +34,7 @@ void perceptron() {
     const auto hiddenLayers = 1;
     const auto hiddenLayerNeurons = 30;
     const auto batchSize = 32;
-    const auto learningRate = 1.0;
+    const auto learningRate = 0.01;
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
 

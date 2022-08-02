@@ -1,5 +1,6 @@
 #include "Neuron.h"
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 
 Neuron::Neuron(const ActivationFunction& activationFunction, const Layer* previousLayer, const Layer* nextLayer)
@@ -37,6 +38,9 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
 
     auto preValueDerivedByBias = 1;
     biasGradient += preValueDerivedByBias * costDerivedByPreValue; // for non-output nodes, we sum all the output influences
+    if (std::isnan(biasGradient)) {
+        int x = 666;
+    }
 
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
         auto preValueDerivedByWeight = previousLayer.neurons[i]->value;
@@ -48,6 +52,10 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
             auto preValueDerivedByActivation = weights[i].weight;
             auto costDerivedByActivation = preValueDerivedByActivation * costDerivedByPreValue;
 
+            if (std::isinf(costDerivedByActivation)) {
+                int y = 666;
+            }
+
             previousLayer.neurons[i]->backpropagate(*previousLayer.previousLayer, {}, costDerivedByActivation);
         }
     }
@@ -55,13 +63,13 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
 
 void Neuron::update(double batchSize, double learningRate) {
     bias -= (biasGradient / batchSize) * learningRate;
-    //std::cout << "bias now " << bias << " reduced by " << (biasGradient / batchSize) * learningRate << "\n";
+    if (std::isnan(bias)) {
+        int x = 666;
+    }
     biasGradient = 0;
 
     for (auto& weight : weights) {
         weight.weight -= (weight.gradient / batchSize) * learningRate;
-        //std::cout << "wght now " << bias << " reduced by " << (weight.gradient / batchSize) * learningRate << "\n";
         weight.gradient = 0;
     }
-
 }
