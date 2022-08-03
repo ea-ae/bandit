@@ -2,9 +2,7 @@
 #include <vector>
 #include <memory>
 #include "ActivationFunctions/ActivationFunction.h"
-#include "InputLayer.h"
-#include "OutputLayer.h"
-#include "HiddenLayer.h"
+#include "Layer.h"
 
 class NeuralNetwork {
 protected:

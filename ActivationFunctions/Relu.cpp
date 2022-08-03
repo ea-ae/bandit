@@ -9,7 +9,7 @@ double Relu::map(double input) const
 }
 
 double Relu::derivative(double input) const {
-    return input >= 0 ? 1 : 0;
+    return input > 0 ? 1 : 0;
 }
 
 double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const {

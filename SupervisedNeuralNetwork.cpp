@@ -27,10 +27,21 @@ double SupervisedNeuralNetwork::calculateCost(int32_t label) {
 
 void SupervisedNeuralNetwork::backpropagate(int32_t label) {
     for (int i = 0; i < outputLayer->layerSize; i++) {
-        // neuron->backpropagate(*outputLayer->previousLayer, label);
         outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, i == label ? 1 : 0);
     }
+
+    for (auto& layer : hiddenLayers) {
+        for (int i = 0; i < layer->layerSize; i++) {
+            layer->neurons[i]->backpropagate(*layer->previousLayer);
+        }
+    }
 }
+
+//void SupervisedNeuralNetwork::backpropagate(int32_t label) {
+//    for (int i = 0; i < outputLayer->layerSize; i++) {
+//        outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, i == label ? 1 : 0);
+//    }
+//}
 
 void SupervisedNeuralNetwork::update(int32_t batchSize, double learningRate) {
     outputLayer->update(batchSize, learningRate);

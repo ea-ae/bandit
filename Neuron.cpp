@@ -27,32 +27,39 @@ void Neuron::calculate(const Layer& previousLayer) {
     value = activationFunction.map(preTransformedValue);
 }
 
-void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedValue, double activationDerivative) {
+void Neuron::addActivationGradient(double gradient) {
+    activationGradient += gradient;
+}
+
+void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedValue) {
     if (std::isinf(value)) {
         int jgkdsa = 666;
     }
 
     if (expectedValue.has_value()) { // are we in an output node?
-        activationDerivative = 2 * (value - expectedValue.value()); // dC/da = 2(a - y)
+        activationGradient = 2 * (value - expectedValue.value()); // dC/da = 2(a - y)
     } // else, we apply precalculated dC/da1 * da1/dz1 * dz1/da2 chain rule result to our derivatives
 
-    auto valueDerivedByPreValue = activationFunction.derivative(value); // da/dz
-    auto costDerivedByPreValue = valueDerivedByPreValue * activationDerivative; // e.g. C->a1->z1, C->a1->z1->a2->z2, etc
+    auto activationDerivedByPreValue = activationFunction.derivative(value); // da/dz
+    auto costDerivedByPreValue = activationDerivedByPreValue * activationGradient; // C->a1->z1, C->a1->z1->a2->z2, etc
 
     if (std::isinf(value)) {
         int jgkdsa = 666;
     }
 
     double preValueDerivedByBias = 1.0;
-    //biasGradient += preValueDerivedByBias * costDerivedByPreValue; // for non-output nodes, we sum all the output influences
-    biasGradient = preValueDerivedByBias * costDerivedByPreValue; // ... we aren't summing activation influences
+    biasGradient += preValueDerivedByBias * costDerivedByPreValue;
+
+    if (biasGradient > 10000) {
+        int jgdksg = 5831951;
+    }
 
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
         auto preValueDerivedByWeight = previousLayer.neurons[i]->value;
         auto weightGradient = preValueDerivedByWeight * costDerivedByPreValue;
         weights[i].gradient += weightGradient;
 
-        if (previousLayer.previousLayer) { // first check to make sure the next layer isn't the input one
+        if (previousLayer.previousLayer) { // first check to make sure the next layer isn't the input layer
             // find the new activation derivative for the next layer of backpropagation
             auto preValueDerivedByActivation = weights[i].weight;
             auto costDerivedByActivation = preValueDerivedByActivation * costDerivedByPreValue;
@@ -61,13 +68,19 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
                 int jgkdsa = 666;
             }
 
-            previousLayer.neurons[i]->backpropagate(*previousLayer.previousLayer, {}, costDerivedByActivation);
+            previousLayer.neurons[i]->addActivationGradient(costDerivedByActivation); // add the gradient
         }
     }
+
+    activationGradient = 0; // reset the sum for the next cycle
 }
 
 void Neuron::update(double batchSize, double learningRate) {
-    bias -= (biasGradient / batchSize) * learningRate;
+    double biasDelta = (biasGradient / batchSize) * learningRate;
+    if (biasDelta > 100) {
+        int gjdksg = 531;
+    }
+    bias -= biasDelta;
     biasGradient = 0;
 
     for (auto& weight : weights) {
@@ -75,3 +88,42 @@ void Neuron::update(double batchSize, double learningRate) {
         weight.gradient = 0;
     }
 }
+
+//void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedValue, double activationDerivative) {
+//    if (std::isinf(value)) {
+//        int jgkdsa = 666;
+//    }
+//
+//    if (expectedValue.has_value()) { // are we in an output node?
+//        activationDerivative = 2 * (value - expectedValue.value()); // dC/da = 2(a - y)
+//    } // else, we apply precalculated dC/da1 * da1/dz1 * dz1/da2 chain rule result to our derivatives
+//
+//    auto valueDerivedByPreValue = activationFunction.derivative(value); // da/dz
+//    auto costDerivedByPreValue = valueDerivedByPreValue * activationDerivative; // e.g. C->a1->z1, C->a1->z1->a2->z2, etc
+//
+//    if (std::isinf(value)) {
+//        int jgkdsa = 666;
+//    }
+//
+//    double preValueDerivedByBias = 1.0;
+//    //biasGradient += preValueDerivedByBias * costDerivedByPreValue; // for non-output nodes, we sum all the output influences
+//    //biasGradient = preValueDerivedByBias * costDerivedByPreValue; // ... we aren't summing activation influences
+//
+//    for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
+//        auto preValueDerivedByWeight = previousLayer.neurons[i]->value;
+//        auto weightGradient = preValueDerivedByWeight * costDerivedByPreValue;
+//        weights[i].gradient += weightGradient;
+//
+//        if (previousLayer.previousLayer) { // first check to make sure the next layer isn't the input one
+//            // find the new activation derivative for the next layer of backpropagation
+//            auto preValueDerivedByActivation = weights[i].weight;
+//            auto costDerivedByActivation = preValueDerivedByActivation * costDerivedByPreValue;
+//
+//            if (std::isinf(costDerivedByActivation)) {
+//                int jgkdsa = 666;
+//            }
+//
+//            previousLayer.neurons[i]->backpropagate(*previousLayer.previousLayer, {}, costDerivedByActivation);
+//        }
+//    }
+//}

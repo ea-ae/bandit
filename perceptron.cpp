@@ -55,7 +55,8 @@ void perceptron() {
     std::cout << std::format("Training labels magic number: {}\n", labelMagic);
     std::cout << std::format("Label count: {}\n", labelCount);
 
-    std::vector<DataItem> dataItems(dataCount);
+    int32_t limit = 500;
+    std::vector<DataItem> dataItems(limit); // dataCount
     for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);
