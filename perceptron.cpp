@@ -32,9 +32,9 @@ void perceptron() {
     const auto inputNodes = 784;
     const auto outputNodes = 10;
     const auto hiddenLayers = 1;
-    const auto hiddenLayerNeurons = 30; // default: 30
+    const auto hiddenLayerNeurons = 400; // default: 30, 400
     const auto batchSize = 32;
-    const auto learningRate = 0.1; // default: 0.01
+    const auto learningRate = 0.05; // default: 0.01
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
 
@@ -55,8 +55,7 @@ void perceptron() {
     std::cout << std::format("Training labels magic number: {}\n", labelMagic);
     std::cout << std::format("Label count: {}\n", labelCount);
 
-    int32_t limit = 500;
-    std::vector<DataItem> dataItems(limit); // dataCount
+    std::vector<DataItem> dataItems(dataCount);
     for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], trainingData);

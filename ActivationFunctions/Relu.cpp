@@ -13,7 +13,7 @@ double Relu::derivative(double input) const {
 }
 
 double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const {
-    const double r = std::sqrt(12.0 / (connectionsIn + connectionsOut));
+    const double r = std::sqrt(2.0 / (connectionsIn + connectionsOut));
 
     std::random_device rd;
     std::mt19937 mt(rd());
