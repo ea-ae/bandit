@@ -1,13 +1,11 @@
 #include <iostream>
-#include "perceptron.h"
+#include "mnist.h"
 #include "NeuralNetwork.h"
 #include "ActivationFunctions/Relu.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
-
-    perceptron();
+    mnist();
 
     /*const auto activationFunction = Relu();
     const auto inputNodes = 3;

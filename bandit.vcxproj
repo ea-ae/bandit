@@ -146,7 +146,7 @@
     <ClCompile Include="NeuralNetwork.cpp" />
     <ClCompile Include="Neuron.cpp" />
     <ClCompile Include="ActivationFunctions\Relu.cpp" />
-    <ClCompile Include="perceptron.cpp" />
+    <ClCompile Include="mnist.cpp" />
     <ClCompile Include="SupervisedNeuralNetwork.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +155,7 @@
     <ClInclude Include="NeuralNetwork.h" />
     <ClInclude Include="Neuron.h" />
     <ClInclude Include="ActivationFunctions\Relu.h" />
-    <ClInclude Include="perceptron.h" />
+    <ClInclude Include="mnist.h" />
     <ClInclude Include="SupervisedNeuralNetwork.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

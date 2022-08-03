@@ -30,7 +30,7 @@
     <ClCompile Include="ActivationFunctions\Relu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="perceptron.cpp">
+    <ClCompile Include="mnist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SupervisedNeuralNetwork.cpp">
@@ -53,7 +53,7 @@
     <ClInclude Include="ActivationFunctions\Relu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="perceptron.h">
+    <ClInclude Include="mnist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SupervisedNeuralNetwork.h">
