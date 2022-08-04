@@ -12,7 +12,7 @@ double Relu::getPreValueDerivative(double input) const {
     return input > 0 ? 1 : 0;
 }
 
-double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const {
+double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const { // He initialization
     const double r = std::sqrt(2.0 / (connectionsIn + connectionsOut));
 
     std::random_device rd;

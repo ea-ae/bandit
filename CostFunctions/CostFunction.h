@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../ActivationFunctions/ActivationFunction.h"
 #include "../NeuralNetworks/Layer.h"
 
 class Layer;
