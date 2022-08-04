@@ -8,7 +8,7 @@ double Relu::map(double input) const
     return std::max(input, 0.0);
 }
 
-double Relu::derivative(double input) const {
+double Relu::getPreValueDerivative(double input) const {
     return input > 0 ? 1 : 0;
 }
 

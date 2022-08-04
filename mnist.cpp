@@ -66,7 +66,7 @@ void mnist() {
     const auto inputNodes = 784;
     const auto outputNodes = 10;
     const auto hiddenLayers = 1;
-    const auto hiddenLayerNeurons = 300; // default: 30, 400
+    const auto hiddenLayerNeurons = 30; // default: 30, 400
     const auto batchSize = 32;
     const auto learningRate = 0.05; // default: 0.01
 

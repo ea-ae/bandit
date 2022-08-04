@@ -3,6 +3,7 @@
 #include <memory>
 #include "Neuron.h"
 #include "../ActivationFunctions/ActivationFunction.h"
+#include "../CostFunctions/CostFunction.h"
 
 class Neuron;
 
@@ -15,7 +16,7 @@ public:
     Layer* nextLayer = nullptr;
 public:
     Layer(int32_t layerSize, Layer* previousLayer);
-    void initializeNodeValues(const ActivationFunction& activationFunction);
+    void initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void calculateNodeValues();
     void update(int32_t batchSize, double learningRate);
 };

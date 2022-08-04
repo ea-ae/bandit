@@ -9,6 +9,6 @@ double LeakyRelu::map(double input) const {
     return input > 0 ? input : input * leakRate;
 }
 
-double LeakyRelu::derivative(double input) const {
+double LeakyRelu::getPreValueDerivative(double input) const {
     return input > 0 ? 1 : leakRate;
 }

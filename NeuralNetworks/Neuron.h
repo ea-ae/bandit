@@ -2,13 +2,14 @@
 #include <vector>
 #include <utility>
 #include <optional>
-#include "../ActivationFunctions/ActivationFunction.h"
 #include "Layer.h"
+#include "../ActivationFunctions/ActivationFunction.h"
 
 class Layer;
+class CostFunction;
 
 struct Weight {
-    double weight;
+    double weight = 0;
     double gradient = 0;
 };
 
@@ -24,8 +25,9 @@ private:
     double preTransformedValue = 0.0;
     
     const ActivationFunction& activationFunction;
+    const CostFunction& costFunction;
 public:
-    Neuron(const ActivationFunction& activationFunction, const Layer* previousLayer, const Layer* nextLayer);
+    Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction, const Layer* previousLayer, const Layer* nextLayer);
     void calculate(const Layer& previousLayer);
     void addActivationGradient(double gradient);
     void backpropagate(Layer& previousLayer, std::optional<double> expectedValue = std::nullopt);

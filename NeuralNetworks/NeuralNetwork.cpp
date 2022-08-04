@@ -16,9 +16,9 @@ NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction, const
     outputLayer = std::make_unique<Layer>(outputs, lastLayer);
     lastLayer->nextLayer = outputLayer.get();
 
-    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activationFunction);
-    inputLayer->initializeNodeValues(activationFunction);
-    outputLayer->initializeNodeValues(activationFunction);
+    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activationFunction, costFunction);
+    inputLayer->initializeNodeValues(activationFunction, costFunction);
+    outputLayer->initializeNodeValues(activationFunction, costFunction);
 }
 
 void NeuralNetwork::calculateOutput() {

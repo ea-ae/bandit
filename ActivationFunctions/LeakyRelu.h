@@ -8,5 +8,5 @@ public:
     LeakyRelu();
     LeakyRelu(double leakRate);
     double map(double input) const;
-    double derivative(double input) const;
+    double getPreValueDerivative(double input) const;
 };

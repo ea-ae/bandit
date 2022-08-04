@@ -2,8 +2,9 @@
 #include <algorithm>
 #include <cmath>
 
-Neuron::Neuron(const ActivationFunction& activationFunction, const Layer* previousLayer, const Layer* nextLayer)
-    : activationFunction(activationFunction)
+Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction,
+    const Layer* previousLayer, const Layer* nextLayer)
+    : activationFunction(activationFunction), costFunction(costFunction)
 {
     if (previousLayer) {
         const auto connectionsIn = previousLayer->layerSize;
@@ -33,18 +34,14 @@ void Neuron::addActivationGradient(double gradient) {
 
 void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedValue) {
     if (expectedValue.has_value()) { // are we in an output node?
-        activationGradient = 2 * (value - expectedValue.value()); // dC/da = 2(a - y)
+        activationGradient = costFunction.getActivationDerivative(value, expectedValue.value()); // dC/da = 2(a - y)
     } // else, we apply precalculated dC/da1 * da1/dz1 * dz1/da2 chain rule result to our derivatives
 
-    auto activationDerivedByPreValue = activationFunction.derivative(value); // da/dz
+    auto activationDerivedByPreValue = activationFunction.getPreValueDerivative(value); // da/dz
     auto costDerivedByPreValue = activationDerivedByPreValue * activationGradient; // C->a1->z1, C->a1->z1->a2->z2, etc
 
     double preValueDerivedByBias = 1.0;
     biasGradient += preValueDerivedByBias * costDerivedByPreValue;
-
-    if (biasGradient > 10000) {
-        int jgdksg = 5831951;
-    }
 
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
         auto preValueDerivedByWeight = previousLayer.neurons[i]->value;

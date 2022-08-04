@@ -21,7 +21,7 @@ double SupervisedNeuralNetwork::calculateCost(int32_t label) {
     std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
         return label == i++ ? 1 : 0;
     });
-    return costFunction.calculateCost(*outputLayer.get(), expected);
+    return costFunction.getCost(*outputLayer.get(), expected);
 }
 
 void SupervisedNeuralNetwork::backpropagate(int32_t label) {

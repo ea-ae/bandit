@@ -7,9 +7,9 @@ Layer::Layer(int32_t layerSize, Layer* previousLayer)
     neurons = std::vector<std::unique_ptr<Neuron>>(layerSize);
 }
 
-void Layer::initializeNodeValues(const ActivationFunction& activationFunction) {
+void Layer::initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction) {
     std::generate(neurons.begin(), neurons.end(), [&]() {
-        return std::make_unique<Neuron>(activationFunction, previousLayer, nextLayer);
+        return std::make_unique<Neuron>(activationFunction, costFunction, previousLayer, nextLayer);
     });
 }
 
