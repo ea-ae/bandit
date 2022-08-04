@@ -11,7 +11,3 @@ double CrossEntropyCost::getCost(Layer& outputLayer, std::vector<int32_t> expect
     }
     return totalCost;
 }
-
-double CrossEntropyCost::getActivationDerivative(double activation, double expected) const {
-    return activation - expected; // assumes sigmoid/softmax!
-}

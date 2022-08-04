@@ -4,5 +4,4 @@
 class QuadraticCost : public CostFunction {
 public:
     double getCost(Layer& outputLayer, std::vector<int32_t> expected) const;
-    double getActivationDerivative(double activation, double expected) const;
 };
