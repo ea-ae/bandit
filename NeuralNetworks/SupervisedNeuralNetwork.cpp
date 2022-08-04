@@ -1,5 +1,7 @@
 #include "SupervisedNeuralNetwork.h"
+#include <algorithm>
 #include <cmath>
+#include <vector>
 
 int32_t SupervisedNeuralNetwork::getHighestOutputNode() {
     int32_t highestNodeId = 0;
@@ -15,14 +17,11 @@ int32_t SupervisedNeuralNetwork::getHighestOutputNode() {
 }
 
 double SupervisedNeuralNetwork::calculateCost(int32_t label) {
-    double totalCost = 0.0;
-    for (int i = 0; i < outputLayer->layerSize; i++) {
-        auto value = outputLayer->neurons[i]->value;
-        auto expected = i == label ? 1 : 0;
-        auto cost = std::pow(value - expected, 2);
-        totalCost += cost;
-    }
-    return totalCost;
+    std::vector<int32_t> expected(outputLayer->layerSize);
+    std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
+        return label == i++ ? 1 : 0;
+    });
+    return costFunction.calculateCost(*outputLayer.get(), expected);
 }
 
 void SupervisedNeuralNetwork::backpropagate(int32_t label) {

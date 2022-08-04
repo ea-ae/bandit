@@ -1,6 +1,6 @@
 #include <iostream>
 #include "mnist.h"
-#include "NeuralNetwork.h"
+// #include "NeuralNetwork.h"
 #include "ActivationFunctions/Relu.h"
 
 int main()

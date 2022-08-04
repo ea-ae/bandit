@@ -18,13 +18,13 @@
     <ClCompile Include="bandit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layer.cpp">
+    <ClCompile Include="NeuralNetworks\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuralNetwork.cpp">
+    <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Neuron.cpp">
+    <ClCompile Include="NeuralNetworks\Neuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ActivationFunctions\Relu.cpp">
@@ -33,18 +33,24 @@
     <ClCompile Include="mnist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SupervisedNeuralNetwork.cpp">
+    <ClCompile Include="NeuralNetworks\SupervisedNeuralNetwork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivationFunctions\LeakyRelu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CostFunctions\QuadraticCost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Layer.h">
+    <ClInclude Include="NeuralNetworks\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NeuralNetwork.h">
+    <ClInclude Include="NeuralNetworks\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Neuron.h">
+    <ClInclude Include="NeuralNetworks\Neuron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActivationFunctions\ActivationFunction.h">
@@ -56,7 +62,16 @@
     <ClInclude Include="mnist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SupervisedNeuralNetwork.h">
+    <ClInclude Include="NeuralNetworks\SupervisedNeuralNetwork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivationFunctions\LeakyRelu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CostFunctions\CostFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CostFunctions\QuadraticCost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

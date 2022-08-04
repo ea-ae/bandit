@@ -142,21 +142,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bandit.cpp" />
-    <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="NeuralNetwork.cpp" />
-    <ClCompile Include="Neuron.cpp" />
+    <ClCompile Include="ActivationFunctions\LeakyRelu.cpp" />
+    <ClCompile Include="NeuralNetworks\Layer.cpp" />
+    <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp" />
+    <ClCompile Include="NeuralNetworks\Neuron.cpp" />
     <ClCompile Include="ActivationFunctions\Relu.cpp" />
     <ClCompile Include="mnist.cpp" />
-    <ClCompile Include="SupervisedNeuralNetwork.cpp" />
+    <ClCompile Include="NeuralNetworks\SupervisedNeuralNetwork.cpp" />
+    <ClCompile Include="CostFunctions\QuadraticCost.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
-    <ClInclude Include="Layer.h" />
-    <ClInclude Include="NeuralNetwork.h" />
-    <ClInclude Include="Neuron.h" />
+    <ClInclude Include="ActivationFunctions\LeakyRelu.h" />
+    <ClInclude Include="CostFunctions\CostFunction.h" />
+    <ClInclude Include="NeuralNetworks\Layer.h" />
+    <ClInclude Include="NeuralNetworks\NeuralNetwork.h" />
+    <ClInclude Include="NeuralNetworks\Neuron.h" />
     <ClInclude Include="ActivationFunctions\Relu.h" />
     <ClInclude Include="mnist.h" />
-    <ClInclude Include="SupervisedNeuralNetwork.h" />
+    <ClInclude Include="NeuralNetworks\SupervisedNeuralNetwork.h" />
+    <ClInclude Include="CostFunctions\QuadraticCost.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

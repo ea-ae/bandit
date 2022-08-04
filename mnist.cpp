@@ -5,8 +5,9 @@
 #include <algorithm>
 #include <cmath>
 #include <array>
-#include "SupervisedNeuralNetwork.h"
-#include "ActivationFunctions/Relu.h"
+#include "NeuralNetworks/SupervisedNeuralNetwork.h"
+#include "ActivationFunctions/LeakyRelu.h"
+#include "CostFunctions/QuadraticCost.h"
 
 template <class T> // ty, stackoverflow
 void endswap(T* objp) {
@@ -59,15 +60,18 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
-    const auto activationFunction = Relu();
+    const auto reluLeak = 0.1;
+    const auto activationFunction = LeakyRelu(reluLeak);
+    const auto costFunction = QuadraticCost();
     const auto inputNodes = 784;
     const auto outputNodes = 10;
     const auto hiddenLayers = 1;
-    const auto hiddenLayerNeurons = 30; // default: 30, 400
+    const auto hiddenLayerNeurons = 300; // default: 30, 400
     const auto batchSize = 32;
     const auto learningRate = 0.05; // default: 0.01
 
-    auto perceptron = SupervisedNeuralNetwork(activationFunction, inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
+    auto perceptron = SupervisedNeuralNetwork(activationFunction, costFunction,
+        inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
 
     auto trainingData = std::ifstream("./training-images.idx3-ubyte", std::ios::binary);
     auto trainingLabels = std::ifstream("./training-labels.idx1-ubyte", std::ios::binary);
@@ -78,7 +82,7 @@ void mnist() {
     std::cout << std::format("Finished reading {} training data items into memory\n", trainingDataSet.size());
 
     auto testingDataSet = createDataItems(testingData, testingLabels);
-    std::cout << std::format("Finished reading {} testing data items into memory\n", trainingDataSet.size());
+    std::cout << std::format("Finished reading {} testing data items into memory\n", testingDataSet.size());
 
     std::cout << "Begin training\n";
     int32_t epoch = 1, done = 0, correctGuesses = 0;

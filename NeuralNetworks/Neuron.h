@@ -2,7 +2,7 @@
 #include <vector>
 #include <utility>
 #include <optional>
-#include "ActivationFunctions/ActivationFunction.h"
+#include "../ActivationFunctions/ActivationFunction.h"
 #include "Layer.h"
 
 class Layer;

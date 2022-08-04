@@ -1,7 +1,8 @@
 #include "NeuralNetwork.h"
 
-NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction,
+NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction, const CostFunction& costFunction,
     int32_t inputs, int32_t outputs, int32_t hiddenLayerCount, int32_t hiddenLayerNeurons)
+    : costFunction(costFunction)
 {
     inputLayer = std::make_unique<Layer>(inputs, nullptr);
     auto lastLayer = inputLayer.get();

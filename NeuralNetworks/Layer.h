@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Neuron.h"
-#include "ActivationFunctions/ActivationFunction.h"
+#include "../ActivationFunctions/ActivationFunction.h"
 
 class Neuron;
 
