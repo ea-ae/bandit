@@ -70,7 +70,7 @@ void mnist() {
     const auto batchSize = 32;
     const auto learningRate = 0.05; // default: 0.01
 
-    auto costFunction = QuadraticCost(0.1);
+    auto costFunction = QuadraticCost(0.01);
     auto activationFunction = LeakyRelu(reluLeak);
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, costFunction,
