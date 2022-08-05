@@ -1,13 +1,16 @@
-#include "mnist.h"
+﻿#include "mnist.h"
 #include <iostream>
 #include <fstream>
 #include <format>
 #include <algorithm>
 #include <cmath>
 #include <array>
+#include <chrono>
 #include "NeuralNetworks/SupervisedNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
+
+using namespace std::chrono;
 
 template <class T> // ty, stackoverflow
 void endswap(T* objp) {
@@ -60,17 +63,17 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
-    const auto regularizationLambda = 0.01;
+    const auto regularizationLambda = 1.0;
     const auto reluLeak = 0.1;
 
     const auto inputNodes = 784;
     const auto outputNodes = 10;
     const auto hiddenLayers = 1;
-    const auto hiddenLayerNeurons = 30; // default: 30, 400
+    const auto hiddenLayerNeurons = 300; // default: 30, 400
     const auto batchSize = 32;
-    const auto learningRate = 0.05; // default: 0.01
+    const auto learningRate = 0.1; // default: 0.01
 
-    auto costFunction = QuadraticCost(0.01);
+    auto costFunction = QuadraticCost(regularizationLambda);
     auto activationFunction = LeakyRelu(reluLeak);
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, costFunction,
@@ -87,9 +90,14 @@ void mnist() {
     auto testingDataSet = createDataItems(testingData, testingLabels);
     std::cout << std::format("Finished reading {} testing data items into memory\n", testingDataSet.size());
 
-    std::cout << "Begin training\n";
+    std::cout << std::format("eta = {} | L = {} | Ln = {} | lambda = {}\n",
+        learningRate, hiddenLayers, hiddenLayerNeurons, regularizationLambda);
     int32_t epoch = 1, done = 0, correctGuesses = 0;
+    auto trainingStart = steady_clock::now();
+
     while (true) {
+        auto epochStart = steady_clock::now();
+
         for (auto& dataItem : trainingDataSet) {
             for (int i = 0; i < dataItem.pixels.size(); i++) {
                 double value = dataItem.pixels[i] / 255.0; // [0, 1]
@@ -119,7 +127,12 @@ void mnist() {
         double trainPassRate = std::ceil((correctGuesses / (double)trainingDataSet.size()) * 10000.0) / 100.0;
         double testPassRate = std::ceil((testsPassed / (double)testingDataSet.size()) * 10000.0) / 100.0;
 
-        std::cout << std::format("Epoch {} ({}% correct, {}% tests passed)\n", epoch, trainPassRate, testPassRate);
+        auto epochEnd = steady_clock::now();
+        auto epochDuration = duration_cast<seconds>(epochEnd - epochStart).count();
+        auto totalDuration = duration_cast<seconds>(epochEnd - trainingStart).count();
+
+        std::cout << std::format("Epoch {} ({}% correct, {}% tests passed)\t ({}s, {}s total)\n",
+            epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
         correctGuesses = 0;
         epoch++;
     }
