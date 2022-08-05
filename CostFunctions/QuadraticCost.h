@@ -4,5 +4,5 @@
 class QuadraticCost : public CostFunction {
 public:
     using CostFunction::CostFunction;
-    double getCost(Layer& outputLayer, std::vector<int32_t> expected) const;
+    float getCost(Layer& outputLayer, std::vector<int32_t> expected) const;
 };

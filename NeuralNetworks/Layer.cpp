@@ -23,7 +23,7 @@ void Layer::calculateNodeValues() {
     if (nextLayer) nextLayer->calculateNodeValues();
 }
 
-void Layer::update(int32_t batchSize, double learningRate) {
+void Layer::update(int32_t batchSize, float learningRate) {
     if (!previousLayer) return; // don't update input nodes
 
     for (auto& neuron : neurons) neuron->update(batchSize, learningRate);

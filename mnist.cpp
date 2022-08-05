@@ -63,15 +63,15 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
-    const auto regularizationLambda = 1.0;
-    const auto reluLeak = 0.1;
+    const auto regularizationLambda = 1.0f;
+    const auto reluLeak = 0.1f;
 
     const auto inputNodes = 784;
     const auto outputNodes = 10;
     const auto hiddenLayers = 1;
     const auto hiddenLayerNeurons = 300; // default: 30, 400
     const auto batchSize = 32;
-    const auto learningRate = 0.1; // default: 0.01
+    const auto learningRate = 0.1f; // default: 0.01
 
     auto costFunction = QuadraticCost(regularizationLambda);
     auto activationFunction = LeakyRelu(reluLeak);
@@ -100,7 +100,7 @@ void mnist() {
 
         for (auto& dataItem : trainingDataSet) {
             for (int i = 0; i < dataItem.pixels.size(); i++) {
-                double value = dataItem.pixels[i] / 255.0; // [0, 1]
+                float value = dataItem.pixels[i] / 255.0f; // [0, 1]
                 perceptron.setInputNode(i, value);
             }
             perceptron.calculateOutput();
@@ -117,15 +117,15 @@ void mnist() {
         int32_t testsPassed = 0;
         for (auto& dataItem : testingDataSet) { // DRY is for weak people
             for (int i = 0; i < dataItem.pixels.size(); i++) {
-                double value = dataItem.pixels[i] / 255.0;
+                float value = dataItem.pixels[i] / 255.0f;
                 perceptron.setInputNode(i, value);
             }
             perceptron.calculateOutput();
             if (perceptron.getHighestOutputNode() == dataItem.label) testsPassed++;
         }
 
-        double trainPassRate = std::ceil((correctGuesses / (double)trainingDataSet.size()) * 10000.0) / 100.0;
-        double testPassRate = std::ceil((testsPassed / (double)testingDataSet.size()) * 10000.0) / 100.0;
+        float trainPassRate = std::ceil((correctGuesses / (float)trainingDataSet.size()) * 10000.0f) / 100.0f;
+        float testPassRate = std::ceil((testsPassed / (float)testingDataSet.size()) * 10000.0f) / 100.0f;
 
         auto epochEnd = steady_clock::now();
         auto epochDuration = duration_cast<seconds>(epochEnd - epochStart).count();

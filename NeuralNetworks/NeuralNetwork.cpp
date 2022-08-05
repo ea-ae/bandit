@@ -34,6 +34,6 @@ void NeuralNetwork::calculateOutput() {
     inputLayer->calculateNodeValues();
 }
 
-void NeuralNetwork::setInputNode(int32_t inputNode, double value) {
+void NeuralNetwork::setInputNode(int32_t inputNode, float value) {
     inputLayer->neurons[inputNode]->value = value;
 }

@@ -18,6 +18,6 @@ public:
     Layer(int32_t layerSize, Layer* previousLayer);
     void initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void calculateNodeValues();
-    void update(int32_t batchSize, double learningRate);
+    void update(int32_t batchSize, float learningRate);
     size_t getWeightCount();
 };

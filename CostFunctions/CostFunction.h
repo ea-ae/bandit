@@ -10,11 +10,11 @@ class CostFunction {
 public:
     size_t totalWeightCount = 0;
 public:
-    CostFunction(double regularizationLambda = 0);
-    virtual double getCost(Layer& outputLayer, std::vector<int32_t> expected) const = 0;
-    virtual double getActivationDerivative(double activation, double expected) const;
-    double getRegularizationCost(std::vector<double> weights) const;
-    double getRegularizationDerivative(double weight) const;
+    CostFunction(float regularizationLambda = 0);
+    virtual float getCost(Layer& outputLayer, std::vector<int32_t> expected) const = 0;
+    virtual float getActivationDerivative(float activation, float expected) const;
+    float getRegularizationCost(std::vector<float> weights) const;
+    float getRegularizationDerivative(float weight) const;
 protected:
-    double regularizationLambda = 0;
+    float regularizationLambda = 0;
 };

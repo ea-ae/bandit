@@ -5,7 +5,7 @@ class SupervisedNeuralNetwork : public NeuralNetwork {
 public:
     using NeuralNetwork::NeuralNetwork;
     int32_t getHighestOutputNode();
-    double calculateCost(int32_t label);
+    float calculateCost(int32_t label);
     void backpropagate(int32_t label);
-    void update(int32_t batchSize, double learningRate);
+    void update(int32_t batchSize, float learningRate);
 };

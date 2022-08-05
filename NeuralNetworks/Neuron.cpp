@@ -20,7 +20,7 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction&
 }
 
 void Neuron::calculate(const Layer& previousLayer) {
-    double sum = bias;
+    float sum = bias;
     for (int i = 0; i < previousLayer.layerSize; i++) {
         sum += previousLayer.neurons[i]->value * weights[i].weight;
     }
@@ -28,11 +28,11 @@ void Neuron::calculate(const Layer& previousLayer) {
     value = activationFunction.map(preTransformedValue);
 }
 
-void Neuron::addActivationGradient(double gradient) {
+void Neuron::addActivationGradient(float gradient) {
     activationGradient += gradient;
 }
 
-void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedValue) {
+void Neuron::backpropagate(Layer& previousLayer, std::optional<float> expectedValue) {
     if (expectedValue.has_value()) { // are we in an output node?
         activationGradient = costFunction.getActivationDerivative(value, expectedValue.value()); // dC/da = 2(a - y)
     } // else, we apply precalculated dC/da1 * da1/dz1 * dz1/da2 chain rule result to our derivatives
@@ -40,7 +40,7 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
     auto activationDerivedByPreValue = activationFunction.getPreValueDerivative(value); // da/dz
     auto costDerivedByPreValue = activationDerivedByPreValue * activationGradient; // C->a1->z1, C->a1->z1->a2->z2, etc
 
-    double preValueDerivedByBias = 1.0;
+    float preValueDerivedByBias = 1.0;
     biasGradient += preValueDerivedByBias * costDerivedByPreValue;
 
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
@@ -60,8 +60,8 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
     activationGradient = 0; // reset the sum for the next cycle
 }
 
-void Neuron::update(double batchSize, double learningRate) {
-    double biasDelta = (biasGradient / batchSize) * learningRate;
+void Neuron::update(int32_t batchSize, float learningRate) {
+    float biasDelta = (biasGradient / batchSize) * learningRate;
     bias -= biasDelta;
     biasGradient = 0;
 

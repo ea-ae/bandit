@@ -5,7 +5,7 @@
 
 int32_t SupervisedNeuralNetwork::getHighestOutputNode() {
     int32_t highestNodeId = 0;
-    double highestNodeValue = outputLayer->neurons[0]->value;
+    float highestNodeValue = outputLayer->neurons[0]->value;
     for (int i = 0; i < outputLayer->layerSize; i++) {
         auto value = outputLayer->neurons[i]->value;
         if (value > highestNodeValue) {
@@ -16,7 +16,7 @@ int32_t SupervisedNeuralNetwork::getHighestOutputNode() {
     return highestNodeId;
 }
 
-double SupervisedNeuralNetwork::calculateCost(int32_t label) {
+float SupervisedNeuralNetwork::calculateCost(int32_t label) {
     std::vector<int32_t> expected(outputLayer->layerSize);
     std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
         return label == i++ ? 1 : 0;
@@ -42,6 +42,6 @@ void SupervisedNeuralNetwork::backpropagate(int32_t label) {
 //    }
 //}
 
-void SupervisedNeuralNetwork::update(int32_t batchSize, double learningRate) {
+void SupervisedNeuralNetwork::update(int32_t batchSize, float learningRate) {
     outputLayer->update(batchSize, learningRate);
 }

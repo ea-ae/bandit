@@ -3,21 +3,21 @@
 #include <cmath>
 #include <random>
 
-double Relu::map(double input) const
+float Relu::map(float input) const
 {
-    return std::max(input, 0.0);
+    return std::max(input, 0.0f);
 }
 
-double Relu::getPreValueDerivative(double input) const {
+float Relu::getPreValueDerivative(float input) const {
     return input > 0 ? 1 : 0;
 }
 
-double Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const { // He initialization
-    const double r = std::sqrt(2.0 / (connectionsIn + connectionsOut));
+float Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const { // He initialization
+    const float r = std::sqrt(2.0f / (connectionsIn + connectionsOut));
 
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<double> generate(-r, r); 
+    std::uniform_real_distribution<float> generate(-r, r); 
 
     return generate(mt); // returns a random real number in [-r, r] range
 }

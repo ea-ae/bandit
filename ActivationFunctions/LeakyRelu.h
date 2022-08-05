@@ -3,10 +3,10 @@
 
 class LeakyRelu : public Relu {
 private:
-    double leakRate;
+    float leakRate;
 public:
     LeakyRelu();
-    LeakyRelu(double leakRate);
-    double map(double input) const;
-    double getPreValueDerivative(double input) const;
+    LeakyRelu(float leakRate);
+    float map(float input) const;
+    float getPreValueDerivative(float input) const;
 };
