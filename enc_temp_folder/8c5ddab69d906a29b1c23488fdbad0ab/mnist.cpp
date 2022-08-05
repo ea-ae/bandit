@@ -35,23 +35,30 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
     read<int32_t>(&dataCount, data);
     read<int32_t>(&dataRows, data);
     read<int32_t>(&dataColumns, data);
+    std::cout << std::format("Data magic number: {}\n", dataMagic);
+    std::cout << std::format("Loading {} images of {}x{} resolution\n", dataCount, dataRows, dataColumns);
 
     int32_t labelMagic, labelCount;
     read<int32_t>(&labelMagic, labels);
     read<int32_t>(&labelCount, labels);
+    std::cout << std::format("Label magic number: {}\n", labelMagic);
+    std::cout << std::format("Label count: {}\n", labelCount);
 
     std::vector<DataItem> dataItems(dataCount);
     for (auto& dataItem : dataItems) {
         for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
             read<uint8_t>(&dataItem.pixels[i], data);
+
             /*if (nodeValue > 0.8) std::cout << "X";
             else if (nodeValue > 0.2) std::cout << "x";
             else std::cout << "_";
             if (i % dataRows == 0) std::cout << "\n";*/
         }
         //std::cout << "\n\n";
+
         read<uint8_t>(&dataItem.label, labels);
     }
+
     return dataItems;
 }
 
@@ -117,6 +124,8 @@ void mnist() {
             if (perceptron.getHighestOutputNode() == dataItem.label) testsPassed++;
         }
 
+        //float trainPassRate = std::ceil((correctGuesses / (float)trainingDataSet.size()) * 10000.0f) / 100.0f;
+        //float testPassRate = std::ceil((testsPassed / (float)testingDataSet.size()) * 10000.0f) / 100.0f;
         float trainPassRate = (100 * correctGuesses) / (float)trainingDataSet.size();
         float testPassRate = (100 * testsPassed) / (float)testingDataSet.size();
 
