@@ -32,4 +32,5 @@ public:
     void addActivationGradient(double gradient);
     void backpropagate(Layer& previousLayer, std::optional<double> expectedValue = std::nullopt);
     void update(double batchSize, double learningRate);
+    size_t getWeightCount();
 };

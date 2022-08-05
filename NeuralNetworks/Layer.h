@@ -19,4 +19,5 @@ public:
     void initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void calculateNodeValues();
     void update(int32_t batchSize, double learningRate);
+    size_t getWeightCount();
 };

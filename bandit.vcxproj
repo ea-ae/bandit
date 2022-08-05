@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="bandit.cpp" />
     <ClCompile Include="ActivationFunctions\LeakyRelu.cpp" />
+    <ClCompile Include="CostFunctions\CostFunction.cpp" />
     <ClCompile Include="CostFunctions\CrossEntropyCost.cpp" />
     <ClCompile Include="NeuralNetworks\Layer.cpp" />
     <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp" />

@@ -48,6 +48,9 @@
     <ClCompile Include="CostFunctions\CrossEntropyCost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CostFunctions\CostFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NeuralNetworks\Layer.h">

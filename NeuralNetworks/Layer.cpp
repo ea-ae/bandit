@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include <algorithm>
+#include <numeric>
 
 Layer::Layer(int32_t layerSize, Layer* previousLayer)
     : neurons(layerSize), layerSize(layerSize), previousLayer(previousLayer)
@@ -28,4 +29,10 @@ void Layer::update(int32_t batchSize, double learningRate) {
     for (auto& neuron : neurons) neuron->update(batchSize, learningRate);
 
     previousLayer->update(batchSize, learningRate); // move onto next layer
+}
+
+size_t Layer::getWeightCount() {
+    return std::accumulate(neurons.begin(), neurons.end(), (size_t)0, [](size_t sum, auto& neuron) {
+        return sum + neuron->getWeightCount();
+    });
 }

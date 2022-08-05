@@ -46,7 +46,7 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<double> expectedV
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
         auto preValueDerivedByWeight = previousLayer.neurons[i]->value;
         auto weightGradient = preValueDerivedByWeight * costDerivedByPreValue;
-        weights[i].gradient += weightGradient;
+        weights[i].gradient += weightGradient + costFunction.getRegularizationDerivative(weights[i].weight);
 
         if (previousLayer.previousLayer) { // first check to make sure the next layer isn't the input layer
             // find the new activation derivative for the next layer of backpropagation
@@ -69,4 +69,8 @@ void Neuron::update(double batchSize, double learningRate) {
         weight.weight -= (weight.gradient / batchSize) * learningRate;
         weight.gradient = 0;
     }
+}
+
+size_t Neuron::getWeightCount() {
+    return weights.size();
 }

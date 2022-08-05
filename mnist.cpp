@@ -7,9 +7,7 @@
 #include <array>
 #include "NeuralNetworks/SupervisedNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
-#include "ActivationFunctions/Sigmoid.h"
 #include "CostFunctions/QuadraticCost.h"
-#include "CostFunctions/CrossEntropyCost.h"
 
 template <class T> // ty, stackoverflow
 void endswap(T* objp) {
@@ -62,12 +60,8 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
+    const auto regularizationLambda = 0.01;
     const auto reluLeak = 0.1;
-    //const auto activationFunction = LeakyRelu(reluLeak);
-    const auto activationFunction = Sigmoid();
-
-    //const auto costFunction = QuadraticCost();
-    const auto costFunction = CrossEntropyCost();
 
     const auto inputNodes = 784;
     const auto outputNodes = 10;
@@ -75,6 +69,9 @@ void mnist() {
     const auto hiddenLayerNeurons = 30; // default: 30, 400
     const auto batchSize = 32;
     const auto learningRate = 0.05; // default: 0.01
+
+    auto costFunction = QuadraticCost(0.1);
+    auto activationFunction = LeakyRelu(reluLeak);
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, costFunction,
         inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
