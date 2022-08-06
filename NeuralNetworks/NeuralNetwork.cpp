@@ -20,14 +20,6 @@ NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction, CostF
     for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activationFunction, costFunction);
     inputLayer->initializeNodeValues(activationFunction, costFunction);
     outputLayer->initializeNodeValues(activationFunction, costFunction);
-
-    // calculate total amount of weights in network for the regularization term
-    size_t totalNetworkWeights = 0;
-    for (auto& layer : hiddenLayers) {
-        totalNetworkWeights += layer->getWeightCount();
-    }
-    totalNetworkWeights += outputLayer->getWeightCount();
-    costFunction.totalWeightCount = totalNetworkWeights;
 }
 
 void NeuralNetwork::calculateOutput() {

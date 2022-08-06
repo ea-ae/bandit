@@ -66,8 +66,8 @@ void Neuron::update(int32_t batchSize, float learningRate) {
     biasGradient = 0;
 
     for (auto& weight : weights) {
-        auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight);
-        weight.weight -= ((weight.gradient / batchSize) + regularizationTerm) * learningRate;
+        auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight, batchSize);
+        weight.weight -= (weight.gradient / batchSize + regularizationTerm) * learningRate;
         weight.gradient = 0;
     }
 }

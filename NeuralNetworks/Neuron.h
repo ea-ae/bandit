@@ -17,6 +17,7 @@ class Neuron {
 public:
     float value = 0.0;
 private:
+    float momentum = 0.0;
     float bias = 0.0;
     float biasGradient = 0.0;
 

@@ -8,13 +8,13 @@ class Layer;
 
 class CostFunction {
 public:
-    size_t totalWeightCount = 0;
-public:
-    CostFunction(float regularizationLambda = 0);
+    CostFunction(float regularizationLambda = 0, float momentumCoefficientMu = 0);
     virtual float getCost(Layer& outputLayer, std::vector<int32_t> expected) const = 0;
     virtual float getActivationDerivative(float activation, float expected) const;
-    float getRegularizationCost(std::vector<float> weights) const;
-    float getRegularizationDerivative(float weight) const;
+    float getRegularizationCost(std::vector<float> weights, int32_t batchSize) const;
+    float getRegularizationDerivative(float weight, int32_t batchSize) const;
+    float getMomentum(float previousMomentum, float weightGradient) const;
 protected:
     float regularizationLambda = 0;
+    float momentumCoefficientMu = 0;
 };

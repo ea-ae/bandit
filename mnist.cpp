@@ -56,7 +56,8 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
-    const auto regularizationLambda = 1.0f;
+    const auto regularizationLambda = 0.001f; // no regularization: 0
+    const auto momentumCoefficientMu = 0.1f; // no momentum: 0
     const auto reluLeak = 0.1f;
 
     const auto inputNodes = 784;
