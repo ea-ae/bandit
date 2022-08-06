@@ -155,7 +155,7 @@
     <ClCompile Include="NeuralNetworks\Neuron.cpp" />
     <ClCompile Include="ActivationFunctions\Relu.cpp" />
     <ClCompile Include="mnist.cpp" />
-    <ClCompile Include="NeuralNetworks\SupervisedNeuralNetwork.cpp" />
+    <ClCompile Include="NeuralNetworks\ClassificationNeuralNetwork.cpp" />
     <ClCompile Include="CostFunctions\QuadraticCost.cpp" />
     <ClCompile Include="ActivationFunctions\Sigmoid.cpp" />
   </ItemGroup>
@@ -171,7 +171,7 @@
     <ClInclude Include="NeuralNetworks\Neuron.h" />
     <ClInclude Include="ActivationFunctions\Relu.h" />
     <ClInclude Include="mnist.h" />
-    <ClInclude Include="NeuralNetworks\SupervisedNeuralNetwork.h" />
+    <ClInclude Include="NeuralNetworks\ClassificationNeuralNetwork.h" />
     <ClInclude Include="CostFunctions\QuadraticCost.h" />
     <ClInclude Include="ActivationFunctions\Sigmoid.h" />
   </ItemGroup>

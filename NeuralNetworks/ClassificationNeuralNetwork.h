@@ -1,11 +1,11 @@
 #pragma once
 #include "NeuralNetwork.h"
 
-class SupervisedNeuralNetwork : public NeuralNetwork {
+class ClassificationNeuralNetwork : public NeuralNetwork {
 public:
     using NeuralNetwork::NeuralNetwork;
     int32_t getHighestOutputNode();
     float calculateCost(int32_t label);
-    void backpropagate(int32_t label);
-    void update(int32_t batchSize, float learningRate);
+private:
+    float getExpectedValue(int32_t label, int32_t neuronIndex);
 };

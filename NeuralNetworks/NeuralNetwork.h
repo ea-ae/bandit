@@ -13,7 +13,12 @@ protected:
     std::vector<std::unique_ptr<Layer>> hiddenLayers;
 public:
     NeuralNetwork(const ActivationFunction& activationFunction, CostFunction& costFunction,
-        int32_t inputs, int32_t outputs, int32_t hiddenLayerCount, int32_t hiddenLayerNeurons);
-    void calculateOutput();
+        int32_t inputs, int32_t outputs, std::vector<int32_t> hiddenLayerNeurons);
     void setInputNode(int32_t inputNode, float value);
+    void calculateOutput();
+    void backpropagate(int32_t label);
+    void update(int32_t batchSize, float learningRate);
+private:
+    // todo: generalize, label might not be int32_t
+    virtual float getExpectedValue(int32_t label, int32_t neuronIndex) = 0;
 };

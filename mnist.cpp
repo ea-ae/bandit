@@ -4,11 +4,12 @@
 #include <format>
 #include <algorithm>
 #include <cmath>
+#include <string>
 #include <array>
 #include <chrono>
 #include "DataLoaders/DataLoader.h"
 #include "DataLoaders/MnistDataLoader.h"
-#include "NeuralNetworks/SupervisedNeuralNetwork.h"
+#include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
 
@@ -24,8 +25,7 @@ void mnist() {
 
     const auto INPUT_NEURONS = 784;
     const auto OUTPUT_NEURONS = 10;
-    const auto HIDDEN_LAYERS = 1;
-    const auto HIDDEN_LAYER_NEURONS = 300; // default: 30, 400
+    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 400 };
 
     const auto BATCH_SIZE = 32;
 
@@ -34,8 +34,8 @@ void mnist() {
 
     // Initialize neural network
 
-    auto net = SupervisedNeuralNetwork(activationFunction, costFunction,
-        INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS, HIDDEN_LAYER_NEURONS);
+    auto net = ClassificationNeuralNetwork(activationFunction, costFunction,
+        INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS);
 
     // Load datasets
 
@@ -44,10 +44,17 @@ void mnist() {
     auto testingDataSet = MnistDataLoader("./test-images.idx3-ubyte", "./test-labels.idx1-ubyte");
     std::cout << std::format("Finished reading {} testing data items into memory\n", testingDataSet.size());
     
-    // Begin training
+    // Print status
 
-    std::cout << std::format("eta = {} | L = {} | Ln = {} | lambda = {} | mu = {}\n",
-        LEARNING_RATE_ETA, HIDDEN_LAYERS, HIDDEN_LAYER_NEURONS, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
+    std::stringstream hlStringStream;
+    std::copy(HIDDEN_LAYERS.begin(), HIDDEN_LAYERS.end(), std::ostream_iterator<int32_t>(hlStringStream, "-"));
+    std::string hlString = hlStringStream.str();
+    hlString.pop_back();
+
+    std::cout << std::format("eta = {} | HL = {} | lambda = {} | mu = {}\n",
+        LEARNING_RATE_ETA, hlString, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
+
+    // Begin learning
 
     int32_t epoch = 1, done = 0;
     auto trainingStart = steady_clock::now();
@@ -56,6 +63,8 @@ void mnist() {
         auto epochStart = steady_clock::now();
         int32_t trainingCorrect = 0, testingCorrect = 0;
         std::optional<int8_t> label;
+
+        // Training
 
         while ((label = trainingDataSet.loadDataItem(net)).has_value()) {
             net.calculateOutput();
@@ -70,11 +79,15 @@ void mnist() {
         }
         trainingDataSet.resetDataIterator();
 
+        // Testing
+
         while ((label = testingDataSet.loadDataItem(net)).has_value()) {
             net.calculateOutput();
             if (net.getHighestOutputNode() == label) testingCorrect++;
         }
         testingDataSet.resetDataIterator();
+
+        // Calculate and print stats
 
         float trainPassRate = (100 * trainingCorrect) / (float)trainingDataSet.size();
         float testPassRate = (100 * testingCorrect) / (float)testingDataSet.size();
