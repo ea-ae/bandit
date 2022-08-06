@@ -51,6 +51,12 @@
     <ClCompile Include="CostFunctions\CostFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLoaders\DataLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLoaders\MnistDataLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NeuralNetworks\Layer.h">
@@ -89,5 +95,14 @@
     <ClInclude Include="CostFunctions\CrossEntropyCost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataLoaders\DataLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\MnistDataLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataLoaders\MnistDataLoader.tpp" />
   </ItemGroup>
 </Project>

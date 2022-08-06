@@ -148,6 +148,8 @@
     <ClCompile Include="ActivationFunctions\LeakyRelu.cpp" />
     <ClCompile Include="CostFunctions\CostFunction.cpp" />
     <ClCompile Include="CostFunctions\CrossEntropyCost.cpp" />
+    <ClCompile Include="DataLoaders\DataLoader.cpp" />
+    <ClCompile Include="DataLoaders\MnistDataLoader.cpp" />
     <ClCompile Include="NeuralNetworks\Layer.cpp" />
     <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp" />
     <ClCompile Include="NeuralNetworks\Neuron.cpp" />
@@ -162,6 +164,8 @@
     <ClInclude Include="ActivationFunctions\LeakyRelu.h" />
     <ClInclude Include="CostFunctions\CostFunction.h" />
     <ClInclude Include="CostFunctions\CrossEntropyCost.h" />
+    <ClInclude Include="DataLoaders\DataLoader.h" />
+    <ClInclude Include="DataLoaders\MnistDataLoader.h" />
     <ClInclude Include="NeuralNetworks\Layer.h" />
     <ClInclude Include="NeuralNetworks\NeuralNetwork.h" />
     <ClInclude Include="NeuralNetworks\Neuron.h" />
@@ -170,6 +174,9 @@
     <ClInclude Include="NeuralNetworks\SupervisedNeuralNetwork.h" />
     <ClInclude Include="CostFunctions\QuadraticCost.h" />
     <ClInclude Include="ActivationFunctions\Sigmoid.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataLoaders\MnistDataLoader.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
