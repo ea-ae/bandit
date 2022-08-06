@@ -9,7 +9,7 @@ MnistDataLoader::MnistDataLoader(std::string dataFileName, std::string labelsFil
 }
 
 std::optional<int8_t> MnistDataLoader::loadDataItem(NeuralNetwork& neuralNetwork) {
-    if (++dataItemsIt == dataItems.end()) return {};
+    if (dataItemsIt == dataItems.end() || ++dataItemsIt == dataItems.end()) return {};
 
     for (int i = 0; i < dataItemsIt->pixels.size(); i++) {
         float value = dataItemsIt->pixels[i] / 255.0f; // [0, 1]
