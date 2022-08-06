@@ -11,7 +11,7 @@ float CostFunction::getActivationDerivative(float activation, float expected) co
 
 float CostFunction::getRegularizationCost(std::vector<float> weights, int32_t batchSize) const {
     float sum = std::accumulate(weights.begin(), weights.end(), 0.0f, [](float s, float w) {
-        return s + std::pow(w, 2);
+        return s + std::powf(w, 2);
     });
     return (regularizationLambda * sum) / (2 * batchSize);
 }
@@ -21,5 +21,5 @@ float CostFunction::getRegularizationDerivative(float weight, int32_t batchSize)
 }
 
 float CostFunction::getMomentum(float previousMomentum, float weightGradient) const {
-    return momentumCoefficientMu * previousMomentum - weightGradient;
+    return momentumCoefficientMu * previousMomentum + weightGradient;
 }

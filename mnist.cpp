@@ -56,22 +56,23 @@ std::vector<DataItem> createDataItems(std::ifstream& data, std::ifstream& labels
 }
 
 void mnist() {
-    const auto regularizationLambda = 0.001f; // no regularization: 0
-    const auto momentumCoefficientMu = 0.1f; // no momentum: 0
-    const auto reluLeak = 0.1f;
+    const auto LEARNING_RATE_ETA = 0.1f; // default: 0.01
+    const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
+    const auto MOMENTUM_COEFFICIENT_MU = 0.2f; // no momentum: 0
+    const auto RELU_LEAK = 0.1f; // no leak: 0
 
-    const auto inputNodes = 784;
-    const auto outputNodes = 10;
-    const auto hiddenLayers = 1;
-    const auto hiddenLayerNeurons = 300; // default: 30, 400
-    const auto batchSize = 32;
-    const auto learningRate = 0.1f; // default: 0.01
+    const auto INPUT_NEURONS = 784;
+    const auto OUTPUT_NEURONS = 10;
+    const auto HIDDEN_LAYERS = 1;
+    const auto HIDDEN_LAYER_NEURONS = 300; // default: 30, 400
 
-    auto costFunction = QuadraticCost(regularizationLambda);
-    auto activationFunction = LeakyRelu(reluLeak);
+    const auto BATCH_SIZE = 32;
+
+    auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
+    auto activationFunction = LeakyRelu(RELU_LEAK);
 
     auto perceptron = SupervisedNeuralNetwork(activationFunction, costFunction,
-        inputNodes, outputNodes, hiddenLayers, hiddenLayerNeurons);
+        INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS, HIDDEN_LAYER_NEURONS);
 
     auto trainingData = std::ifstream("./training-images.idx3-ubyte", std::ios::binary);
     auto trainingLabels = std::ifstream("./training-labels.idx1-ubyte", std::ios::binary);
@@ -84,8 +85,8 @@ void mnist() {
     auto testingDataSet = createDataItems(testingData, testingLabels);
     std::cout << std::format("Finished reading {} testing data items into memory\n", testingDataSet.size());
 
-    std::cout << std::format("eta = {} | L = {} | Ln = {} | lambda = {}\n",
-        learningRate, hiddenLayers, hiddenLayerNeurons, regularizationLambda);
+    std::cout << std::format("eta = {} | L = {} | Ln = {} | lambda = {} | mu = {}\n",
+        LEARNING_RATE_ETA, HIDDEN_LAYERS, HIDDEN_LAYER_NEURONS, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     int32_t epoch = 1, done = 0, correctGuesses = 0;
     auto trainingStart = steady_clock::now();
 
@@ -102,9 +103,9 @@ void mnist() {
 
             if (perceptron.getHighestOutputNode() == dataItem.label) correctGuesses++;
 
-            if (++done == batchSize) {
+            if (++done == BATCH_SIZE) {
                 done = 0;
-                perceptron.update(batchSize, learningRate);
+                perceptron.update(BATCH_SIZE, LEARNING_RATE_ETA);
             }
         }
 
