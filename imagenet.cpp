@@ -1,19 +1,11 @@
 #include "imagenet.h"
 #include <iostream>
-#include <fstream>
 #include <format>
-#include <algorithm>
-#include <cmath>
-#include <string>
-#include <array>
-#include <chrono>
 #include "DataLoaders/ImageNetDataLoader.h"
 #include "Trainers/ClassificationTrainer.h"
 #include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
-
-using namespace std::chrono;
 
 void imagenet() {
     // Configuration
@@ -43,13 +35,11 @@ void imagenet() {
     auto trainingDataSet = ImageNetDataLoader("val", ".ubyte", 11);
     trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
 
-    // Print status
+    // Begin learning
 
     std::cout << std::format("eta = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
         LEARNING_RATE_ETA, trainer.getHiddenLayersStatusMessage(HIDDEN_LAYERS), 
         REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
-
-    // Begin learning
 
     trainer.train();
 }
