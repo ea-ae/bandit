@@ -4,6 +4,7 @@
 
 int main()
 {
-    imagenet();
-    // mnist();
+    std::cout << "Initializing\n";
+    // imagenet();
+    mnist();
 }

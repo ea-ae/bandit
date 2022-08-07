@@ -5,8 +5,6 @@
 #include <optional>
 #include <string>
 #include <memory>
-#include "../NeuralNetworks/NeuralNetwork.h"
-
 
 constexpr int32_t MAGIC = (41 << 24) + (42 << 16) + (43 << 8) + 44;
 constexpr int32_t PIXELS = 224 * 224 * 3;
@@ -25,7 +23,7 @@ private:
     ImageNetDataVector::const_iterator dataItemsIt;
 public:
     ImageNetDataLoader(std::string filePrefix, std::string fileSuffix, int32_t count);
-    // std::optional<int8_t> loadDataItem(NeuralNetwork& neuralNetwork);
+    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork);
     void resetDataIterator();
     size_t size();
 private:

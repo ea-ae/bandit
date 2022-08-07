@@ -5,7 +5,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "../NeuralNetworks/NeuralNetwork.h"
 
 struct MnistDataItem {
     std::array<uint8_t, 784> pixels;
@@ -20,7 +19,7 @@ private:
     MnistDataVector::const_iterator dataItemsIt;
 public:
     MnistDataLoader(std::string dataFileName, std::string labelsFileName);
-    std::optional<int8_t> loadDataItem(NeuralNetwork& neuralNetwork);
+    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork);
     void resetDataIterator();
     size_t size();
 private:

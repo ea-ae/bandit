@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -146,6 +146,8 @@
   <ItemGroup>
     <ClCompile Include="bandit.cpp" />
     <ClCompile Include="ActivationFunctions\LeakyRelu.cpp" />
+    <ClCompile Include="Trainers\Trainer.cpp" />
+    <ClCompile Include="Trainers\ClassificationTrainer.cpp" />
     <ClCompile Include="CostFunctions\CostFunction.cpp" />
     <ClCompile Include="CostFunctions\CrossEntropyCost.cpp" />
     <ClCompile Include="DataLoaders\DataLoader.cpp" />
@@ -164,6 +166,8 @@
   <ItemGroup>
     <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
     <ClInclude Include="ActivationFunctions\LeakyRelu.h" />
+    <ClInclude Include="Trainers\Trainer.h" />
+    <ClInclude Include="Trainers\ClassificationTrainer.h" />
     <ClInclude Include="CostFunctions\CostFunction.h" />
     <ClInclude Include="CostFunctions\CrossEntropyCost.h" />
     <ClInclude Include="DataLoaders\DataLoader.h" />

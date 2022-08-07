@@ -8,7 +8,7 @@ MnistDataLoader::MnistDataLoader(std::string dataFileName, std::string labelsFil
     resetDataIterator();
 }
 
-std::optional<int8_t> MnistDataLoader::loadDataItem(NeuralNetwork& neuralNetwork) {
+std::optional<int16_t> MnistDataLoader::loadDataItem(NeuralNetwork& neuralNetwork) {
     if (dataItemsIt == dataItems.end() || ++dataItemsIt == dataItems.end()) return {};
 
     for (int i = 0; i < dataItemsIt->pixels.size(); i++) {
