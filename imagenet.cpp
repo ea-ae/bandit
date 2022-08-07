@@ -42,7 +42,6 @@ void imagenet() {
 
     auto trainingDataSet = ImageNetDataLoader("val", ".ubyte", 11);
     trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
-    std::cout << std::format("Finished reading {} training data items into memory\n", trainingDataSet.size());
 
     // Print status
 

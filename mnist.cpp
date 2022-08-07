@@ -7,8 +7,8 @@
 #include <string>
 #include <array>
 #include <chrono>
-#include "DataLoaders/DataLoader.h"
 #include "DataLoaders/MnistDataLoader.h"
+#include "Trainers/ClassificationTrainer.h"
 #include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
@@ -32,86 +32,27 @@ void mnist() {
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
 
-    // Initialize neural network
+    // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(activationFunction, costFunction,
         INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS);
+    auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
 
     // Load datasets
 
     auto trainingDataSet = MnistDataLoader("./training-images.idx3-ubyte", "./training-labels.idx1-ubyte");
-    std::cout << std::format("Finished reading {} training data items into memory\n", trainingDataSet.size());
+    trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
+
     auto testingDataSet = MnistDataLoader("./test-images.idx3-ubyte", "./test-labels.idx1-ubyte");
-    std::cout << std::format("Finished reading {} testing data items into memory\n", testingDataSet.size());
+    trainer.addDataSource(&testingDataSet, DataSourceType::Testing);
     
     // Print status
 
-    std::stringstream hlStringStream;
-    std::string hlString = "0";
-    if (HIDDEN_LAYERS.size() > 0) {
-        std::copy(HIDDEN_LAYERS.begin(), HIDDEN_LAYERS.end(), std::ostream_iterator<int32_t>(hlStringStream, "x"));
-        hlString = hlStringStream.str();
-        hlString.pop_back();
-    }
-
     std::cout << std::format("eta = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
-        LEARNING_RATE_ETA, hlString, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
+        LEARNING_RATE_ETA, trainer.getHiddenLayersStatusMessage(HIDDEN_LAYERS), 
+        REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     // Begin learning
 
-    int32_t epoch = 1;
-    auto trainingStart = steady_clock::now();
-
-    while (true) {
-        auto epochStart = steady_clock::now();
-        int32_t trainingCorrect = 0, testingCorrect = 0;
-        auto dataSetRatio = static_cast<int32_t>(
-            std::ceilf(static_cast<float>(trainingDataSet.size()) / testingDataSet.size()));
-        
-        // Training and testing
-
-        std::optional<int8_t> trainLabel, testLabel;
-        while (true) {
-            int32_t batchItemsDone = 0, batchesDone = 0;
-
-            while ((trainLabel = trainingDataSet.loadDataItem(net)).has_value()) {
-                net.calculateOutput();
-                net.backpropagate(trainLabel.value());
-
-                if (net.getHighestOutputNode() == trainLabel.value()) trainingCorrect++;
-
-                if (++batchItemsDone == BATCH_SIZE) {
-                    batchItemsDone = 0;
-                    net.update(BATCH_SIZE, LEARNING_RATE_ETA);
-                    if (++batchesDone == dataSetRatio) break; // occasionally switch between training/testing
-                }
-            }
-
-            while ((testLabel = testingDataSet.loadDataItem(net)).has_value()) {
-                net.calculateOutput();
-                if (net.getHighestOutputNode() == testLabel) testingCorrect++;
-
-                if (++batchItemsDone == BATCH_SIZE) break; // do 1 testing batch for every n training batches
-            }
-
-            if (!trainLabel.has_value() && !testLabel.has_value()) break; // both data sets depleted
-        }
-
-        trainingDataSet.resetDataIterator();
-        testingDataSet.resetDataIterator();
-
-        // Calculate and print stats
-
-        float trainPassRate = static_cast<float>(100 * trainingCorrect) / trainingDataSet.size();
-        float testPassRate = static_cast<float>(100 * testingCorrect) / testingDataSet.size();
-
-        auto epochEnd = steady_clock::now();
-        auto epochDuration = duration_cast<seconds>(epochEnd - epochStart).count();
-        auto totalDuration = duration_cast<seconds>(epochEnd - trainingStart).count();
-
-        std::cout << std::format("Epoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
-            epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
-
-        epoch++;
-    }
+    trainer.train();
 }

@@ -14,7 +14,8 @@ void ClassificationTrainer::train() {
     int32_t epoch = 1;
     auto trainingStart = steady_clock::now();
     auto trainingDataSet = trainingDataSources[0]; // OK for now
-    auto testingDataSet = trainingDataSources[0]; // !
+    // auto testingDataSet = trainingDataSources[0]; // !
+    auto testingDataSet = testingDataSources[0];
 
     while (true) {
         auto epochStart = steady_clock::now();
