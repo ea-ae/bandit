@@ -11,15 +11,15 @@ void mnist() {
     // Configuration
 
     const auto LEARNING_RATE_ETA = 0.1f; // default: 0.1
-    const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto MOMENTUM_COEFFICIENT_MU = 0.2f; // no momentum: 0
+    const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
     const auto INPUT_NEURONS = 784;
     const auto OUTPUT_NEURONS = 10;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30 };
+    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 300 };
 
-    const auto BATCH_SIZE = 8;
+    const auto BATCH_SIZE = 128;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);

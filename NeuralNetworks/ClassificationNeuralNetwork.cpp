@@ -25,5 +25,5 @@ float ClassificationNeuralNetwork::calculateCost(int32_t label) {
 }
 
 float ClassificationNeuralNetwork::getExpectedValue(int32_t label, int32_t neuronIndex) {
-    return neuronIndex == label ? 1 : 0;
+    return neuronIndex == label ? 1.0f : 0.0f;
 }

@@ -5,7 +5,7 @@
 
 using namespace std::chrono;
 
-ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate, float batchSize) 
+ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate, int32_t batchSize) 
     : net(net), learningRate(learningRate), batchSize(batchSize) {}
 
 void ClassificationTrainer::train() {

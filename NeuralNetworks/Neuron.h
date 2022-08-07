@@ -1,9 +1,14 @@
 #pragma once
+#include <eigen/Eigen/Dense>
 #include <vector>
 #include <utility>
 #include <optional>
 #include "Layer.h"
 #include "../ActivationFunctions/ActivationFunction.h"
+
+const auto BATCH_SIZE = 128;
+
+using ActivationVector = Eigen::Matrix<float, 1, BATCH_SIZE>;
 
 class Layer;
 class CostFunction;
@@ -16,6 +21,7 @@ struct Weight {
 class Neuron {
 public:
     float value = 0.0;
+    //ActivationVector value;
 private:
     float momentum = 0.0;
     float bias = 0.0;
@@ -28,7 +34,8 @@ private:
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;
 public:
-    Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction, const Layer* previousLayer, const Layer* nextLayer);
+    Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction, 
+        const Layer* previousLayer, const Layer* nextLayer);
     void calculate(const Layer& previousLayer);
     void addActivationGradient(float gradient);
     void backpropagate(Layer& previousLayer, std::optional<float> expectedValue = std::nullopt);

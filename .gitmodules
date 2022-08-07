@@ -1,6 +1,4 @@
 [submodule "include/eigen"]
 	path = include/eigen
 	url = https://gitlab.com/libeigen/eigen.git
-	branch = 3.0
-[submodule "eigen/"]
 	branch = 3.4

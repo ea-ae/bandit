@@ -19,7 +19,7 @@ void imagenet() {
     const auto OUTPUT_NEURONS = 100;
     const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30 };
 
-    const auto BATCH_SIZE = 8;
+    const auto BATCH_SIZE = 128;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);

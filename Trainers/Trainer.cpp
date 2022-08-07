@@ -13,9 +13,13 @@ void Trainer::addDataSource(DataLoader* dataSource, DataSourceType dataSourceTyp
     case DataSourceType::Testing:
         testingDataSources.push_back(dataSource);
         type = "testing";
+        break;
+    case DataSourceType::Validation:
+        throw std::runtime_error("Validation data type is unsupported");
     }
 
     std::cout << std::format("Finished reading {} {} data items into memory\n", dataSource->size(), type);
+    // std::cout << "Finished reading " << dataSource->size() << " " << type << " data items into memory\n";
 }
 
 std::string Trainer::getHiddenLayersStatusMessage(std::vector<int32_t> hiddenLayers) {

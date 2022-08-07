@@ -1,6 +1,7 @@
 #include "Neuron.h"
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction,
     const Layer* previousLayer, const Layer* nextLayer)
@@ -21,9 +22,13 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction&
 
 void Neuron::calculate(const Layer& previousLayer) {
     float sum = bias;
+    //ActivationVector sum = ActivationVector(ActivationVector::Zero());
     for (int i = 0; i < previousLayer.layerSize; i++) {
         sum += previousLayer.neurons[i]->value * weights[i].weight;
     }
+    std::cout << sum << "\n";
+    std::cout << sum << "\n";
+    std::cout << sum << "\n";
     preTransformedValue = sum;
     value = activationFunction.map(preTransformedValue);
 }

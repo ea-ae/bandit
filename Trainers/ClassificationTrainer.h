@@ -4,10 +4,10 @@
 
 class ClassificationTrainer : public Trainer {
 public:
-    ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate, float batchSize);
+    ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate, int32_t batchSize);
     void train();
 private:
     ClassificationNeuralNetwork& net;
     const float learningRate;
-    const float batchSize;
+    const int32_t batchSize;
 };
