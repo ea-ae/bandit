@@ -1,6 +1,10 @@
 #pragma once
-#include <string>
+#include <fstream>
 
-struct DataSource {};
+class DataLoader {
+protected:
+    template <class T> static void endswap(T* objp);
+    template <class T> static void read(T* buffer, std::ifstream& stream, bool littleEndian = false);
+};
 
-class DataLoader {};
+#include "DataLoader.tpp"

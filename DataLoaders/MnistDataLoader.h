@@ -25,8 +25,4 @@ public:
     size_t size();
 private:
     void createDataItems(std::ifstream& data, std::ifstream& labels);
-    template <class T> static void endswap(T* objp);
-    template <class T> static void read(T* buffer, std::ifstream& stream);
 };
-
-#include "MnistDataLoader.tpp"

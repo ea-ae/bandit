@@ -53,7 +53,9 @@ void Neuron::backpropagate(Layer& previousLayer, std::optional<float> expectedVa
             auto preValueDerivedByActivation = weights[i].weight;
             auto costDerivedByActivation = preValueDerivedByActivation * costDerivedByPreValue;
 
-            previousLayer.neurons[i]->addActivationGradient(costDerivedByActivation); // add the gradient
+            if (costDerivedByActivation != 0) { // sparsity optimization for non-leaky ReLu's
+                previousLayer.neurons[i]->addActivationGradient(costDerivedByActivation); // add the gradient
+            }
         }
     }
 

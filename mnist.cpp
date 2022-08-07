@@ -25,7 +25,7 @@ void mnist() {
 
     const auto INPUT_NEURONS = 784;
     const auto OUTPUT_NEURONS = 10;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30 };
+    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 300, 300 };
 
     const auto BATCH_SIZE = 32;
 
@@ -47,7 +47,7 @@ void mnist() {
     // Print status
 
     std::stringstream hlStringStream;
-    std::copy(HIDDEN_LAYERS.begin(), HIDDEN_LAYERS.end(), std::ostream_iterator<int32_t>(hlStringStream, "-"));
+    std::copy(HIDDEN_LAYERS.begin(), HIDDEN_LAYERS.end(), std::ostream_iterator<int32_t>(hlStringStream, "x"));
     std::string hlString = hlStringStream.str();
     hlString.pop_back();
 

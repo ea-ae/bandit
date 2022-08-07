@@ -57,6 +57,12 @@
     <ClCompile Include="DataLoaders\MnistDataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLoaders\ImageNetDataLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imagenet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NeuralNetworks\Layer.h">
@@ -101,8 +107,14 @@
     <ClInclude Include="DataLoaders\MnistDataLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataLoaders\ImageNetDataLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imagenet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataLoaders\MnistDataLoader.tpp" />
+    <None Include="DataLoaders\DataLoader.tpp" />
   </ItemGroup>
 </Project>
