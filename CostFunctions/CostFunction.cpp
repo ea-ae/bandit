@@ -6,8 +6,7 @@ CostFunction::CostFunction(float regularizationLambda, float momentumCoefficient
     : regularizationLambda(regularizationLambda), momentumCoefficientMu(momentumCoefficientMu) { }
 
 //BatchArray CostFunction::getActivationDerivatives(BatchArray& activations, BatchArray& expected) const {
-//    BatchArray result = activations - expected;
-//    return result;
+//    return activations - expected;
 //}
 
 FixThis CostFunction::getActivationDerivatives(const FixThis& activations, const FixThis& expected) const {

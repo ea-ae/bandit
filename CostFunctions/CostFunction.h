@@ -1,11 +1,15 @@
 #pragma once
 #include <vector>
 #include <stdint.h>
-#include "../ActivationFunctions/ActivationFunction.h"
+// #include "../ActivationFunctions/ActivationFunction.h"
 #include <eigen/Eigen/Dense>
 #include "../NeuralNetworks/Neuron.h"
 
 using FixThis = Eigen::Array<float, 1, 128>;
+
+class Layer;
+class Neuron;
+class ActivationFunction;
 
 class CostFunction {
 public:
