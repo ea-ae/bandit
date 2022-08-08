@@ -3,11 +3,11 @@
 #include <cmath>
 #include <vector>
 
-int32_t ClassificationNeuralNetwork::getHighestOutputNode() {
+int32_t ClassificationNeuralNetwork::getHighestOutputNode(int32_t nthBatchItem) {
     int32_t highestNodeId = 0;
-    float highestNodeValue = outputLayer->neurons[0]->value;
+    float highestNodeValue = outputLayer->neurons[0]->values[nthBatchItem];
     for (int i = 0; i < outputLayer->layerSize; i++) {
-        auto value = outputLayer->neurons[i]->value;
+        auto value = outputLayer->neurons[i]->values[nthBatchItem];
         if (value > highestNodeValue) {
             highestNodeId = i;
             highestNodeValue = value;
@@ -21,7 +21,8 @@ float ClassificationNeuralNetwork::calculateCost(int32_t label) {
     std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
         return label == i++ ? 1 : 0;
     });
-    return costFunction.getCost(*outputLayer.get(), expected);
+    //return costFunction.getCost(*outputLayer.get(), expected);
+    return -1; // todo temp until we fix costs with vectorization
 }
 
 float ClassificationNeuralNetwork::getExpectedValue(int32_t label, int32_t neuronIndex) {

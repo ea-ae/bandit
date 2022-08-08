@@ -51,9 +51,6 @@
     <ClCompile Include="CostFunctions\CostFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLoaders\DataLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataLoaders\MnistDataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

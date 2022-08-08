@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 #include <format>
+#include "../NeuralNetworks/Neuron.h"
 
 using namespace std::chrono;
 
@@ -25,34 +26,64 @@ void ClassificationTrainer::train() {
 
         // Training and testing
 
-        std::optional<int8_t> trainLabel, testLabel;
+        BatchLabelArray batchLabels = BatchLabelArray(BatchLabelArray::Zero());
+        std::optional<int8_t> label;
+        bool trainingDataLeft = true, testingDataLeft = true;
         while (true) {
-            int32_t batchItemsDone = 0, batchesDone = 0;
+            // int32_t batchItemsDone = 0, batchesDone = 0;
 
-            while ((trainLabel = trainingDataSet->loadDataItem(net)).has_value()) {
-                net.calculateOutput();
-                net.backpropagate(trainLabel.value());
+            if (trainingDataLeft) {
+                // occasionally switch between training/testing
+                for (int32_t batchesDone = 0; batchesDone < dataSetRatio; batchesDone++) {
+                    if (!trainingDataLeft) {
+                        std::cout << "Ran out of training data on point\n";
+                        break;
+                    }
 
-                if (net.getHighestOutputNode() == trainLabel.value()) trainingCorrect++;
+                    for (int32_t batchItemsDone = 0; batchItemsDone < batchSize; batchItemsDone++) {
+                        label = trainingDataSet->loadDataItem(net, batchItemsDone);
+                        if (!label.has_value()) {
+                            trainingDataLeft = false;
+                            break;
+                        }
+                        batchLabels[batchItemsDone] = label.value();
+                    }
 
-                if (++batchItemsDone == batchSize) {
-                    batchItemsDone = 0;
+                    if (!trainingDataLeft) { // make sure we got a full batch of labels and inputs
+                        break;
+                    }
+
+                    net.calculateOutput();
+                    net.backpropagate(batchLabels);
+                    for (int32_t i = 0; i < batchLabels.size(); i++) {
+                        if (net.getHighestOutputNode(i) == batchLabels[i]) trainingCorrect++;
+                    }
                     net.update(batchSize, learningRate);
-                    if (++batchesDone == dataSetRatio) break; // occasionally switch between training/testing
                 }
             }
 
-            while ((testLabel = testingDataSet->loadDataItem(net)).has_value()) {
-                net.calculateOutput();
-                if (net.getHighestOutputNode() == testLabel) testingCorrect++;
+            if (testingDataLeft) {
+                for (int32_t batchItemsDone = 0; batchItemsDone < batchSize; batchItemsDone++) {
+                    label = testingDataSet->loadDataItem(net, batchItemsDone);
+                    if (!label.has_value()) {
+                        testingDataLeft = false;
+                        break;
+                    }
+                    batchLabels[batchItemsDone] = label.value();
+                }
 
-                if (++batchItemsDone == batchSize) break; // do 1 testing batch for every n training batches
+                if (trainingDataLeft) { // make sure we got a full batch of labels and inputs
+                    net.calculateOutput();
+                    for (int32_t i = 0; i < batchLabels.size(); i++) {
+                        if (net.getHighestOutputNode(i) == batchLabels[i]) testingCorrect++;
+                    }
+                }
             }
 
-            if (!trainLabel.has_value() && !testLabel.has_value()) break; // both data sets depleted
+            if (!trainingDataLeft && !testingDataLeft) break;
         }
 
-        // Iterate over same data again on next epoch
+        // Iterate over the same data again on next epoch
 
         trainingDataSet->resetDataIterator();
         testingDataSet->resetDataIterator();

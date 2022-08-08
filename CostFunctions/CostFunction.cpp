@@ -5,8 +5,13 @@
 CostFunction::CostFunction(float regularizationLambda, float momentumCoefficientMu) 
     : regularizationLambda(regularizationLambda), momentumCoefficientMu(momentumCoefficientMu) { }
 
-float CostFunction::getActivationDerivative(float activation, float expected) const {
-    return activation - expected;
+//BatchArray CostFunction::getActivationDerivatives(BatchArray& activations, BatchArray& expected) const {
+//    BatchArray result = activations - expected;
+//    return result;
+//}
+
+FixThis CostFunction::getActivationDerivatives(const FixThis& activations, const FixThis& expected) const {
+    return activations - expected;
 }
 
 float CostFunction::getRegularizationCost(std::vector<float> weights, int32_t batchSize) const {

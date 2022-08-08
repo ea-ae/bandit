@@ -19,7 +19,7 @@ private:
     MnistDataVector::const_iterator dataItemsIt;
 public:
     MnistDataLoader(std::string dataFileName, std::string labelsFileName);
-    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork);
+    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
 private:

@@ -152,7 +152,6 @@
     <ClCompile Include="Trainers\ClassificationTrainer.cpp" />
     <ClCompile Include="CostFunctions\CostFunction.cpp" />
     <ClCompile Include="CostFunctions\CrossEntropyCost.cpp" />
-    <ClCompile Include="DataLoaders\DataLoader.cpp" />
     <ClCompile Include="DataLoaders\MnistDataLoader.cpp" />
     <ClCompile Include="DataLoaders\ImageNetDataLoader.cpp" />
     <ClCompile Include="imagenet.cpp" />

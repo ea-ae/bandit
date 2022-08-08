@@ -22,17 +22,21 @@ NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction, CostF
     outputLayer->initializeNodeValues(activationFunction, costFunction);
 }
 
-void NeuralNetwork::setInputNode(int32_t inputNode, float value) {
-    inputLayer->neurons[inputNode]->value = value;
+void NeuralNetwork::setInputNode(int32_t inputNode, int32_t nthBatchItem, float value) {
+    inputLayer->neurons[inputNode]->values[nthBatchItem] = value;
 }
 
 void NeuralNetwork::calculateOutput() {
     inputLayer->calculateNodeValues();
 }
 
-void NeuralNetwork::backpropagate(int32_t label) {
+void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
+    auto expectedValues = BatchArray(BatchArray::Zero());
     for (int32_t i = 0; i < outputLayer->layerSize; i++) {
-        outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, getExpectedValue(label, i));
+        expectedValues = labels.unaryExpr([this, &i](int32_t label) {
+            return getExpectedValue(label, i);
+        });
+        outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, &expectedValues);
     }
 
     for (auto& layer : hiddenLayers) {

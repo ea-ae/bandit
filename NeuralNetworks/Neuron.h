@@ -5,10 +5,12 @@
 #include <optional>
 #include "Layer.h"
 #include "../ActivationFunctions/ActivationFunction.h"
+#include "../CostFunctions/CostFunction.h"
 
-const auto BATCH_SIZE = 128;
+const auto BATCH_SIZE = 1;
 
-using ActivationVector = Eigen::Matrix<float, 1, BATCH_SIZE>;
+using BatchArray = Eigen::Array<float, 1, BATCH_SIZE>;
+using BatchLabelArray = Eigen::Array<int16_t, 1, BATCH_SIZE>;
 
 class Layer;
 class CostFunction;
@@ -20,16 +22,16 @@ struct Weight {
 
 class Neuron {
 public:
-    float value = 0.0;
-    //ActivationVector value;
+    //float value = 0.0f;
+    BatchArray values = BatchArray(BatchArray::Zero());
 private:
-    float momentum = 0.0;
-    float bias = 0.0;
-    float biasGradient = 0.0;
+    float momentum = 0.0f;
+    float bias = 0.0f;
+    float biasGradient = 0.0f;
 
     std::vector<Weight> weights;
-    float activationGradient = 0.0;
-    float preTransformedValue = 0.0;
+    BatchArray activationGradients = BatchArray(BatchArray::Zero());
+    BatchArray preTransformedValues;
     
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;
@@ -37,8 +39,8 @@ public:
     Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction, 
         const Layer* previousLayer, const Layer* nextLayer);
     void calculate(const Layer& previousLayer);
-    void addActivationGradient(float gradient);
-    void backpropagate(Layer& previousLayer, std::optional<float> expectedValue = std::nullopt);
+    void addActivationGradients(const BatchArray& gradients);
+    void backpropagate(Layer& previousLayer, BatchArray* expectedValues = nullptr);
     void update(int32_t batchSize, float learningRate);
     size_t getWeightCount();
 };

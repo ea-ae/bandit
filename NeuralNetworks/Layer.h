@@ -6,6 +6,7 @@
 #include "../CostFunctions/CostFunction.h"
 
 class Neuron;
+class CostFunction;
 
 class Layer {
 public:
