@@ -30,8 +30,6 @@ void ClassificationTrainer::train() {
         std::optional<int8_t> label;
         bool trainingDataLeft = true, testingDataLeft = true;
         while (true) {
-            // int32_t batchItemsDone = 0, batchesDone = 0;
-
             if (trainingDataLeft) {
                 // occasionally switch between training/testing
                 for (int32_t batchesDone = 0; batchesDone < dataSetRatio; batchesDone++) {

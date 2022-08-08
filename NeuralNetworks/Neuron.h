@@ -7,7 +7,7 @@
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
 
-const auto BATCH_SIZE = 1;
+const auto BATCH_SIZE = 16;
 
 using BatchArray = Eigen::Array<float, 1, BATCH_SIZE>;
 using BatchLabelArray = Eigen::Array<int16_t, 1, BATCH_SIZE>;
@@ -22,7 +22,6 @@ struct Weight {
 
 class Neuron {
 public:
-    //float value = 0.0f;
     BatchArray values = BatchArray(BatchArray::Zero());
 private:
     float momentum = 0.0f;

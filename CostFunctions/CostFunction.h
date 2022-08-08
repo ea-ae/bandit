@@ -2,14 +2,8 @@
 #include <vector>
 #include <stdint.h>
 #include "../ActivationFunctions/ActivationFunction.h"
-// #include "../NeuralNetworks/Layer.h"
 #include <eigen/Eigen/Dense>
 #include "../NeuralNetworks/Neuron.h"
-
-// I don't even use the Layer class anymore, but removing it (+ the #include "Layer.h")
-// increases the amount of spammy compiler errors by an order of magnitude
-//class Layer; 
-//class Neuron;
 
 using FixThis = Eigen::Array<float, 1, 128>;
 

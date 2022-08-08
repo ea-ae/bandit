@@ -21,16 +21,12 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction&
 }
 
 void Neuron::calculate(const Layer& previousLayer) {
-    // float sum = bias;
-    //values = BatchArray(BatchArray::Constant(bias));
     values = values.setConstant(bias);
     for (int i = 0; i < previousLayer.layerSize; i++) {
-        // sum += previousLayer.neurons[i]->value * weights[i].weight;
         auto& inputs = previousLayer.neurons[i]->values;
         values += inputs * weights[i].weight; // scalar multiplication
     }
     preTransformedValues = values;
-    // value = activationFunction.map(preTransformedValue);
     values = values.unaryExpr([this](float preValue) { return activationFunction.map(preValue); });
 }
 
@@ -44,14 +40,11 @@ void Neuron::backpropagate(Layer& previousLayer, BatchArray* expectedValues) {
         activationGradients = values - *expectedValues; // dC/da = 2(a - y)
     } // else, we apply precalculated dC/da1 * da1/dz1 * dz1/da2 chain rule result to our derivatives
 
-    //auto activationDerivedByPreValue = activationFunction.getPreValueDerivative(value); // da/dz
     auto activationsDerivedByPreValues = values.unaryExpr([this](float value) {
         return activationFunction.getPreValueDerivative(value); // da/dz
     });
     auto costDerivedByPreValues = activationsDerivedByPreValues * activationGradients; // C->a1->z1, C->a1->z1->a2->z2, etc
 
-    // float preValueDerivedByBias = 1.0; // unnecessary
-    // biasGradient += costDerivedByPreValue * preValueDerivedByBias;
     biasGradient = costDerivedByPreValues.sum(); // dC/dz = dC/db
 
     for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
@@ -67,14 +60,12 @@ void Neuron::backpropagate(Layer& previousLayer, BatchArray* expectedValues) {
         }
     }
 
-    // activationGradient = 0; // reset the sum for the next cycle
     activationGradients = activationGradients.setZero();
 }
 
 void Neuron::update(int32_t batchSize, float learningRate) { // todo: batchSize not needed
     float biasDelta = (biasGradient / batchSize) * learningRate;
     bias -= biasDelta;
-    // biasGradient = 0; // we assign not add with vectors now, no longer need to reset
 
     for (auto& weight : weights) {
         auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight, batchSize);
