@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="src\ActivationFunctions\ActivationFunction.h" />
     <ClInclude Include="src\ActivationFunctions\LeakyRelu.h" />
+    <ClInclude Include="src\bandit.h" />
     <ClInclude Include="src\Trainers\Trainer.h" />
     <ClInclude Include="src\Trainers\ClassificationTrainer.h" />
     <ClInclude Include="src\CostFunctions\CostFunction.h" />

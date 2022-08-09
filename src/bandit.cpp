@@ -1,9 +1,8 @@
-#include <iostream>
+#include "bandit.h"
 #include "mnist.h"
 //#include "imagenet.h"
 
-int main()
-{
+void main() {
     std::cout << "Initializing\n";
     mnist();
     // imagenet();

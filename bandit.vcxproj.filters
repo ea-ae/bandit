@@ -122,6 +122,9 @@
     <ClInclude Include="src\Trainers\Trainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\bandit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\DataLoaders\DataLoader.tpp" />

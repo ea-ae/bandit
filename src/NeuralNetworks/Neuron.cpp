@@ -63,7 +63,7 @@ void Neuron::backpropagate(Layer& previousLayer, BatchArray* expectedValues) {
     activationGradients = activationGradients.setZero();
 }
 
-void Neuron::update(int32_t batchSize, float learningRate) { // todo: batchSize not needed
+void Neuron::update(int32_t batchSize, float learningRate) {
     float biasDelta = (biasGradient / batchSize) * learningRate;
     bias -= biasDelta;
 

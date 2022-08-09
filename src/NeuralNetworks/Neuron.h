@@ -5,17 +5,12 @@
 #include <vector>
 #include <utility>
 #include <optional>
+#include "../bandit.h"
 #include "Layer.h"
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
 
-const auto BATCH_SIZE = 16;
-
-using BatchArray = Eigen::Array<float, 1, BATCH_SIZE>;
-using BatchLabelArray = Eigen::Array<int16_t, 1, BATCH_SIZE>;
-
 class Layer;
-class CostFunction;
 
 struct Weight {
     float weight = 0;
