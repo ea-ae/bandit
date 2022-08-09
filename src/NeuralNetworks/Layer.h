@@ -16,7 +16,7 @@ public:
     Layer* previousLayer = nullptr;
     Layer* nextLayer = nullptr;
 public:
-    Layer(int32_t layerSize, Layer* previousLayer);
+    Layer(int32_t layerSize);
     void initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void calculateNodeValues();
     void update(int32_t batchSize, float learningRate);

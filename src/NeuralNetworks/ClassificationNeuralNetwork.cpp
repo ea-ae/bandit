@@ -16,7 +16,7 @@ int32_t ClassificationNeuralNetwork::getHighestOutputNode(int32_t nthBatchItem) 
     return highestNodeId;
 }
 
-float ClassificationNeuralNetwork::calculateCost(int32_t label) {
+float ClassificationNeuralNetwork::calculateCost(int32_t label) { // add cost param here
     std::vector<int32_t> expected(outputLayer->layerSize);
     std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
         return label == i++ ? 1 : 0;

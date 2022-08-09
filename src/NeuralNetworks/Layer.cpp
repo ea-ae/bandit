@@ -2,8 +2,7 @@
 #include <algorithm>
 #include <numeric>
 
-Layer::Layer(int32_t layerSize, Layer* previousLayer)
-    : neurons(layerSize), layerSize(layerSize), previousLayer(previousLayer)
+Layer::Layer(int32_t layerSize) : neurons(layerSize), layerSize(layerSize)
 {
     neurons = std::vector<std::unique_ptr<Neuron>>(layerSize);
 }

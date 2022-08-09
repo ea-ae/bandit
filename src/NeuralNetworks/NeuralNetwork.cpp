@@ -1,25 +1,28 @@
 #include "NeuralNetwork.h"
 
-NeuralNetwork::NeuralNetwork(const ActivationFunction& activationFunction, CostFunction& costFunction,
-    int32_t inputs, int32_t outputs, std::vector<int32_t> hiddenLayerNeurons)
-    : costFunction(costFunction)
-{
-    inputLayer = std::make_unique<Layer>(inputs, nullptr);
-    auto lastLayer = inputLayer.get();
+NeuralNetwork::NeuralNetwork(int32_t inputs, int32_t outputs) {
+    inputLayer = std::make_unique<Layer>(inputs);
+    outputLayer = std::make_unique<Layer>(outputs);
+}
 
-    // create layers and assign the lastLayer/nextLayer members for each layer
-    for (auto& neuronCount : hiddenLayerNeurons) {
-        hiddenLayers.push_back(std::make_unique<Layer>(neuronCount, lastLayer));
-        lastLayer->nextLayer = hiddenLayers.back().get(); // set lastLayer's nextLayer field
-        lastLayer = hiddenLayers.back().get(); // set current layer as the new lastLayer
-    }
-    outputLayer = std::make_unique<Layer>(outputs, lastLayer);
+void NeuralNetwork::addLayer(Layer&& layer) {
+    auto previousLayer = hiddenLayers.empty() ? inputLayer.get() : hiddenLayers.back().get();
+    layer.previousLayer = previousLayer;
+    hiddenLayers.push_back(std::make_unique<Layer>(std::move(layer)));
+    previousLayer->nextLayer = hiddenLayers.back().get();
+
+}
+
+void NeuralNetwork::buildLayers(const ActivationFunction& activation, const CostFunction& cost) {
+    // link the last layer
+    auto lastLayer = hiddenLayers.back().get();
     lastLayer->nextLayer = outputLayer.get();
+    outputLayer->previousLayer = lastLayer;
 
     // initialize neurons inside the layers
-    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activationFunction, costFunction);
-    inputLayer->initializeNodeValues(activationFunction, costFunction);
-    outputLayer->initializeNodeValues(activationFunction, costFunction);
+    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activation, cost);
+    inputLayer->initializeNodeValues(activation, cost);
+    outputLayer->initializeNodeValues(activation, cost);
 }
 
 void NeuralNetwork::setInputNode(int32_t inputNode, int32_t nthBatchItem, float value) {

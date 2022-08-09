@@ -1,32 +1,33 @@
 ﻿#include "mnist.h"
 #include <iostream>
 #include <format>
+#include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "NeuralNetworks/Neuron.h"
 #include "DataLoaders/MnistDataLoader.h"
 #include "Trainers/ClassificationTrainer.h"
-#include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
 
 void mnist() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.2f; // default: 0.1
+    const auto LEARNING_RATE_ETA = 0.002f; // default: 0.1-0.2
     const auto MOMENTUM_COEFFICIENT_MU = 0.2f; // no momentum: 0
     const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
     const auto INPUT_NEURONS = 784;
     const auto OUTPUT_NEURONS = 10;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 300 }; // default: 300
+    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30, 30, 30, 30 }; // default: 300
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
 
     // Initialize neural network and trainer
 
-    auto net = ClassificationNeuralNetwork(activationFunction, costFunction,
-        INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS);
+    auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
+    net.addLayer(Layer(30));
+    net.buildLayers(activationFunction, costFunction);
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
 
     // Load datasets

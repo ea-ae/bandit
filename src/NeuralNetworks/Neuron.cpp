@@ -22,7 +22,7 @@ Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction&
 
 void Neuron::calculate(const Layer& previousLayer) {
     values = values.setConstant(bias);
-    for (int i = 0; i < previousLayer.layerSize; i++) {
+    for (int i = 0; i < previousLayer.layerSize; i++) { // a*w dot product
         auto& inputs = previousLayer.neurons[i]->values;
         values += inputs * weights[i].weight; // scalar multiplication
     }

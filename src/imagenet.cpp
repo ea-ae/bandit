@@ -17,15 +17,17 @@ void imagenet() {
 
     const auto INPUT_NEURONS = PIXELS;
     const auto OUTPUT_NEURONS = 100;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30 };
+    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 50, 50, 50 };
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
 
     // Initialize neural network and trainer
 
-    auto net = ClassificationNeuralNetwork(activationFunction, costFunction,
-        INPUT_NEURONS, OUTPUT_NEURONS, HIDDEN_LAYERS);
+    auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
+    net.addLayer(Layer(50));
+    net.addLayer(Layer(50));
+    net.addLayer(Layer(50));
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
 
     // Load datasets
