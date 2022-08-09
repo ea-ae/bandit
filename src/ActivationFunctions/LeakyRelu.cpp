@@ -1,7 +1,7 @@
 #include "LeakyRelu.h"
 #include <cmath>
 
-LeakyRelu::LeakyRelu() : LeakyRelu(0.1) {}
+LeakyRelu::LeakyRelu() : LeakyRelu(0.1f) {}
 
 LeakyRelu::LeakyRelu(float leakRate) : leakRate(leakRate) {}
 

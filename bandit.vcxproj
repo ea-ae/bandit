@@ -146,46 +146,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bandit.cpp" />
-    <ClCompile Include="ActivationFunctions\LeakyRelu.cpp" />
-    <ClCompile Include="Trainers\Trainer.cpp" />
-    <ClCompile Include="Trainers\ClassificationTrainer.cpp" />
-    <ClCompile Include="CostFunctions\CostFunction.cpp" />
-    <ClCompile Include="CostFunctions\CrossEntropyCost.cpp" />
-    <ClCompile Include="DataLoaders\MnistDataLoader.cpp" />
-    <ClCompile Include="DataLoaders\ImageNetDataLoader.cpp" />
-    <ClCompile Include="imagenet.cpp" />
-    <ClCompile Include="NeuralNetworks\Layer.cpp" />
-    <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp" />
-    <ClCompile Include="NeuralNetworks\Neuron.cpp" />
-    <ClCompile Include="ActivationFunctions\Relu.cpp" />
-    <ClCompile Include="mnist.cpp" />
-    <ClCompile Include="NeuralNetworks\ClassificationNeuralNetwork.cpp" />
-    <ClCompile Include="CostFunctions\QuadraticCost.cpp" />
-    <ClCompile Include="ActivationFunctions\Sigmoid.cpp" />
+    <ClCompile Include="src\bandit.cpp" />
+    <ClCompile Include="src\ActivationFunctions\LeakyRelu.cpp" />
+    <ClCompile Include="src\Trainers\Trainer.cpp" />
+    <ClCompile Include="src\Trainers\ClassificationTrainer.cpp" />
+    <ClCompile Include="src\CostFunctions\CostFunction.cpp" />
+    <ClCompile Include="src\CostFunctions\CrossEntropyCost.cpp" />
+    <ClCompile Include="src\DataLoaders\MnistDataLoader.cpp" />
+    <ClCompile Include="src\DataLoaders\ImageNetDataLoader.cpp" />
+    <ClCompile Include="src\imagenet.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Layer.cpp" />
+    <ClCompile Include="src\NeuralNetworks\NeuralNetwork.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Neuron.cpp" />
+    <ClCompile Include="src\ActivationFunctions\Relu.cpp" />
+    <ClCompile Include="src\mnist.cpp" />
+    <ClCompile Include="src\NeuralNetworks\ClassificationNeuralNetwork.cpp" />
+    <ClCompile Include="src\CostFunctions\QuadraticCost.cpp" />
+    <ClCompile Include="src\ActivationFunctions\Sigmoid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActivationFunctions\ActivationFunction.h" />
-    <ClInclude Include="ActivationFunctions\LeakyRelu.h" />
-    <ClInclude Include="Trainers\Trainer.h" />
-    <ClInclude Include="Trainers\ClassificationTrainer.h" />
-    <ClInclude Include="CostFunctions\CostFunction.h" />
-    <ClInclude Include="CostFunctions\CrossEntropyCost.h" />
-    <ClInclude Include="DataLoaders\DataLoader.h" />
-    <ClInclude Include="DataLoaders\MnistDataLoader.h" />
-    <ClInclude Include="DataLoaders\ImageNetDataLoader.h" />
-    <ClInclude Include="imagenet.h" />
-    <ClInclude Include="NeuralNetworks\Layer.h" />
-    <ClInclude Include="NeuralNetworks\NeuralNetwork.h" />
-    <ClInclude Include="NeuralNetworks\Neuron.h" />
-    <ClInclude Include="ActivationFunctions\Relu.h" />
-    <ClInclude Include="mnist.h" />
-    <ClInclude Include="NeuralNetworks\ClassificationNeuralNetwork.h" />
-    <ClInclude Include="CostFunctions\QuadraticCost.h" />
-    <ClInclude Include="ActivationFunctions\Sigmoid.h" />
+    <ClInclude Include="src\ActivationFunctions\ActivationFunction.h" />
+    <ClInclude Include="src\ActivationFunctions\LeakyRelu.h" />
+    <ClInclude Include="src\Trainers\Trainer.h" />
+    <ClInclude Include="src\Trainers\ClassificationTrainer.h" />
+    <ClInclude Include="src\CostFunctions\CostFunction.h" />
+    <ClInclude Include="src\CostFunctions\CrossEntropyCost.h" />
+    <ClInclude Include="src\DataLoaders\DataLoader.h" />
+    <ClInclude Include="src\DataLoaders\MnistDataLoader.h" />
+    <ClInclude Include="src\DataLoaders\ImageNetDataLoader.h" />
+    <ClInclude Include="src\imagenet.h" />
+    <ClInclude Include="src\NeuralNetworks\Layer.h" />
+    <ClInclude Include="src\NeuralNetworks\NeuralNetwork.h" />
+    <ClInclude Include="src\NeuralNetworks\Neuron.h" />
+    <ClInclude Include="src\ActivationFunctions\Relu.h" />
+    <ClInclude Include="src\mnist.h" />
+    <ClInclude Include="src\NeuralNetworks\ClassificationNeuralNetwork.h" />
+    <ClInclude Include="src\CostFunctions\QuadraticCost.h" />
+    <ClInclude Include="src\ActivationFunctions\Sigmoid.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataLoaders\DataLoader.tpp" />
+    <None Include="src\DataLoaders\DataLoader.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

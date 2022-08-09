@@ -15,115 +15,115 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bandit.cpp">
+    <ClCompile Include="src\bandit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuralNetworks\Layer.cpp">
+    <ClCompile Include="src\NeuralNetworks\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuralNetworks\NeuralNetwork.cpp">
+    <ClCompile Include="src\NeuralNetworks\NeuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuralNetworks\Neuron.cpp">
+    <ClCompile Include="src\NeuralNetworks\Neuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActivationFunctions\Relu.cpp">
+    <ClCompile Include="src\ActivationFunctions\Relu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mnist.cpp">
+    <ClCompile Include="src\mnist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NeuralNetworks\ClassificationNeuralNetwork.cpp">
+    <ClCompile Include="src\NeuralNetworks\ClassificationNeuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActivationFunctions\LeakyRelu.cpp">
+    <ClCompile Include="src\ActivationFunctions\LeakyRelu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CostFunctions\QuadraticCost.cpp">
+    <ClCompile Include="src\CostFunctions\QuadraticCost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActivationFunctions\Sigmoid.cpp">
+    <ClCompile Include="src\ActivationFunctions\Sigmoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CostFunctions\CrossEntropyCost.cpp">
+    <ClCompile Include="src\CostFunctions\CrossEntropyCost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CostFunctions\CostFunction.cpp">
+    <ClCompile Include="src\CostFunctions\CostFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLoaders\MnistDataLoader.cpp">
+    <ClCompile Include="src\DataLoaders\MnistDataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLoaders\ImageNetDataLoader.cpp">
+    <ClCompile Include="src\DataLoaders\ImageNetDataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="imagenet.cpp">
+    <ClCompile Include="src\imagenet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trainers\ClassificationTrainer.cpp">
+    <ClCompile Include="src\Trainers\ClassificationTrainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trainers\Trainer.cpp">
+    <ClCompile Include="src\Trainers\Trainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NeuralNetworks\Layer.h">
+    <ClInclude Include="src\NeuralNetworks\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NeuralNetworks\NeuralNetwork.h">
+    <ClInclude Include="src\NeuralNetworks\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NeuralNetworks\Neuron.h">
+    <ClInclude Include="src\NeuralNetworks\Neuron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActivationFunctions\ActivationFunction.h">
+    <ClInclude Include="src\ActivationFunctions\ActivationFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActivationFunctions\Relu.h">
+    <ClInclude Include="src\ActivationFunctions\Relu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mnist.h">
+    <ClInclude Include="src\mnist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NeuralNetworks\ClassificationNeuralNetwork.h">
+    <ClInclude Include="src\NeuralNetworks\ClassificationNeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActivationFunctions\LeakyRelu.h">
+    <ClInclude Include="src\ActivationFunctions\LeakyRelu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CostFunctions\CostFunction.h">
+    <ClInclude Include="src\CostFunctions\CostFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CostFunctions\QuadraticCost.h">
+    <ClInclude Include="src\CostFunctions\QuadraticCost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActivationFunctions\Sigmoid.h">
+    <ClInclude Include="src\ActivationFunctions\Sigmoid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CostFunctions\CrossEntropyCost.h">
+    <ClInclude Include="src\CostFunctions\CrossEntropyCost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoader.h">
+    <ClInclude Include="src\DataLoaders\DataLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\MnistDataLoader.h">
+    <ClInclude Include="src\DataLoaders\MnistDataLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\ImageNetDataLoader.h">
+    <ClInclude Include="src\DataLoaders\ImageNetDataLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imagenet.h">
+    <ClInclude Include="src\imagenet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Trainers\ClassificationTrainer.h">
+    <ClInclude Include="src\Trainers\ClassificationTrainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Trainers\Trainer.h">
+    <ClInclude Include="src\Trainers\Trainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataLoaders\DataLoader.tpp" />
+    <None Include="src\DataLoaders\DataLoader.tpp" />
   </ItemGroup>
 </Project>
