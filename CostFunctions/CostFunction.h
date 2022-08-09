@@ -1,8 +1,9 @@
 #pragma once
+#pragma warning(push, 0)
+#include <eigen/Eigen/Dense>
+#pragma warning( pop )
 #include <vector>
 #include <stdint.h>
-// #include "../ActivationFunctions/ActivationFunction.h"
-#include <eigen/Eigen/Dense>
 #include "../NeuralNetworks/Neuron.h"
 
 using FixThis = Eigen::Array<float, 1, 128>;

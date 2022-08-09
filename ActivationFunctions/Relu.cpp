@@ -9,7 +9,7 @@ float Relu::map(float input) const
 }
 
 float Relu::getPreValueDerivative(float input) const {
-    return input > 0 ? 1 : 0;
+    return input > 0 ? 1.0f : 0.0f;
 }
 
 float Relu::generateRandomWeight(int32_t connectionsIn, int32_t connectionsOut) const { // He initialization

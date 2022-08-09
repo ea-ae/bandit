@@ -10,5 +10,5 @@ float LeakyRelu::map(float input) const {
 }
 
 float LeakyRelu::getPreValueDerivative(float input) const {
-    return input > 0 ? 1 : leakRate;
+    return input > 0.0f ? 1.0f : leakRate;
 }
