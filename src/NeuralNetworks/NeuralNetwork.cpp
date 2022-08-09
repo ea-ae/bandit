@@ -1,4 +1,5 @@
 #include "NeuralNetwork.h"
+#include <algorithm>
 
 NeuralNetwork::NeuralNetwork(int32_t inputs, int32_t outputs) {
     inputLayer = std::make_unique<Layer>(inputs);
@@ -19,10 +20,14 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
     lastLayer->nextLayer = outputLayer.get();
     outputLayer->previousLayer = lastLayer;
 
-    // initialize neurons inside the layers
-    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->initializeNodeValues(activation, cost);
-    inputLayer->initializeNodeValues(activation, cost);
-    outputLayer->initializeNodeValues(activation, cost);
+    // initialize neurons of input layer
+    std::generate(inputLayer->neurons.begin(), inputLayer->neurons.end(), [&]() {
+        return std::make_unique<Neuron>(nullptr, activation, cost); // input layer has no inputNeurons
+    });
+
+    // initialize neurons inside the layers (each layer sets the inputNeurons of the next layer)
+    inputLayer->connectNextLayer(activation, cost);
+    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->connectNextLayer(activation, cost);
 }
 
 void NeuralNetwork::setInputNode(int32_t inputNode, int32_t nthBatchItem, float value) {
@@ -44,7 +49,7 @@ void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
 
     for (auto& layer : hiddenLayers) {
         for (int32_t i = 0; i < layer->layerSize; i++) {
-            layer->neurons[i]->backpropagate(*layer->previousLayer);
+            layer->neurons[i]->backpropagate(*layer->previousLayer); // todo: pass the bool!
         }
     }
 }

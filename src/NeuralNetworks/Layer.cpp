@@ -7,16 +7,18 @@ Layer::Layer(int32_t layerSize) : neurons(layerSize), layerSize(layerSize)
     neurons = std::vector<std::unique_ptr<Neuron>>(layerSize);
 }
 
-void Layer::initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction) {
-    std::generate(neurons.begin(), neurons.end(), [&]() {
-        return std::make_unique<Neuron>(activationFunction, costFunction, previousLayer, nextLayer);
+void Layer::connectNextLayer(const ActivationFunction& activation, const CostFunction& cost) {
+    if (nextLayer == nullptr) return;
+
+    std::generate(nextLayer->neurons.begin(), nextLayer->neurons.end(), [&]() {
+        return std::make_unique<Neuron>(&neurons, activation, cost); // dense layer, pass full vector
     });
 }
 
 void Layer::calculateNodeValues() {
     if (previousLayer) {
         for (auto& neuron : neurons) {
-            neuron->calculate(*previousLayer);
+            neuron->calculate();
         }
     }
     if (nextLayer) nextLayer->calculateNodeValues();

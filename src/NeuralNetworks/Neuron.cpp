@@ -3,25 +3,23 @@
 #include <cmath>
 #include <iostream>
 
-Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction,
-    const Layer* previousLayer)
-    : activationFunction(activationFunction), costFunction(costFunction)
+Neuron::Neuron(std::vector<std::unique_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost)
+    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost)
 {
-    if (previousLayer) {
-        weights = std::vector<Weight>(previousLayer->layerSize);
+    if (inputNeurons != nullptr) {
+        weights = std::vector<Weight>(inputNeurons->size());
         std::generate(weights.begin(), weights.end(), [&]() { // initialize weights
             Weight weight;
-            weight.weight = activationFunction.generateRandomWeight(previousLayer->layerSize);
+            weight.weight = activationFunction.generateRandomWeight(inputNeurons->size());
             return weight;
         });
     }
 }
 
-void Neuron::calculate(const Layer& previousLayer) {
+void Neuron::calculate() {
     values = values.setConstant(bias);
-    for (int i = 0; i < previousLayer.layerSize; i++) { // a*w dot product
-        auto& inputs = previousLayer.neurons[i]->values;
-        values += inputs * weights[i].weight; // scalar multiplication
+    for (int i = 0; i < inputNeurons->size(); i++) { // a*w dot product
+        values += (*inputNeurons)[i]->values* weights[i].weight; // scalar multiplication
     }
     preTransformedValues = values;
     values = values.unaryExpr([this](float preValue) { return activationFunction.map(preValue); });
@@ -31,7 +29,7 @@ void Neuron::addActivationGradients(const BatchArray& gradients) {
     activationGradients += gradients;
 }
 
-void Neuron::backpropagate(Layer& previousLayer, BatchArray* expectedValues) {
+void Neuron::backpropagate(Layer& inputLayer, BatchArray* expectedValues) {
     if (expectedValues != nullptr) { // are we in an output node?
         // activationGradients = costFunction.getActivationDerivatives(values, *expectedValues); // dC/da = 2(a - y)
         activationGradients = values - *expectedValues; // dC/da = 2(a - y)
@@ -44,16 +42,17 @@ void Neuron::backpropagate(Layer& previousLayer, BatchArray* expectedValues) {
 
     biasGradient = costDerivedByPreValues.sum(); // dC/dz = dC/db
 
-    for (int i = 0; i < previousLayer.layerSize; i++) { // calculate weights and biases for each neuron in previous layer
-        auto& preValuesDerivedByWeight = previousLayer.neurons[i]->values;
+    for (int i = 0; i < inputNeurons->size(); i++) { // calculate weights and biases for each neuron in previous layer
+        auto& preValuesDerivedByWeight = (*inputNeurons)[i]->values;
         auto weightGradient = (preValuesDerivedByWeight * costDerivedByPreValues).sum();
         weights[i].gradient += weightGradient;
 
-        if (previousLayer.previousLayer) { // first check to make sure the next layer isn't the input layer
+        // todo: just pass the bool
+        if (inputLayer.previousLayer) { // first check to make sure the next layer isn't the input layer
             // find the new activation derivative for the next layer of backpropagation
             auto preValuesDerivedByActivation = weights[i].weight;
             auto costDerivedByActivations = preValuesDerivedByActivation * costDerivedByPreValues;
-            previousLayer.neurons[i]->addActivationGradients(costDerivedByActivations); // add the gradient
+            (*inputNeurons)[i]->addActivationGradients(costDerivedByActivations); // add the gradient
         }
     }
 

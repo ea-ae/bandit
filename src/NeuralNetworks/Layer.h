@@ -17,7 +17,7 @@ public:
     Layer* nextLayer = nullptr;
 public:
     Layer(int32_t layerSize);
-    void initializeNodeValues(const ActivationFunction& activationFunction, const CostFunction& costFunction);
+    void connectNextLayer(const ActivationFunction& activation, const CostFunction& cost);
     void calculateNodeValues();
     void update(int32_t batchSize, float learningRate);
     size_t getWeightCount();
