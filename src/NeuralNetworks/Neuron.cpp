@@ -4,17 +4,14 @@
 #include <iostream>
 
 Neuron::Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction,
-    const Layer* previousLayer, const Layer* nextLayer)
+    const Layer* previousLayer)
     : activationFunction(activationFunction), costFunction(costFunction)
 {
     if (previousLayer) {
-        const auto connectionsIn = previousLayer->layerSize;
-        const auto connectionsOut = nextLayer ? nextLayer->layerSize : 0;
-
         weights = std::vector<Weight>(previousLayer->layerSize);
         std::generate(weights.begin(), weights.end(), [&]() { // initialize weights
             Weight weight;
-            weight.weight = activationFunction.generateRandomWeight(connectionsIn, connectionsOut);
+            weight.weight = activationFunction.generateRandomWeight(previousLayer->layerSize);
             return weight;
         });
     }

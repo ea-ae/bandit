@@ -18,7 +18,6 @@ void mnist() {
 
     const auto INPUT_NEURONS = 784;
     const auto OUTPUT_NEURONS = 10;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 30, 30, 30, 30 }; // default: 300
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
@@ -28,6 +27,7 @@ void mnist() {
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
     net.addLayer(Layer(30));
     net.buildLayers(activationFunction, costFunction);
+
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
 
     // Load datasets
@@ -40,9 +40,8 @@ void mnist() {
     
     // Begin learning
 
-    std::cout << std::format("eta = {} | batch = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
-        LEARNING_RATE_ETA, BATCH_SIZE, trainer.getHiddenLayersStatusMessage(HIDDEN_LAYERS), 
-        REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
+    std::cout << std::format("eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
+        LEARNING_RATE_ETA, BATCH_SIZE, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     trainer.train();
 }

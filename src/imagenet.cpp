@@ -17,7 +17,6 @@ void imagenet() {
 
     const auto INPUT_NEURONS = PIXELS;
     const auto OUTPUT_NEURONS = 100;
-    const auto HIDDEN_LAYERS = std::vector<int32_t>{ 50, 50, 50 };
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
@@ -28,6 +27,8 @@ void imagenet() {
     net.addLayer(Layer(50));
     net.addLayer(Layer(50));
     net.addLayer(Layer(50));
+    net.buildLayers(activationFunction, costFunction);
+
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
 
     // Load datasets
@@ -38,8 +39,7 @@ void imagenet() {
     // Begin learning
 
     std::cout << std::format("eta = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
-        LEARNING_RATE_ETA, trainer.getHiddenLayersStatusMessage(HIDDEN_LAYERS), 
-        REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
+        LEARNING_RATE_ETA, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     trainer.train();
 }

@@ -33,7 +33,7 @@ private:
     const CostFunction& costFunction;
 public:
     Neuron(const ActivationFunction& activationFunction, const CostFunction& costFunction, 
-        const Layer* previousLayer, const Layer* nextLayer);
+        const Layer* previousLayer);
     void calculate(const Layer& previousLayer);
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(Layer& previousLayer, BatchArray* expectedValues = nullptr);
