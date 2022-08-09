@@ -29,7 +29,7 @@ void Neuron::addActivationGradients(const BatchArray& gradients) {
     activationGradients += gradients;
 }
 
-void Neuron::backpropagate(Layer& inputLayer, BatchArray* expectedValues) {
+void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValues) {
     if (expectedValues != nullptr) { // are we in an output node?
         // activationGradients = costFunction.getActivationDerivatives(values, *expectedValues); // dC/da = 2(a - y)
         activationGradients = values - *expectedValues; // dC/da = 2(a - y)
@@ -47,8 +47,7 @@ void Neuron::backpropagate(Layer& inputLayer, BatchArray* expectedValues) {
         auto weightGradient = (preValuesDerivedByWeight * costDerivedByPreValues).sum();
         weights[i].gradient += weightGradient;
 
-        // todo: just pass the bool
-        if (inputLayer.previousLayer) { // first check to make sure the next layer isn't the input layer
+        if (backpropagateGradients) { // first check to make sure the next layer isn't the input layer
             // find the new activation derivative for the next layer of backpropagation
             auto preValuesDerivedByActivation = weights[i].weight;
             auto costDerivedByActivations = preValuesDerivedByActivation * costDerivedByPreValues;

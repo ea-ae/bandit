@@ -36,7 +36,7 @@ public:
     Neuron(std::vector<std::unique_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost);
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
-    void backpropagate(Layer& inputLayer, BatchArray* expectedValues = nullptr);
+    void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);
     void update(int32_t batchSize, float learningRate);
     size_t getWeightCount();
 };

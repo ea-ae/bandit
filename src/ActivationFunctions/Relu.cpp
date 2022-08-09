@@ -12,7 +12,7 @@ float Relu::getPreValueDerivative(float input) const {
     return input > 0 ? 1.0f : 0.0f;
 }
 
-float Relu::generateRandomWeight(int32_t connectionsIn) const { // He initialization
+float Relu::generateRandomWeight(size_t connectionsIn) const { // He initialization
     const float r = std::sqrt(2.0f / connectionsIn);
 
     std::random_device rd;

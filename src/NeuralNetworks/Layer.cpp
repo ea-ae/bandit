@@ -2,10 +2,7 @@
 #include <algorithm>
 #include <numeric>
 
-Layer::Layer(int32_t layerSize) : neurons(layerSize), layerSize(layerSize)
-{
-    neurons = std::vector<std::unique_ptr<Neuron>>(layerSize);
-}
+Layer::Layer(int32_t layerSize) : neurons(layerSize), layerSize(layerSize) {}
 
 void Layer::connectNextLayer(const ActivationFunction& activation, const CostFunction& cost) {
     if (nextLayer == nullptr) return;

@@ -44,12 +44,13 @@ void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
         expectedValues = labels.unaryExpr([this, &i](int32_t label) {
             return getExpectedValue(label, i);
         });
-        outputLayer->neurons[i]->backpropagate(*outputLayer->previousLayer, &expectedValues);
+        outputLayer->neurons[i]->backpropagate(true, &expectedValues);
     }
 
     for (auto& layer : hiddenLayers) {
         for (int32_t i = 0; i < layer->layerSize; i++) {
-            layer->neurons[i]->backpropagate(*layer->previousLayer); // todo: pass the bool!
+            bool backpropagateGradients = layer->previousLayer->previousLayer != nullptr; // input layer?
+            layer->neurons[i]->backpropagate(backpropagateGradients);
         }
     }
 }
