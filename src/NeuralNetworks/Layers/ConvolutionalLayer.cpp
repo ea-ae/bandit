@@ -1,12 +1,15 @@
 #include "ConvolutionalLayer.h"
+#include <algorithm>
 
 Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
 
 ConvolutionalLayer::ConvolutionalLayer(int32_t channels, Size inputSize, Size fieldSize, 
-    Size stride, int32_t padding, int32_t depth)
-    : channels(channels), inputSize(inputSize), fieldSize(fieldSize), stride(stride), padding(padding), depth(depth)
+    Size stride, int32_t depth, int32_t padding)
+    : channels(channels), inputSize(inputSize), fieldSize(fieldSize), stride(stride), depth(depth), padding(padding)
 {
-    neurons = std::vector<std::unique_ptr<Neuron>>(getFilterCount() * getNeuronsPerFilter());
+    //neurons = std::vector<std::unique_ptr<Neuron>>(getFilterCount() * getNeuronsPerFilter());
+    neurons.reserve(getFilterCount() * getNeuronsPerFilter());
+    fields = std::vector<std::vector<Neuron*>>(getFilterCount() / depth);
 
     if (2 * padding + fieldSize.x > inputSize.x || 2 * padding + fieldSize.y > inputSize.y) {
         throw std::logic_error("Receptive field size is larger than the x/y size arguments");
@@ -25,13 +28,40 @@ std::vector<std::unique_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
 }
 
 void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
+    auto& prevNeurons = previousLayer->getNeurons();
+    int32_t x = 0, y = 0;
+    int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
+    int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
 
+    for (auto& field : fields) { // create all the field vectors
+        for (int row = y; row < y + fieldSize.y; row++) {
+            for (int col = x; col < x + fieldSize.x; col++) {
+                auto i = inputSize.x * row + col;
+                field.push_back(prevNeurons[i].get());
+            }
+        }
+
+        // stride onto next field
+        x += stride.x;
+        if (x + fieldSize.x > inputSize.x) {
+            x = 0;
+            y += stride.y;
+        }
+
+        // create the filters/kernels on top of the fields
+        for (int i = 0; i < depth; i++) { // make 'depth' amount of filters per field
+            neurons.push_back(std::make_unique<Neuron>(&field, activation, cost));
+        }
+    }
+
+    int jgksg = 531;
+    // return std::make_unique<Neuron>(&previousLayer->getNeurons(), activation, cost);
 }
 
 int32_t ConvolutionalLayer::getFilterCount() const {
-    int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
     int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
-    return columns * rows * depth;
+    int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
+    return rows * columns * depth;
 }
 
 int32_t ConvolutionalLayer::getNeuronsPerFilter() const {

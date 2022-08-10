@@ -4,6 +4,7 @@
 #include "DataLoaders/MnistDataLoader.h"
 #include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "NeuralNetworks/Layers/DenseLayer.h"
+#include "NeuralNetworks/Layers/ConvolutionalLayer.h"
 #include "Trainers/ClassificationTrainer.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
@@ -26,6 +27,8 @@ void mnist() {
     // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
+    //net.addLayer(new ConvolutionalLayer(1, Size(28, 28), ...);
+    net.addLayer(new ConvolutionalLayer(1, Size(3, 3), Size(2, 2), Size(1, 1), 1));
     net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
