@@ -16,8 +16,8 @@ public:
     Layer* previousLayer = nullptr;
     Layer* nextLayer = nullptr;
 public:
-    Layer(int32_t layerSize);
-    void connectNextLayer(const ActivationFunction& activation, const CostFunction& cost);
+    Layer(int32_t neuronCount);
+    virtual void connectNextLayer(const ActivationFunction& activation, const CostFunction& cost) = 0;
     void calculateNodeValues();
     void update(float learningRate);
     size_t getWeightCount();

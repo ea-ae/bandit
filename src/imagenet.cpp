@@ -2,10 +2,11 @@
 #include <iostream>
 #include <format>
 #include "DataLoaders/ImageNetDataLoader.h"
-#include "Trainers/ClassificationTrainer.h"
 #include "NeuralNetworks/ClassificationNeuralNetwork.h"
-#include "ActivationFunctions/LeakyRelu.h"
+#include "NeuralNetworks/Layers/DenseLayer.h"
+#include "Trainers/ClassificationTrainer.h"
 #include "CostFunctions/QuadraticCost.h"
+#include "ActivationFunctions/LeakyRelu.h"
 
 void imagenet() {
     // Configuration
@@ -24,9 +25,9 @@ void imagenet() {
     // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
-    net.addLayer(Layer(50));
-    net.addLayer(Layer(50));
-    net.addLayer(Layer(50));
+    net.addLayer(new DenseLayer(50));
+    net.addLayer(new DenseLayer(50));
+    net.addLayer(new DenseLayer(50));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);

@@ -1,12 +1,13 @@
 ﻿#include "mnist.h"
 #include <iostream>
 #include <format>
-#include "NeuralNetworks/ClassificationNeuralNetwork.h"
-#include "NeuralNetworks/Neuron.h"
 #include "DataLoaders/MnistDataLoader.h"
+#include "NeuralNetworks/ClassificationNeuralNetwork.h"
+#include "NeuralNetworks/Layers/DenseLayer.h"
 #include "Trainers/ClassificationTrainer.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
+#include "NeuralNetworks/Neuron.h"
 
 void mnist() {
     // Configuration
@@ -25,7 +26,7 @@ void mnist() {
     // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
-    net.addLayer(Layer(30));
+    net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);

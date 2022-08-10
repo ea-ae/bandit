@@ -2,15 +2,7 @@
 #include <algorithm>
 #include <numeric>
 
-Layer::Layer(int32_t layerSize) : neurons(layerSize), layerSize(layerSize) {}
-
-void Layer::connectNextLayer(const ActivationFunction& activation, const CostFunction& cost) {
-    if (nextLayer == nullptr) return;
-
-    std::generate(nextLayer->neurons.begin(), nextLayer->neurons.end(), [&]() {
-        return std::make_unique<Neuron>(&neurons, activation, cost); // dense layer, pass full vector
-    });
-}
+Layer::Layer(int32_t neuronCount) : neurons(neuronCount), layerSize(neuronCount) {}
 
 void Layer::calculateNodeValues() {
     if (previousLayer) {

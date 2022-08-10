@@ -4,6 +4,7 @@
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
 #include "Layers/Layer.h"
+#include "Layers/DenseLayer.h"
 #include "Neuron.h"
 
 class NeuralNetwork {
@@ -13,7 +14,7 @@ protected:
     std::vector<std::unique_ptr<Layer>> hiddenLayers;
 public:
     NeuralNetwork(int32_t inputs, int32_t outputs);
-    void addLayer(Layer&& layer);
+    void addLayer(Layer* layer);
     void buildLayers(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void setInputNode(int32_t inputNode, int32_t nthBatchItem, float value);
     void calculateOutput();
