@@ -13,7 +13,7 @@
 void mnist() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.02f; // default: 0.1-0.2
+    const auto LEARNING_RATE_ETA = 0.01f; // default: 0.1-0.2
     const auto MOMENTUM_COEFFICIENT_MU = 0.2f; // no momentum: 0
     const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto RELU_LEAK = 0.01f; // no leak: 0
@@ -28,8 +28,8 @@ void mnist() {
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
     //net.addLayer(new ConvolutionalLayer(1, Size(28, 28), ...);
-    net.addLayer(new ConvolutionalLayer(1, Size(28, 28), Size(5, 5), Size(1, 1), 3));
-    net.addLayer(new DenseLayer(50));
+    net.addLayer(new ConvolutionalLayer(Size(28, 28), Size(6, 6), Size(2, 2), 20));
+    net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
