@@ -5,9 +5,9 @@
 
 int32_t ClassificationNeuralNetwork::getHighestOutputNode(int32_t nthBatchItem) {
     int32_t highestNodeId = 0;
-    float highestNodeValue = outputLayer->neurons[0]->values[nthBatchItem];
-    for (int i = 0; i < outputLayer->layerSize; i++) {
-        auto value = outputLayer->neurons[i]->values[nthBatchItem];
+    float highestNodeValue = outputLayer->getNeurons()[0]->values[nthBatchItem];
+    for (int i = 0; i < outputLayer->getNeurons().size(); i++) {
+        auto value = outputLayer->getNeurons()[i]->values[nthBatchItem];
         if (value > highestNodeValue) {
             highestNodeId = i;
             highestNodeValue = value;
@@ -17,7 +17,7 @@ int32_t ClassificationNeuralNetwork::getHighestOutputNode(int32_t nthBatchItem) 
 }
 
 float ClassificationNeuralNetwork::calculateCost(int32_t label) { // add cost param here
-    std::vector<int32_t> expected(outputLayer->layerSize);
+    std::vector<int32_t> expected(outputLayer->getNeurons().size());
     std::generate(expected.begin(), expected.end(), [label, i = 0]() mutable {
         return label == i++ ? 1 : 0;
     });

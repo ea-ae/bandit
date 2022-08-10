@@ -20,7 +20,7 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
     outputLayer->previousLayer = lastLayer;
 
     // initialize neurons of input layer
-    std::generate(inputLayer->neurons.begin(), inputLayer->neurons.end(), [&]() {
+    std::generate(inputLayer->getNeurons().begin(), inputLayer->getNeurons().end(), [&]() {
         return std::make_unique<Neuron>(nullptr, activation, cost); // input layer has no inputNeurons
     });
 
@@ -30,7 +30,7 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
 }
 
 void NeuralNetwork::setInputNode(int32_t inputNode, int32_t nthBatchItem, float value) {
-    inputLayer->neurons[inputNode]->values[nthBatchItem] = value;
+    inputLayer->getNeurons()[inputNode]->values[nthBatchItem] = value;
 }
 
 void NeuralNetwork::calculateOutput() {
@@ -39,17 +39,17 @@ void NeuralNetwork::calculateOutput() {
 
 void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
     auto expectedValues = BatchArray(BatchArray::Zero());
-    for (int32_t i = 0; i < outputLayer->layerSize; i++) {
+    for (int32_t i = 0; i < outputLayer->getNeurons().size(); i++) {
         expectedValues = labels.unaryExpr([this, &i](int32_t label) {
             return getExpectedValue(label, i);
         });
-        outputLayer->neurons[i]->backpropagate(true, &expectedValues);
+        outputLayer->getNeurons()[i]->backpropagate(true, &expectedValues);
     }
 
     for (auto& layer : hiddenLayers) {
-        for (int32_t i = 0; i < layer->layerSize; i++) {
+        for (int32_t i = 0; i < layer->getNeurons().size(); i++) {
             bool backpropagateGradients = layer->previousLayer->previousLayer != nullptr; // input layer?
-            layer->neurons[i]->backpropagate(backpropagateGradients);
+            layer->getNeurons()[i]->backpropagate(backpropagateGradients);
         }
     }
 }

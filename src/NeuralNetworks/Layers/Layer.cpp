@@ -2,11 +2,9 @@
 #include <algorithm>
 #include <numeric>
 
-Layer::Layer(int32_t neuronCount) : neurons(neuronCount), layerSize(neuronCount) {}
-
 void Layer::calculateNodeValues() {
     if (previousLayer) {
-        for (auto& neuron : neurons) {
+        for (auto& neuron : getNeurons()) {
             neuron->calculate();
         }
     }
@@ -16,13 +14,13 @@ void Layer::calculateNodeValues() {
 void Layer::update(float learningRate) {
     if (!previousLayer) return; // don't update input nodes
 
-    for (auto& neuron : neurons) neuron->update(learningRate);
+    for (auto& neuron : getNeurons()) neuron->update(learningRate);
 
     previousLayer->update(learningRate); // move onto next layer
 }
 
 size_t Layer::getWeightCount() {
-    return std::accumulate(neurons.begin(), neurons.end(), (size_t)0, [](size_t sum, auto& neuron) {
+    return std::accumulate(getNeurons().begin(), getNeurons().end(), (size_t)0, [](size_t sum, auto& neuron) {
         return sum + neuron->getWeightCount();
     });
 }
