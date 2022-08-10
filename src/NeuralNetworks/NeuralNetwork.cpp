@@ -24,9 +24,9 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
         return std::make_unique<Neuron>(nullptr, activation, cost); // input layer has no inputNeurons
     });
 
-    // initialize neurons inside the layers (each layer sets the inputNeurons of the next layer)
-    inputLayer->connectNextLayer(activation, cost);
-    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->connectNextLayer(activation, cost);
+    // initialize neurons inside the layers (each layer sets its inputNeurons from previous layer)
+    for (auto& hiddenLayer : hiddenLayers) hiddenLayer->connectPreviousLayer(activation, cost);
+    outputLayer->connectPreviousLayer(activation, cost);
 }
 
 void NeuralNetwork::setInputNode(int32_t inputNode, int32_t nthBatchItem, float value) {

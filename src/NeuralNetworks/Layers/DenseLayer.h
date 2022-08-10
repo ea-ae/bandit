@@ -4,5 +4,5 @@
 class DenseLayer : public Layer {
 public:
     DenseLayer(int32_t neuronCount);
-    void connectNextLayer(const ActivationFunction& activation, const CostFunction& cost);
+    void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost);
 };

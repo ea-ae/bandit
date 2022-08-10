@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\NeuralNetworks\Layers\ConvolutionalLayer.cpp" />
     <ClCompile Include="src\NeuralNetworks\Layers\DenseLayer.cpp" />
     <ClCompile Include="src\bandit.cpp" />
     <ClCompile Include="src\ActivationFunctions\LeakyRelu.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="src\ActivationFunctions\Sigmoid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\NeuralNetworks\Layers\ConvolutionalLayer.h" />
     <ClInclude Include="src\NeuralNetworks\Layers\DenseLayer.h" />
     <ClInclude Include="src\ActivationFunctions\ActivationFunction.h" />
     <ClInclude Include="src\ActivationFunctions\LeakyRelu.h" />

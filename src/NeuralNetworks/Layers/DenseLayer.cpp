@@ -5,10 +5,10 @@
 
 DenseLayer::DenseLayer(int32_t neuronCount) : Layer(neuronCount) {}
 
-void DenseLayer::connectNextLayer(const ActivationFunction& activation, const CostFunction& cost) {
-    if (nextLayer == nullptr) return;
+void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
+    if (previousLayer == nullptr) return;
 
-    std::generate(nextLayer->neurons.begin(), nextLayer->neurons.end(), [&]() {
-        return std::make_unique<Neuron>(&neurons, activation, cost); // dense layer, pass full vector
+    std::generate(neurons.begin(), neurons.end(), [&]() {
+        return std::make_unique<Neuron>(&previousLayer->neurons, activation, cost); // dense layer, pass full vector
     });
 }
