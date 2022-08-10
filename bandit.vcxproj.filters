@@ -72,6 +72,9 @@
     <ClCompile Include="src\NeuralNetworks\Layers\ConvolutionalLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cifar100.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NeuralNetworks\Layers\Layer.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\NeuralNetworks\Layers\ConvolutionalLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cifar100.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

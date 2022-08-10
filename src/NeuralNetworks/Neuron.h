@@ -15,11 +15,13 @@ class Layer;
 struct Weight {
     float weight = 0.0f;
     float gradient = 0.0f;
+    float momentum = 0.0f;
 };
 
 struct Bias {
     float bias = 0.0f;
     float gradient = 0.0f;
+    float momentum = 0.0f;
     bool done = false;
 };
 
@@ -29,9 +31,6 @@ public:
 private:
     Bias selfBias;
     Bias* bias = nullptr;
-    float momentum = 0.0f;
-    /*float bias = 0.0f;
-    float biasGradient = 0.0f;*/
 
     std::vector<std::shared_ptr<Neuron>>* inputNeurons;
     std::vector<Weight> selfWeights;

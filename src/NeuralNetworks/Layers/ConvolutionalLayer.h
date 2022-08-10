@@ -15,6 +15,7 @@ public:
         int32_t dimensions = 1, int32_t channels = 1, int32_t padding = 0);
     std::vector<std::shared_ptr<Neuron>>& getNeurons();
     void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost);
+    const Size outputSize() const;
     int32_t getFieldCountPerDepth() const;
     int32_t getParamsPerFilter() const;
 private:

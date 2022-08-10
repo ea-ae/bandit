@@ -70,6 +70,12 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         depth * getFieldCountPerDepth(), depth * getParamsPerFilter());
 }
 
+const Size ConvolutionalLayer::outputSize() const {
+    int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
+    int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
+    return Size(columns, rows);
+}
+
 int32_t ConvolutionalLayer::getFieldCountPerDepth() const {
     int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
     int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
