@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Neuron.h"
-#include "../ActivationFunctions/ActivationFunction.h"
-#include "../CostFunctions/CostFunction.h"
+#include "../Neuron.h"
+#include "../../ActivationFunctions/ActivationFunction.h"
+#include "../../CostFunctions/CostFunction.h"
 
 class Neuron;
 class CostFunction;
@@ -19,6 +19,6 @@ public:
     Layer(int32_t layerSize);
     void connectNextLayer(const ActivationFunction& activation, const CostFunction& cost);
     void calculateNodeValues();
-    void update(int32_t batchSize, float learningRate);
+    void update(float learningRate);
     size_t getWeightCount();
 };

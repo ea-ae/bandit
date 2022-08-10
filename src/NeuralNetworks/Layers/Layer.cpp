@@ -21,12 +21,12 @@ void Layer::calculateNodeValues() {
     if (nextLayer) nextLayer->calculateNodeValues();
 }
 
-void Layer::update(int32_t batchSize, float learningRate) {
+void Layer::update(float learningRate) {
     if (!previousLayer) return; // don't update input nodes
 
-    for (auto& neuron : neurons) neuron->update(batchSize, learningRate);
+    for (auto& neuron : neurons) neuron->update(learningRate);
 
-    previousLayer->update(batchSize, learningRate); // move onto next layer
+    previousLayer->update(learningRate); // move onto next layer
 }
 
 size_t Layer::getWeightCount() {

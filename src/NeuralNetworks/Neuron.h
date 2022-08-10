@@ -6,7 +6,7 @@
 #include <utility>
 #include <optional>
 #include "../bandit.h"
-#include "Layer.h"
+#include "Layers/Layer.h"
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
 
@@ -37,6 +37,6 @@ public:
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);
-    void update(int32_t batchSize, float learningRate);
+    void update(float learningRate);
     size_t getWeightCount();
 };

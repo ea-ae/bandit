@@ -6,8 +6,8 @@
 
 using namespace std::chrono;
 
-ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate, int32_t batchSize) 
-    : net(net), learningRate(learningRate), batchSize(batchSize) {}
+ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate) 
+    : net(net), learningRate(learningRate) {}
 
 void ClassificationTrainer::train() {
     // Begin learning
@@ -38,7 +38,7 @@ void ClassificationTrainer::train() {
                         break;
                     }
 
-                    for (int32_t batchItemsDone = 0; batchItemsDone < batchSize; batchItemsDone++) {
+                    for (int32_t batchItemsDone = 0; batchItemsDone < BATCH_SIZE; batchItemsDone++) {
                         label = trainingDataSet->loadDataItem(net, batchItemsDone);
                         if (!label.has_value()) {
                             trainingDataLeft = false;
@@ -56,12 +56,12 @@ void ClassificationTrainer::train() {
                     for (int32_t i = 0; i < batchLabels.size(); i++) {
                         if (net.getHighestOutputNode(i) == batchLabels[i]) trainingCorrect++;
                     }
-                    net.update(batchSize, learningRate);
+                    net.update(learningRate);
                 }
             }
 
             if (testingDataLeft) {
-                for (int32_t batchItemsDone = 0; batchItemsDone < batchSize; batchItemsDone++) {
+                for (int32_t batchItemsDone = 0; batchItemsDone < BATCH_SIZE; batchItemsDone++) {
                     label = testingDataSet->loadDataItem(net, batchItemsDone);
                     if (!label.has_value()) {
                         testingDataLeft = false;

@@ -29,7 +29,7 @@ void imagenet() {
     net.addLayer(Layer(50));
     net.buildLayers(activationFunction, costFunction);
 
-    auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA, BATCH_SIZE);
+    auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
 
     // Load datasets
 

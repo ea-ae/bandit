@@ -9,19 +9,15 @@ BatchArray CostFunction::getActivationDerivatives(BatchArray& activations, Batch
     return activations - expected;
 }
 
-//FixThis CostFunction::getActivationDerivatives(const FixThis& activations, const FixThis& expected) const {
-//    return activations - expected;
-//}
-
-float CostFunction::getRegularizationCost(std::vector<float> weights, int32_t batchSize) const {
+float CostFunction::getRegularizationCost(std::vector<float> weights) const {
     float sum = std::accumulate(weights.begin(), weights.end(), 0.0f, [](float s, float w) {
         return s + std::powf(w, 2);
     });
-    return (regularizationLambda * sum) / (2 * batchSize);
+    return (regularizationLambda * sum) / (2 * BATCH_SIZE);
 }
 
-float CostFunction::getRegularizationDerivative(float weight, int32_t batchSize) const {
-    return (regularizationLambda * weight) / batchSize;
+float CostFunction::getRegularizationDerivative(float weight) const {
+    return (regularizationLambda * weight) / BATCH_SIZE;
 }
 
 float CostFunction::getMomentum(float previousMomentum, float weightGradient) const {

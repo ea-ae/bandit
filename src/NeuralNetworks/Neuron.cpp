@@ -58,13 +58,13 @@ void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValu
     activationGradients = activationGradients.setZero();
 }
 
-void Neuron::update(int32_t batchSize, float learningRate) {
-    float biasDelta = (biasGradient / batchSize) * learningRate;
+void Neuron::update(float learningRate) {
+    float biasDelta = (biasGradient / BATCH_SIZE) * learningRate;
     bias -= biasDelta;
 
     for (auto& weight : weights) {
-        auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight, batchSize);
-        auto weightGradient = (weight.gradient / batchSize + regularizationTerm) * learningRate;
+        auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight);
+        auto weightGradient = (weight.gradient / BATCH_SIZE + regularizationTerm) * learningRate;
 
         momentum = costFunction.getMomentum(momentum, weightGradient); // mu * v - eta * delC
         weight.weight -= momentum;

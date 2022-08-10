@@ -3,7 +3,7 @@
 #include <memory>
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
-#include "Layer.h"
+#include "Layers/Layer.h"
 #include "Neuron.h"
 
 class NeuralNetwork {
@@ -18,7 +18,7 @@ public:
     void setInputNode(int32_t inputNode, int32_t nthBatchItem, float value);
     void calculateOutput();
     void backpropagate(BatchLabelArray& labels);
-    void update(int32_t batchSize, float learningRate);
+    void update(float learningRate);
 private:
     // todo: templates/abstraction, label might not be int32_t
     virtual float getExpectedValue(int32_t label, int32_t neuronIndex) = 0;

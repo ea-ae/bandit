@@ -55,6 +55,6 @@ void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
     }
 }
 
-void NeuralNetwork::update(int32_t batchSize, float learningRate) {
-    outputLayer->update(batchSize, learningRate);
+void NeuralNetwork::update(float learningRate) {
+    outputLayer->update(learningRate);
 }

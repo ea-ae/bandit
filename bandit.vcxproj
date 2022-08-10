@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\NeuralNetworks\Layers\DenseLayer.cpp" />
     <ClCompile Include="src\bandit.cpp" />
     <ClCompile Include="src\ActivationFunctions\LeakyRelu.cpp" />
     <ClCompile Include="src\Trainers\Trainer.cpp" />
@@ -155,7 +156,7 @@
     <ClCompile Include="src\DataLoaders\MnistDataLoader.cpp" />
     <ClCompile Include="src\DataLoaders\ImageNetDataLoader.cpp" />
     <ClCompile Include="src\imagenet.cpp" />
-    <ClCompile Include="src\NeuralNetworks\Layer.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Layers\Layer.cpp" />
     <ClCompile Include="src\NeuralNetworks\NeuralNetwork.cpp" />
     <ClCompile Include="src\NeuralNetworks\Neuron.cpp" />
     <ClCompile Include="src\ActivationFunctions\Relu.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\ActivationFunctions\Sigmoid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\NeuralNetworks\Layers\DenseLayer.h" />
     <ClInclude Include="src\ActivationFunctions\ActivationFunction.h" />
     <ClInclude Include="src\ActivationFunctions\LeakyRelu.h" />
     <ClInclude Include="src\bandit.h" />
@@ -176,7 +178,7 @@
     <ClInclude Include="src\DataLoaders\MnistDataLoader.h" />
     <ClInclude Include="src\DataLoaders\ImageNetDataLoader.h" />
     <ClInclude Include="src\imagenet.h" />
-    <ClInclude Include="src\NeuralNetworks\Layer.h" />
+    <ClInclude Include="src\NeuralNetworks\Layers\Layer.h" />
     <ClInclude Include="src\NeuralNetworks\NeuralNetwork.h" />
     <ClInclude Include="src\NeuralNetworks\Neuron.h" />
     <ClInclude Include="src\ActivationFunctions\Relu.h" />
