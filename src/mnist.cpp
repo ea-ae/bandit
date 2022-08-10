@@ -28,8 +28,8 @@ void mnist() {
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
     //net.addLayer(new ConvolutionalLayer(1, Size(28, 28), ...);
-    net.addLayer(new ConvolutionalLayer(1, Size(3, 3), Size(2, 2), Size(1, 1), 1));
-    net.addLayer(new DenseLayer(30));
+    net.addLayer(new ConvolutionalLayer(1, Size(28, 28), Size(5, 5), Size(1, 1), 3));
+    net.addLayer(new DenseLayer(50));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);

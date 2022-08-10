@@ -8,8 +8,8 @@ ConvolutionalLayer::ConvolutionalLayer(int32_t channels, Size inputSize, Size fi
     : channels(channels), inputSize(inputSize), fieldSize(fieldSize), stride(stride), depth(depth), padding(padding)
 {
     //neurons = std::vector<std::unique_ptr<Neuron>>(getFilterCount() * getNeuronsPerFilter());
-    neurons.reserve(getFilterCount() * getNeuronsPerFilter());
-    fields = std::vector<std::vector<Neuron*>>(getFilterCount() / depth);
+    neurons.reserve(getFilterCount());
+    fields = std::vector<std::vector<std::shared_ptr<Neuron>>>(getFilterCount() / depth);
 
     if (2 * padding + fieldSize.x > inputSize.x || 2 * padding + fieldSize.y > inputSize.y) {
         throw std::logic_error("Receptive field size is larger than the x/y size arguments");
@@ -23,23 +23,23 @@ ConvolutionalLayer::ConvolutionalLayer(int32_t channels, Size inputSize, Size fi
     }
 }
 
-std::vector<std::unique_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
+std::vector<std::shared_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
     return neurons;
 }
 
 void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
     auto& prevNeurons = previousLayer->getNeurons();
     int32_t x = 0, y = 0;
-    int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
-    int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
 
     for (auto& field : fields) { // create all the field vectors
         for (int row = y; row < y + fieldSize.y; row++) {
             for (int col = x; col < x + fieldSize.x; col++) {
                 auto i = inputSize.x * row + col;
-                field.push_back(prevNeurons[i].get());
+                field.push_back(std::shared_ptr<Neuron>(prevNeurons[i]));
+                // std::cout << i << " ";
             }
         }
+        // std::cout << "\n";
 
         // stride onto next field
         x += stride.x;
@@ -47,15 +47,16 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
             x = 0;
             y += stride.y;
         }
+    }
 
-        // create the filters/kernels on top of the fields
-        for (int i = 0; i < depth; i++) { // make 'depth' amount of filters per field
-            neurons.push_back(std::make_unique<Neuron>(&field, activation, cost));
+    // create the filters/kernels on top of the fields
+    for (int i = 0; i < depth; i++) { // make 'depth' amount of filters per field
+        for (auto& field : fields) {
+            neurons.push_back(std::make_shared<Neuron>(&field, activation, cost));
         }
     }
 
-    int jgksg = 531;
-    // return std::make_unique<Neuron>(&previousLayer->getNeurons(), activation, cost);
+    std::cout << "CL: " << getFilterCount() << " neurons/filters, " << (getNeuronsPerFilter() + getFilterCount()) << " params\n";
 }
 
 int32_t ConvolutionalLayer::getFilterCount() const {

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-Neuron::Neuron(std::vector<std::unique_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost)
+Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost)
     : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost)
 {
     if (inputNeurons != nullptr) {

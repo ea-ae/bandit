@@ -21,7 +21,7 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
 
     // initialize neurons of input layer
     std::generate(inputLayer->getNeurons().begin(), inputLayer->getNeurons().end(), [&]() {
-        return std::make_unique<Neuron>(nullptr, activation, cost); // input layer has no inputNeurons
+        return std::make_shared<Neuron>(nullptr, activation, cost); // input layer has no inputNeurons
     });
 
     // initialize neurons inside the layers (each layer sets its inputNeurons from previous layer)
