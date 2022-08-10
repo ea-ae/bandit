@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <memory>
 #include <vector>
+#include <format>
 
 DenseLayer::DenseLayer(int32_t neuronCount) : neurons(neuronCount) {}
 
@@ -16,5 +17,5 @@ void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, cons
         return std::make_shared<Neuron>(&previousLayer->getNeurons(), activation, cost);
     });
 
-    std::cout << "DL: " << neurons.size() << " neurons, " << (getWeightCount() + neurons.size()) << " params\n";
+    std::cout << std::format("DL: {} neurons, {} params\n", neurons.size(), getWeightCount() + neurons.size());
 }

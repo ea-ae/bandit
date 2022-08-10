@@ -75,6 +75,9 @@
     <ClCompile Include="src\cifar100.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataLoaders\CifarDataLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NeuralNetworks\Layers\Layer.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cifar100.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataLoaders\CifarDataLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

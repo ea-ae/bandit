@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DataLoaders\CifarDataLoader.cpp" />
     <ClCompile Include="src\cifar100.cpp" />
     <ClCompile Include="src\NeuralNetworks\Layers\ConvolutionalLayer.cpp" />
     <ClCompile Include="src\NeuralNetworks\Layers\DenseLayer.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="src\ActivationFunctions\Sigmoid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DataLoaders\CifarDataLoader.h" />
     <ClInclude Include="src\cifar100.h" />
     <ClInclude Include="src\NeuralNetworks\Layers\ConvolutionalLayer.h" />
     <ClInclude Include="src\NeuralNetworks\Layers\DenseLayer.h" />

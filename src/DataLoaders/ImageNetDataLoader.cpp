@@ -1,5 +1,4 @@
 #include "ImageNetDataLoader.h"
-#include <cassert>
 #include <iostream>
 
 ImageNetDataLoader::ImageNetDataLoader(std::string filePrefix, std::string fileSuffix, int32_t count) {

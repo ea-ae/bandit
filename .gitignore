@@ -4,6 +4,7 @@
 *.idx1-ubyte
 *.idx3-ubyte
 *.ubyte
+*.bin
 
 ### Presets
 

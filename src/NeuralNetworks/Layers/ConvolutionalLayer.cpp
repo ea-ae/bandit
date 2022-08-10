@@ -39,8 +39,8 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
     int32_t x = 0, y = 0;
     for (auto& field : fields) { // create all the field vectors
         for (int row = y; row < y + fieldSize.y; row++) {
-            for (int col = x; col < x + fieldSize.x; col++) {
-                auto i = inputSize.x * row + col;
+            for (int col = x; col < x + fieldSize.x * channels; col++) {
+                auto i = inputSize.x * channels * row + col;
                 field.push_back(std::shared_ptr<Neuron>(prevNeurons[i]));
                 // std::cout << i << " ";
             }
@@ -48,8 +48,8 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         // std::cout << "\n";
 
         // stride onto next field
-        x += stride.x;
-        if (x + fieldSize.x > inputSize.x) {
+        x += stride.x * channels;
+        if (x + fieldSize.x * channels > inputSize.x * channels) {
             x = 0;
             y += stride.y;
         }

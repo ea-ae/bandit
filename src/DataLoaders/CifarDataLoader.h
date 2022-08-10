@@ -6,22 +6,23 @@
 #include <string>
 #include <memory>
 
-constexpr int32_t MAGIC = (41 << 24) + (42 << 16) + (43 << 8) + 44;
-constexpr int32_t PIXELS = 224 * 224 * 3;
+constexpr int32_t CHANNELS = 3;
+constexpr int32_t PIXELS_PC = 32 * 32; // * 3
+constexpr int32_t PIXELS = CHANNELS * PIXELS_PC;
 
-struct ImageNetDataItem {
+struct CifarDataItem {
     std::unique_ptr<std::array<uint8_t, PIXELS>> pixels = std::make_unique<std::array<uint8_t, PIXELS>>();
     uint16_t label;
 };
 
-using ImageNetDataVector = std::vector<ImageNetDataItem>;
+using CifarDataVector = std::vector<CifarDataItem>;
 
-class ImageNetDataLoader : public DataLoader {
+class CifarDataLoader : public DataLoader {
 private:
-    std::unique_ptr<ImageNetDataVector> dataItems = std::make_unique<ImageNetDataVector>();;
-    ImageNetDataVector::const_iterator dataItemsIt;
+    std::unique_ptr<CifarDataVector> dataItems;
+    CifarDataVector::const_iterator dataItemsIt;
 public:
-    ImageNetDataLoader(std::string filePrefix, std::string fileSuffix, int32_t count);
+    CifarDataLoader(std::string dataFileName, size_t amount);
     std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
