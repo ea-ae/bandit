@@ -12,13 +12,14 @@
 void cifar100() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.001f; // default: 0.1-0.2
+    const auto LEARNING_RATE_ETA = 0.1f; // default: 0.1-0.2
     const auto MOMENTUM_COEFFICIENT_MU = 0.0f; // no momentum: 0
-    const auto REGULARIZATION_LAMBDA = 0.0f; // no regularization: 0, default: 0.001
+    const auto REGULARIZATION_LAMBDA = 0.000f; // no regularization: 0, default: 0.001
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
-    const auto USE_COARSE_LABELS = true;
-    const auto INPUT_NEURONS = 32 * 32 * 3;
+    const auto USE_COARSE_LABELS = false;
+    //const auto INPUT_NEURONS = 32 * 32 * 3;
+    const auto INPUT_NEURONS = 3 * 3 * 2;
     const auto OUTPUT_NEURONS = USE_COARSE_LABELS ? 10 : 100;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
@@ -27,18 +28,20 @@ void cifar100() {
     // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
-    net.addLayer(new ConvolutionalLayer(Size(32, 32), Size(8, 8), Size(3, 3), 40, 1, 3));
-    // net.addLayer(new DenseLayer(30));
+    // todo instead of [Input]Size() + channels, create 2DSize() and 3DSize() or use eigen
+    net.addLayer(new ConvolutionalLayer(Size(3, 3), Size(2, 2), Size(1, 1), 1, 2));
+    //net.addLayer(new ConvolutionalLayer(Size(32, 32), Size(8, 8), Size(3, 3), 40, 1));
+    //net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
 
     // Load datasets
 
-    auto trainingDataSet = CifarDataLoader("./train.bin", 50000, true);
+    auto trainingDataSet = CifarDataLoader("./train.bin", 500, true);
     trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
 
-    auto testingDataSet = CifarDataLoader("./test.bin", 10000, true);
+    auto testingDataSet = CifarDataLoader("./test.bin", 100, true);
     trainer.addDataSource(&testingDataSet, DataSourceType::Testing);
 
     // Begin learning

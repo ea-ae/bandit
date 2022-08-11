@@ -35,13 +35,12 @@ void CifarDataLoader::createDataItems(std::ifstream& data, bool useCoarseLabels)
         read<int8_t>(&fineLabel, data);
 
         dataItem.label = useCoarseLabels ? coarseLabel : fineLabel;
-        // std::cout << static_cast<int32_t>(coarseLabel) << " and " << static_cast<int32_t>(fineLabel) << "\n";
 
         auto& pixels = *dataItem.pixels.get();
-        for (size_t p = 0; p < PIXELS_PC; p++) {
-            for (size_t c = 0; c < CHANNELS; c++) {
-                read<uint8_t>(&pixels[p + c * PIXELS_PC], data); // realign RGB pixels
-                //std::cout << "got " << p + c * PIXELS_PC << " w " << (int)pixels[p + c * PIXELS_PC] << "\n";
+        for (size_t c = 0; c < CHANNELS; c++) {
+            for (size_t p = 0; p < PIXELS_PC; p++) {
+                read<uint8_t>(&pixels[c * PIXELS_PC + p], data);
+                // read<uint8_t>(&pixels[p + c * PIXELS_PC], data); // realign RGB pixels
             }
         }
     }

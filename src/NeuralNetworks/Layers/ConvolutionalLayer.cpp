@@ -4,20 +4,19 @@
 
 Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
 
-ConvolutionalLayer::ConvolutionalLayer(Size inputSize, Size fieldSize, Size stride, int32_t depth,
-    int32_t dimensions, int32_t channels, int32_t padding)
-    : inputSize(inputSize), fieldSize(fieldSize), 
-      stride(stride), depth(depth), dimensions(dimensions), channels(channels), padding(padding)
+ConvolutionalLayer::ConvolutionalLayer(Size inputSize, Size fieldSize, Size stride, size_t depth,
+    int32_t channelCount, int32_t padding)
+    : inputSize(inputSize), fieldSize(fieldSize), channels(channelCount), filters(depth),
+      stride(stride), depth(depth), channelCount(channelCount), padding(padding)
 {
-    neurons.reserve(static_cast<size_t>(depth) * getFieldCountPerDepth());
-    filters.reserve(depth);
-    fields = std::vector<std::vector<std::shared_ptr<Neuron>>>(getFieldCountPerDepth());
+    neurons.reserve(depth * channelCount * getFieldCountPerChannel());
+    // filters.reserve(depth);
 
     auto pad = 2 * padding;
     if (2 * padding + fieldSize.x > inputSize.x || 2 * padding + fieldSize.y > inputSize.y) {
         throw std::logic_error("Receptive field size is larger than the x/y size arguments");
     } else if (stride.x > fieldSize.x || stride.y > fieldSize.y) {
-        throw std::logic_error("Stride is larger than receptive field size and skips inputs");
+        throw std::logic_error("Stride is larger than receptive field size and therefore skips inputs");
     } else if ((pad + inputSize.x - fieldSize.x) % stride.x != 0 || (pad + inputSize.y - fieldSize.y) % stride.y != 0) {
         throw std::logic_error("Stride results in asymmetric outputs due to skipped inputs");
     }
@@ -30,44 +29,59 @@ std::vector<std::shared_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
 void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
     auto& prevNeurons = previousLayer->getNeurons();
 
-    if (prevNeurons.size() != static_cast<size_t>(inputSize.x) * inputSize.y * channels) {
+    auto inputNeuronsPerChannel = inputSize.x * inputSize.y;
+
+    if (prevNeurons.size() != static_cast<size_t>(inputNeuronsPerChannel) * channelCount) {
         throw std::logic_error("Incorrect input size (area mismatch)");
-    } else if (prevNeurons.size() % dimensions != 0) {
-        throw std::logic_error("Invalid dimensions argument");
+    } else if (prevNeurons.size() % channelCount != 0) {
+        throw std::logic_error("Invalid channel count (doesn't divide by neuron count)");
     }
 
-    int32_t x = 0, y = 0;
-    for (auto& field : fields) { // create all the field vectors
-        for (int row = y; row < y + fieldSize.y; row++) {
-            for (int col = x; col < x + fieldSize.x * channels; col++) {
-                auto i = inputSize.x * channels * row + col;
-                field.push_back(std::shared_ptr<Neuron>(prevNeurons[i]));
-                // std::cout << i << " ";
+    for (auto channel = 0; channel < channels.size(); channel++) {
+        auto channelOffset = channel * inputNeuronsPerChannel;
+
+        channels[channel] = std::vector<Field>(getFieldCountPerChannel());
+        int32_t x = 0, y = 0;
+        for (auto& field : channels[channel]) { // create all the field vectors
+            for (int row = y; row < y + fieldSize.y; row++) {
+                for (int col = x; col < x + fieldSize.x; col++) {
+                    auto i = inputSize.x * row + col; // calculate coordinate pos within channel
+                    auto ii = i + channelOffset; // offset by channel n
+                    field.push_back(std::shared_ptr<Neuron>(prevNeurons[ii]));
+                    // std::cout << i << " ";
+                }
+            }
+            // std::cout << "\n";
+
+            // stride onto next field
+            x += stride.x;
+            if (x + fieldSize.x > inputSize.x) {
+                x = 0;
+                y += stride.y;
             }
         }
-        // std::cout << "\n";
-
-        // stride onto next field
-        x += stride.x * channels;
-        if (x + fieldSize.x * channels > inputSize.x * channels) {
-            x = 0;
-            y += stride.y;
-        }
     }
+    
+    for (auto& filter : filters) { // initialize the kernels/weights/neurons of each filter
+        // filter = Filter(channelCount); // amount of kernels per filter = amount of channels
+        for (auto kernel = 0; kernel < channelCount; kernel++) { //  amount of kernels per filter = amount of channels
+            auto& channelFields = channels[kernel]; // the fields for this kernel
 
-    // create the filters/kernels on top of the fields
-    for (int i = 0; i < depth; i++) { // make 'depth' amount of filters per field
-        filters.push_back(std::pair<std::vector<Weight>, Bias>(
-            std::vector<Weight>(getParamsPerFilter() - 1), Bias())); // shared weights/bias
-        auto& [sharedWeights, sharedBias] = filters.back();
+            filter.push_back(Kernel( // create shared weights & bias for the kernel
+                std::vector<Weight>(getParamsPerKernel() - 1), // subtract the bias param
+                Bias()
+            ));
 
-        for (auto& field : fields) {
-            neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &sharedWeights, &sharedBias));
+            auto& [sharedWeights, sharedBias] = filter.back();
+
+            for (auto& field : channelFields) { // create a neuron for each field in the channel/kernel for this filter
+                neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &sharedWeights, &sharedBias));
+            }
         }
     }
 
     std::cout << std::format("CL: {} neurons, {} params\n",
-        depth * getFieldCountPerDepth(), depth * getParamsPerFilter());
+        depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel());
 }
 
 const Size ConvolutionalLayer::outputSize() const {
@@ -76,12 +90,12 @@ const Size ConvolutionalLayer::outputSize() const {
     return Size(columns, rows);
 }
 
-int32_t ConvolutionalLayer::getFieldCountPerDepth() const {
+int32_t ConvolutionalLayer::getFieldCountPerChannel() const {
     int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
     int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
     return rows * columns;
 }
 
-int32_t ConvolutionalLayer::getParamsPerFilter() const {
-    return channels * fieldSize.x * fieldSize.y + 1;
+int32_t ConvolutionalLayer::getParamsPerKernel() const {
+    return fieldSize.x * fieldSize.y + 1;
 }

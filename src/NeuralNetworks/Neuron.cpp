@@ -20,7 +20,9 @@ Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const Activat
 
 Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
     std::vector<Weight>* sharedWeights, Bias* sharedBias)
-    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost), weights(sharedWeights), bias(sharedBias) {}
+    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost), weights(sharedWeights), bias(sharedBias) {
+    int gjdksgjskg = 59032852;
+}
 
 void Neuron::calculate() {
     values = values.setConstant(bias->bias);
