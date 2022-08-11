@@ -34,7 +34,8 @@ void CifarDataLoader::createDataItems(std::ifstream& data) {
         read<int8_t>(&coarseLabel, data);
         read<int8_t>(&fineLabel, data);
 
-        std::cout << static_cast<int32_t>(coarseLabel) << " and " << static_cast<int32_t>(fineLabel) << "\n";
+        dataItem.label = fineLabel;
+        // std::cout << static_cast<int32_t>(coarseLabel) << " and " << static_cast<int32_t>(fineLabel) << "\n";
 
         auto pixels = *dataItem.pixels.get();
         for (size_t p = 0; p < PIXELS_PC; p++) {

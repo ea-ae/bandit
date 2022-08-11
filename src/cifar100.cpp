@@ -17,8 +17,8 @@ void cifar100() {
     const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
-    const auto INPUT_NEURONS = 784;
-    const auto OUTPUT_NEURONS = 10;
+    const auto INPUT_NEURONS = 32 * 32 * 3;
+    const auto OUTPUT_NEURONS = 100;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
@@ -26,9 +26,8 @@ void cifar100() {
     // Initialize neural network and trainer
 
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
-    //net.addLayer(new ConvolutionalLayer(1, Size(28, 28), ...);
-    //net.addLayer(new ConvolutionalLayer(Size(28, 28), Size(6, 6), Size(2, 2), 20));
-    net.addLayer(new DenseLayer(300));
+    net.addLayer(new ConvolutionalLayer(Size(32, 32), Size(8, 8), Size(3, 3), 40, 1, 3));
+    // net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
@@ -40,4 +39,11 @@ void cifar100() {
 
     auto testingDataSet = CifarDataLoader("./test.bin", 10000);
     trainer.addDataSource(&testingDataSet, DataSourceType::Testing);
+
+    // Begin learning
+
+    std::cout << std::format("eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
+        LEARNING_RATE_ETA, BATCH_SIZE, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
+
+    trainer.train();
 }

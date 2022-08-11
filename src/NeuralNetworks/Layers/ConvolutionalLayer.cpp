@@ -30,7 +30,7 @@ std::vector<std::shared_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
 void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
     auto& prevNeurons = previousLayer->getNeurons();
 
-    if (prevNeurons.size() != static_cast<size_t>(inputSize.x) * inputSize.y) {
+    if (prevNeurons.size() != static_cast<size_t>(inputSize.x) * inputSize.y * channels) {
         throw std::logic_error("Incorrect input size (area mismatch)");
     } else if (prevNeurons.size() % dimensions != 0) {
         throw std::logic_error("Invalid dimensions argument");
