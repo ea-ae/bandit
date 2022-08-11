@@ -22,10 +22,10 @@ private:
     std::unique_ptr<CifarDataVector> dataItems;
     CifarDataVector::const_iterator dataItemsIt;
 public:
-    CifarDataLoader(std::string dataFileName, size_t amount);
+    CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels = false);
     std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
 private:
-    void createDataItems(std::ifstream& data);
+    void createDataItems(std::ifstream& data, bool useCoarseLabels);
 };

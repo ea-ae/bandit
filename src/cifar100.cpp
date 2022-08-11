@@ -12,13 +12,14 @@
 void cifar100() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.02f; // default: 0.1-0.2
-    const auto MOMENTUM_COEFFICIENT_MU = 0.9f; // no momentum: 0
-    const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
+    const auto LEARNING_RATE_ETA = 0.001f; // default: 0.1-0.2
+    const auto MOMENTUM_COEFFICIENT_MU = 0.0f; // no momentum: 0
+    const auto REGULARIZATION_LAMBDA = 0.0f; // no regularization: 0, default: 0.001
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
+    const auto USE_COARSE_LABELS = true;
     const auto INPUT_NEURONS = 32 * 32 * 3;
-    const auto OUTPUT_NEURONS = 100;
+    const auto OUTPUT_NEURONS = USE_COARSE_LABELS ? 10 : 100;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
@@ -34,10 +35,10 @@ void cifar100() {
 
     // Load datasets
 
-    auto trainingDataSet = CifarDataLoader("./train.bin", 50000);
+    auto trainingDataSet = CifarDataLoader("./train.bin", 50000, true);
     trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
 
-    auto testingDataSet = CifarDataLoader("./test.bin", 10000);
+    auto testingDataSet = CifarDataLoader("./test.bin", 10000, true);
     trainer.addDataSource(&testingDataSet, DataSourceType::Testing);
 
     // Begin learning

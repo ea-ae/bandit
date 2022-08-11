@@ -13,7 +13,7 @@
 void mnist() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.02f; // default: 0.1-0.2
+    const auto LEARNING_RATE_ETA = 0.2f; // default: 0.1-0.2
     const auto MOMENTUM_COEFFICIENT_MU = 0.9f; // no momentum: 0
     const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0
     const auto RELU_LEAK = 0.01f; // no leak: 0

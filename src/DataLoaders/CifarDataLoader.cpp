@@ -1,10 +1,10 @@
 #include "CifarDataLoader.h"
 
-CifarDataLoader::CifarDataLoader(std::string dataFileName, size_t amount) 
+CifarDataLoader::CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels) 
     : dataItems(std::make_unique<CifarDataVector>(amount)) {
     auto data = std::ifstream(dataFileName, std::ios::binary);
 
-    createDataItems(data);
+    createDataItems(data, useCoarseLabels);
     resetDataIterator();
 }
 
@@ -28,13 +28,13 @@ size_t CifarDataLoader::size() {
     return dataItems->size();
 }
 
-void CifarDataLoader::createDataItems(std::ifstream& data) {
+void CifarDataLoader::createDataItems(std::ifstream& data, bool useCoarseLabels) {
     for (auto& dataItem : *dataItems) {
         int8_t coarseLabel, fineLabel;
         read<int8_t>(&coarseLabel, data);
         read<int8_t>(&fineLabel, data);
 
-        dataItem.label = fineLabel;
+        dataItem.label = useCoarseLabels ? coarseLabel : fineLabel;
         // std::cout << static_cast<int32_t>(coarseLabel) << " and " << static_cast<int32_t>(fineLabel) << "\n";
 
         auto pixels = *dataItem.pixels.get();
