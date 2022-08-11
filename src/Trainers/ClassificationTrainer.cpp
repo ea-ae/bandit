@@ -1,5 +1,6 @@
 #include "ClassificationTrainer.h"
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <format>
 #include "../NeuralNetworks/Neuron.h"
@@ -20,7 +21,7 @@ void ClassificationTrainer::train() {
 
     while (true) {
         auto epochStart = steady_clock::now();
-        int32_t trainingCorrect = 0, testingCorrect = 0;
+        int32_t trainingCorrect = 0, testsDone = 0, testingCorrect = 0;
         auto dataSetRatio = static_cast<int32_t>(
             std::ceilf(static_cast<float>(trainingDataSet->size()) / testingDataSet->size()));
 
@@ -63,6 +64,7 @@ void ClassificationTrainer::train() {
             if (testingDataLeft) {
                 for (int32_t batchItemsDone = 0; batchItemsDone < BATCH_SIZE; batchItemsDone++) {
                     label = testingDataSet->loadDataItem(net, batchItemsDone);
+                    testsDone++;
                     if (!label.has_value()) {
                         testingDataLeft = false;
                         break;
@@ -79,6 +81,11 @@ void ClassificationTrainer::train() {
             }
 
             if (!trainingDataLeft && !testingDataLeft) break;
+
+            float testingProgress = 100.0f * testsDone / testingDataSet->size();
+            auto progressBar = std::string(static_cast<int32_t>(std::floor(testingProgress * 0.3)), '=');
+            std::cout << std::format("\rEpoch {:03} | {:05.2f}% done | {:30} |", 
+                epoch, testingProgress, progressBar);
         }
 
         // Iterate over the same data again on next epoch
@@ -95,7 +102,7 @@ void ClassificationTrainer::train() {
         auto epochDuration = duration_cast<seconds>(epochEnd - epochStart).count();
         auto totalDuration = duration_cast<seconds>(epochEnd - trainingStart).count();
 
-        std::cout << std::format("Epoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
+        std::cout << std::format("\rEpoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
             epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
 
         epoch++;
