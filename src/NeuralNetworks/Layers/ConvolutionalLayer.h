@@ -10,7 +10,7 @@ struct Size {
 };
 
 using Field = std::vector<std::shared_ptr<Neuron>>;
-using Kernel = std::pair<std::vector<Weight>, Bias>;
+using Kernel = std::pair<std::vector<std::shared_ptr<Weight>>, Bias>;
 using Filter = std::vector<Kernel>;
 
 class ConvolutionalLayer : public Layer {

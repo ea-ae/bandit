@@ -7,27 +7,33 @@ Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const Activat
     : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost)
 {
     if (inputNeurons != nullptr) {
-        selfWeights = std::vector<Weight>(inputNeurons->size());
-        std::generate(selfWeights.begin(), selfWeights.end(), [&]() { // initialize weights
-            Weight weight;
-            weight.weight = activationFunction.generateRandomWeight(inputNeurons->size());
-            return weight;
+        weights = std::vector<std::shared_ptr<Weight>>(inputNeurons->size());
+
+        std::generate(weights.begin(), weights.end(), [&]() { // initialize weights
+            Weight* weight = new Weight();
+            weight->weight = activationFunction.generateRandomWeight(inputNeurons->size());
+            return std::shared_ptr<Weight>(weight);
         });
-        weights = &selfWeights;
-        bias = &selfBias;
+        bias = std::make_shared<Bias>();
     }
 }
 
 Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
-    std::vector<Weight>* sharedWeights, Bias* sharedBias)
-    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost), weights(sharedWeights), bias(sharedBias) {
-    int gjdksgjskg = 59032852;
+    std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias)
+    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost) {
+    std::copy(sharedWeights->begin(), sharedWeights->end(), std::back_inserter(weights));
+    
+    for (auto& weight : *sharedWeights) {
+        weight->weight = activationFunction.generateRandomWeight(inputNeurons->size()); // initialize weights(todo: only once!!)
+        weights.push_back(weight);
+    }
+    bias = std::shared_ptr<Bias>(sharedBias);
 }
 
 void Neuron::calculate() {
     values = values.setConstant(bias->bias);
     for (int i = 0; i < inputNeurons->size(); i++) { // a*w dot product
-        values += (*inputNeurons)[i]->values * (*weights)[i].weight; // scalar multiplication
+        values += (*inputNeurons)[i]->values * weights[i]->weight; // scalar multiplication
     }
     preTransformedValues = values;
     values = values.unaryExpr([this](float preValue) { return activationFunction.map(preValue); });
@@ -53,11 +59,11 @@ void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValu
     for (int i = 0; i < inputNeurons->size(); i++) { // calculate weights and biases for each neuron in previous layer
         auto& preValuesDerivedByWeight = (*inputNeurons)[i]->values;
         auto weightGradient = (preValuesDerivedByWeight * costDerivedByPreValues).sum();
-        (*weights)[i].gradient += weightGradient;
+        weights[i]->gradient += weightGradient;
 
         if (backpropagateGradients) { // first check to make sure the next layer isn't the input layer
             // find the new activation derivative for the next layer of backpropagation
-            auto preValuesDerivedByActivation = (*weights)[i].weight;
+            auto preValuesDerivedByActivation = weights[i]->weight;
             auto costDerivedByActivations = preValuesDerivedByActivation * costDerivedByPreValues;
             (*inputNeurons)[i]->addActivationGradients(costDerivedByActivations); // add the gradient
         }
@@ -74,16 +80,16 @@ void Neuron::update(float learningRate) {
     bias->gradient = 0;
     bias->done = true; // prevents multiple updates on shared weights
 
-    for (auto& weight : *weights) {
-        auto regularizationTerm = costFunction.getRegularizationDerivative(weight.weight);
-        auto weightGradient = (weight.gradient / BATCH_SIZE + regularizationTerm) * learningRate;
+    for (auto& weight : weights) {
+        auto regularizationTerm = costFunction.getRegularizationDerivative(weight->weight);
+        auto weightGradient = (weight->gradient / BATCH_SIZE + regularizationTerm) * learningRate;
 
-        weight.momentum = costFunction.getMomentum(weight.momentum, weightGradient); // mu * v - eta * delC
-        weight.weight -= weight.momentum;
-        weight.gradient = 0;
+        weight->momentum = costFunction.getMomentum(weight->momentum, weightGradient); // mu * v - eta * delC
+        weight->weight -= weight->momentum;
+        weight->gradient = 0;
     }
 }
 
 size_t Neuron::getWeightCount() {
-    return weights->size();
+    return weights.size();
 }

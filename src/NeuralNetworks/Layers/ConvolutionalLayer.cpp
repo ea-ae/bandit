@@ -63,16 +63,20 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
     }
     
     for (auto& filter : filters) { // initialize the kernels/weights/neurons of each filter
-        // filter = Filter(channelCount); // amount of kernels per filter = amount of channels
         for (auto kernel = 0; kernel < channelCount; kernel++) { //  amount of kernels per filter = amount of channels
             auto& channelFields = channels[kernel]; // the fields for this kernel
 
+            auto weights = std::vector<std::shared_ptr<Weight>>();
+            for (auto i = 0; i < getParamsPerKernel() - 1; i++) { // subtract the bias param
+                weights.push_back(std::make_shared<Weight>());
+            }
+
             filter.push_back(Kernel( // create shared weights & bias for the kernel
-                std::vector<Weight>(getParamsPerKernel() - 1), // subtract the bias param
+                std::move(weights),
                 Bias()
             ));
 
-            auto& [sharedWeights, sharedBias] = filter.back();
+            auto& [sharedWeights, sharedBias] = filter.back(); // todo: skip the filter vector bc we dont need it w shared_ptr<Bias>
 
             for (auto& field : channelFields) { // create a neuron for each field in the channel/kernel for this filter
                 neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &sharedWeights, &sharedBias));

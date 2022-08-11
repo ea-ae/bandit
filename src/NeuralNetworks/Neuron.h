@@ -29,12 +29,11 @@ class Neuron {
 public:
     BatchArray values = BatchArray(BatchArray::Zero());
 private:
-    Bias selfBias;
-    Bias* bias = nullptr;
+    std::shared_ptr<Bias> bias = nullptr;
 
     std::vector<std::shared_ptr<Neuron>>* inputNeurons;
-    std::vector<Weight> selfWeights;
-    std::vector<Weight>* weights = nullptr; // useful in case of shared weights
+    //std::vector<Weight> selfWeights;
+    std::vector<std::shared_ptr<Weight>> weights; // useful in case of shared weights
     BatchArray activationGradients = BatchArray(BatchArray::Zero());
     BatchArray preTransformedValues;
     
@@ -43,7 +42,7 @@ private:
 public:
     Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost);
     Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
-        std::vector<Weight>* sharedWeights, Bias* sharedBias);
+        std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias);
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);
