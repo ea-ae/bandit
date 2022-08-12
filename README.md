@@ -1,10 +1,10 @@
 # Bandit
 
-Experimenting with simple neural networks made from scratch as well as reinforcement learning.
+Experimenting with simple convolutional neural networks for image classification. All of the functionality was implemented from scratch and Eigen was used for the linear algebra.
 
 ## Features
 
-* Stochastic gradient descent with:
+* Stochastic gradient descent
     * Vectorization
     * Momentum
     * L2 regularization
@@ -14,7 +14,7 @@ Experimenting with simple neural networks made from scratch as well as reinforce
 * Activation functions: ReLu, leaky ReLu, sigmoid
 * Data loaders: MNIST, CIFAR-100, ImageNet
 
-## Results
+## Performance
 
 All the training-testing mini-batches were interleaved proportionally.
 
