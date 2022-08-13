@@ -9,6 +9,13 @@ struct Size {
     Size(int32_t x, int32_t y);
 };
 
+struct Size3 {
+    int32_t x;
+    int32_t y;
+    int32_t z;
+    Size3(int32_t x, int32_t y, int32_t z);
+};
+
 struct Filter {
     std::vector<std::shared_ptr<Weight>> weights;
     Bias bias;
@@ -18,8 +25,7 @@ using Field = std::vector<std::shared_ptr<Neuron>>;
 
 class ConvolutionalLayer : public Layer {
 public:
-    ConvolutionalLayer(Size inputSize, Size fieldSize, Size stride, size_t depth = 1, 
-        int32_t channelCount = 1, int32_t padding = 0);
+    ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride = Size(1, 1), int32_t padding = 0);
     std::vector<std::shared_ptr<Neuron>>& getNeurons();
     void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost);
     const Size outputSize() const;
@@ -33,10 +39,10 @@ private:
     std::vector<Filter> filters;
     std::vector<Field> fields;
 
-    const Size inputSize;
-    const Size fieldSize;
+    const Size3 inputSize;
+    const Size3 fieldSize;
     const Size stride;
-    const size_t depth;
-    const int32_t channelCount;
     const int32_t padding;
+    const int32_t channelCount;
+    const size_t depth;
 };

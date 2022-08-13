@@ -17,10 +17,10 @@ void cifar100() {
     const auto REGULARIZATION_LAMBDA = 0.000f; // no regularization: 0, default: 0.001
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
-    const auto USE_COARSE_LABELS = false;
+    const auto USE_COARSE_LABELS = true;
     const auto INPUT_NEURONS = 32 * 32 * 3;
     //const auto INPUT_NEURONS = 3 * 3 * 2;
-    const auto OUTPUT_NEURONS = USE_COARSE_LABELS ? 10 : 100;
+    const auto OUTPUT_NEURONS = USE_COARSE_LABELS ? 20 : 100;
 
     auto costFunction = QuadraticCost(REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU);
     auto activationFunction = LeakyRelu(RELU_LEAK);
@@ -30,7 +30,8 @@ void cifar100() {
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
     // todo instead of [Input]Size() + channels, create 2DSize() and 3DSize() or use eigen
     //net.addLayer(new ConvolutionalLayer(Size(3, 3), Size(2, 2), Size(1, 1), 1, 2));
-    net.addLayer(new ConvolutionalLayer(Size(32, 32), Size(5, 5), Size(1, 3), 20, 3));
+    net.addLayer(new ConvolutionalLayer(Size3(32, 32, 3), Size3(5, 5, 20)));
+    //net.addLayer(new ConvolutionalLayer(Size3(5, 5, 20), Size3(5, 5, 20), Size(1, 1)));
     //net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);
 
@@ -38,10 +39,10 @@ void cifar100() {
 
     // Load datasets
 
-    auto trainingDataSet = CifarDataLoader("./train.bin", 50000, true);
+    auto trainingDataSet = CifarDataLoader("./train.bin", 50000, USE_COARSE_LABELS);
     trainer.addDataSource(&trainingDataSet, DataSourceType::Training);
 
-    auto testingDataSet = CifarDataLoader("./test.bin", 10000, true);
+    auto testingDataSet = CifarDataLoader("./test.bin", 10000, USE_COARSE_LABELS);
     trainer.addDataSource(&testingDataSet, DataSourceType::Testing);
 
     // Begin learning

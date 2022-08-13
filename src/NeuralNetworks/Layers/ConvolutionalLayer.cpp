@@ -4,10 +4,11 @@
 
 Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
 
-ConvolutionalLayer::ConvolutionalLayer(Size inputSize, Size fieldSize, Size stride, size_t depth,
-    int32_t channelCount, int32_t padding)
-    : inputSize(inputSize), fieldSize(fieldSize), filters(depth),
-      stride(stride), depth(depth), channelCount(channelCount), padding(padding)
+Size3::Size3(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
+
+ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride, int32_t padding)
+    : inputSize(inputSize), fieldSize(fieldSize), filters(fieldSize.z),
+      stride(stride), depth(fieldSize.z), channelCount(inputSize.z), padding(padding)
 {
     neurons.reserve(depth * channelCount * getFieldCountPerChannel());
 
@@ -70,8 +71,9 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         }
     }
 
-    std::cout << std::format("CL: {} neurons, {} params\n",
-        depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel());
+    std::cout << std::format("CL | {} neurons, {} params, {}x{}x{} -> {}x{}x{}\n",
+        depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel(),
+        inputSize.x, inputSize.y, inputSize.z, fieldSize.x, fieldSize.y, fieldSize.z);
 }
 
 const Size ConvolutionalLayer::outputSize() const {

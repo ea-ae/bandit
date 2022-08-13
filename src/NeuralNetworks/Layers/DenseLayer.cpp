@@ -17,5 +17,5 @@ void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, cons
         return std::make_shared<Neuron>(&previousLayer->getNeurons(), activation, cost);
     });
 
-    std::cout << std::format("DL: {} neurons, {} params\n", neurons.size(), getWeightCount() + neurons.size());
+    std::cout << std::format("DL | {} neurons, {} params\n", neurons.size(), getWeightCount() + neurons.size());
 }
