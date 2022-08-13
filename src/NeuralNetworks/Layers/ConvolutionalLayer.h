@@ -9,9 +9,12 @@ struct Size {
     Size(int32_t x, int32_t y);
 };
 
+struct Filter {
+    std::vector<std::shared_ptr<Weight>> weights;
+    Bias bias;
+};
+
 using Field = std::vector<std::shared_ptr<Neuron>>;
-using Kernel = std::pair<std::vector<std::shared_ptr<Weight>>, Bias>;
-using Filter = std::vector<Kernel>;
 
 class ConvolutionalLayer : public Layer {
 public:
@@ -24,9 +27,12 @@ public:
     int32_t getParamsPerKernel() const;
 private:
     std::vector<std::shared_ptr<Neuron>> neurons;
-    std::vector<std::vector<Field>> channels;
-    //std::vector<Field> fields;
+    //std::vector<std::vector<Field>> channels;
+    //std::vector<std::vector<Field>> fields;
+    //std::vector<std::vector<std::shared_ptr<Neuron>>> fields;
     std::vector<Filter> filters;
+    std::vector<Field> fields;
+
     const Size inputSize;
     const Size fieldSize;
     const Size stride;

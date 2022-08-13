@@ -20,12 +20,14 @@ Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const Activat
 
 Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
     std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias)
-    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost) {
+    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost) 
+{
     std::copy(sharedWeights->begin(), sharedWeights->end(), std::back_inserter(weights));
     
-    for (auto& weight : *sharedWeights) {
-        weight->weight = activationFunction.generateRandomWeight(inputNeurons->size()); // initialize weights(todo: only once!!)
-        weights.push_back(weight);
+    //for (auto& weight : *sharedWeights) {
+    for (auto& weight : weights) {
+        weight->weight = activationFunction.generateRandomWeight(inputNeurons->size()); // initialize weights (todo: only once!!)
+        //weights.push_back(weight);
     }
     bias = std::shared_ptr<Bias>(sharedBias);
 }

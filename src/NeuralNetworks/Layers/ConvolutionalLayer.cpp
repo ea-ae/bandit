@@ -6,11 +6,10 @@ Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
 
 ConvolutionalLayer::ConvolutionalLayer(Size inputSize, Size fieldSize, Size stride, size_t depth,
     int32_t channelCount, int32_t padding)
-    : inputSize(inputSize), fieldSize(fieldSize), channels(channelCount), filters(depth),
+    : inputSize(inputSize), fieldSize(fieldSize), filters(depth),
       stride(stride), depth(depth), channelCount(channelCount), padding(padding)
 {
     neurons.reserve(depth * channelCount * getFieldCountPerChannel());
-    // filters.reserve(depth);
 
     auto pad = 2 * padding;
     if (2 * padding + fieldSize.x > inputSize.x || 2 * padding + fieldSize.y > inputSize.y) {
@@ -37,21 +36,18 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         throw std::logic_error("Invalid channel count (doesn't divide by neuron count)");
     }
 
-    for (auto channel = 0; channel < channels.size(); channel++) {
-        auto channelOffset = channel * inputNeuronsPerChannel;
+    fields = std::vector<Field>(getFieldCountPerChannel()); // e.g. vector of 5x5x3 fields
 
-        channels[channel] = std::vector<Field>(getFieldCountPerChannel());
+    for (auto channel = 0; channel < channelCount; channel++) {
+        auto channelOffset = channel * inputNeuronsPerChannel;
         int32_t x = 0, y = 0;
-        for (auto& field : channels[channel]) { // create all the field vectors
-            for (int row = y; row < y + fieldSize.y; row++) {
-                for (int col = x; col < x + fieldSize.x; col++) {
-                    auto i = inputSize.x * row + col; // calculate coordinate pos within channel
-                    auto ii = i + channelOffset; // offset by channel n
-                    field.push_back(std::shared_ptr<Neuron>(prevNeurons[ii]));
-                    // std::cout << i << " ";
+        for (auto field = 0; field < getFieldCountPerChannel(); field++) {
+            for (int32_t row = y; row < y + fieldSize.y; row++) {
+                for (int32_t col = x; col < x + fieldSize.x; col++) {
+                    auto i = inputSize.x * row + col + channelOffset; // calculate coordinate pos within channel + offset by channel n
+                    fields[field].push_back(std::shared_ptr<Neuron>(prevNeurons[i])); // add input neuron for field
                 }
             }
-            // std::cout << "\n";
 
             // stride onto next field
             x += stride.x;
@@ -62,25 +58,15 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         }
     }
     
-    for (auto& filter : filters) { // initialize the kernels/weights/neurons of each filter
+    for (auto& filter : filters) { // filter depth is analogous to the amount of input channels in the next convolutional layer
         for (auto kernel = 0; kernel < channelCount; kernel++) { //  amount of kernels per filter = amount of channels
-            auto& channelFields = channels[kernel]; // the fields for this kernel
-
-            auto weights = std::vector<std::shared_ptr<Weight>>();
-            for (auto i = 0; i < getParamsPerKernel() - 1; i++) { // subtract the bias param
-                weights.push_back(std::make_shared<Weight>());
+            for (auto i = 0; i < fieldSize.x * fieldSize.y; i++) {
+                filter.weights.push_back(std::make_shared<Weight>()); // shared weights for the filter, e.g. 5x5x3 for W=H=5 and D=3
             }
+        }
 
-            filter.push_back(Kernel( // create shared weights & bias for the kernel
-                std::move(weights),
-                Bias()
-            ));
-
-            auto& [sharedWeights, sharedBias] = filter.back(); // todo: skip the filter vector bc we dont need it w shared_ptr<Bias>
-
-            for (auto& field : channelFields) { // create a neuron for each field in the channel/kernel for this filter
-                neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &sharedWeights, &sharedBias));
-            }
+        for (auto& field : fields) { // each field has inputs from every channel
+            neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &filter.weights, &filter.bias));
         }
     }
 
