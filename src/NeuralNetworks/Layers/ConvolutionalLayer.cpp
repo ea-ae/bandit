@@ -2,10 +2,6 @@
 #include <algorithm>
 #include <format>
 
-Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
-
-Size3::Size3(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
-
 ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride, int32_t padding)
     : inputSize(inputSize), fieldSize(fieldSize), filters(fieldSize.z),
       stride(stride), depth(fieldSize.z), channelCount(inputSize.z), padding(padding)
@@ -73,13 +69,13 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
 
     std::cout << std::format("CL | {} neurons, {} params, {}x{}x{} -> {}x{}x{}\n",
         depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel(),
-        inputSize.x, inputSize.y, inputSize.z, outputSize().x, outputSize().y, fieldSize.z);
+        inputSize.x, inputSize.y, inputSize.z, outputSize().x, outputSize().y, outputSize().z);
 }
 
-const Size ConvolutionalLayer::outputSize() const {
+const Size3 ConvolutionalLayer::outputSize() const {
     int32_t rows = (2 * padding + inputSize.y - fieldSize.y) / stride.y + 1;
     int32_t columns = (2 * padding + inputSize.x - fieldSize.x) / stride.x + 1;
-    return Size(columns, rows);
+    return Size3(columns, rows, fieldSize.z);
 }
 
 int32_t ConvolutionalLayer::getFieldCountPerChannel() const {

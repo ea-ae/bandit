@@ -14,7 +14,7 @@ protected:
     std::vector<std::unique_ptr<Layer>> hiddenLayers;
 public:
     NeuralNetwork(int32_t inputs, int32_t outputs);
-    void addLayer(Layer* layer);
+    Layer* addLayer(Layer* layer);
     void buildLayers(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void setInputNode(int32_t inputNode, int32_t nthBatchItem, float value);
     void calculateOutput();

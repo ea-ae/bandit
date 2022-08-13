@@ -3,18 +3,7 @@
 #include "Layer.h"
 #include "../Neuron.h"
 
-struct Size {
-    int32_t x;
-    int32_t y;
-    Size(int32_t x, int32_t y);
-};
 
-struct Size3 {
-    int32_t x;
-    int32_t y;
-    int32_t z;
-    Size3(int32_t x, int32_t y, int32_t z);
-};
 
 struct Filter {
     std::vector<std::shared_ptr<Weight>> weights;
@@ -28,7 +17,7 @@ public:
     ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride = Size(1, 1), int32_t padding = 0);
     std::vector<std::shared_ptr<Neuron>>& getNeurons();
     void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost);
-    const Size outputSize() const;
+    const Size3 outputSize() const;
     int32_t getFieldCountPerChannel() const;
     int32_t getParamsPerKernel() const;
 private:

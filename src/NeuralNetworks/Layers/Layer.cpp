@@ -2,6 +2,10 @@
 #include <algorithm>
 #include <numeric>
 
+Size::Size(int32_t x, int32_t y) : x(x), y(y) {}
+
+Size3::Size3(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
+
 void Layer::calculateNodeValues() {
     if (previousLayer) {
         for (auto& neuron : getNeurons()) {

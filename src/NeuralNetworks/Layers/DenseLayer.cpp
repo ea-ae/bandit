@@ -10,6 +10,10 @@ std::vector<std::shared_ptr<Neuron>>& DenseLayer::getNeurons() {
     return neurons;
 }
 
+const Size3 DenseLayer::outputSize() const {
+    return Size3(neurons.size(), 1, 1);
+}
+
 void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
     if (previousLayer == nullptr) return;
 

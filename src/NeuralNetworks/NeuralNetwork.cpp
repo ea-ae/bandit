@@ -6,11 +6,13 @@ NeuralNetwork::NeuralNetwork(int32_t inputs, int32_t outputs) {
     outputLayer = std::make_unique<DenseLayer>(outputs);
 }
 
-void NeuralNetwork::addLayer(Layer* layer) {
+Layer* NeuralNetwork::addLayer(Layer* layer) {
     auto previousLayer = hiddenLayers.empty() ? inputLayer.get() : hiddenLayers.back().get();
     layer->previousLayer = previousLayer;
     hiddenLayers.push_back(std::unique_ptr<Layer>(layer));
     previousLayer->nextLayer = hiddenLayers.back().get();
+    
+    return layer;
 }
 
 void NeuralNetwork::buildLayers(const ActivationFunction& activation, const CostFunction& cost) {
