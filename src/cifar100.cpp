@@ -30,7 +30,9 @@ void cifar100() {
     auto net = ClassificationNeuralNetwork(INPUT_NEURONS, OUTPUT_NEURONS);
     // todo instead of [Input]Size() + channels, create 2DSize() and 3DSize() or use eigen
     //net.addLayer(new ConvolutionalLayer(Size(3, 3), Size(2, 2), Size(1, 1), 1, 2));
-    net.addLayer(new ConvolutionalLayer(Size3(32, 32, 3), Size3(5, 5, 20)));
+    net.addLayer(new ConvolutionalLayer(Size3(32, 32, 3), Size3(5, 5, 10)));
+    net.addLayer(new ConvolutionalLayer(Size3(28, 28, 10), Size3(5, 5, 5)));
+    net.addLayer(new ConvolutionalLayer(Size3(24, 24, 5), Size3(5, 5, 5)));
     //net.addLayer(new ConvolutionalLayer(Size3(5, 5, 20), Size3(5, 5, 20), Size(1, 1)));
     //net.addLayer(new DenseLayer(30));
     net.buildLayers(activationFunction, costFunction);

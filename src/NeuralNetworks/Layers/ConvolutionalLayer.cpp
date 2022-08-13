@@ -10,7 +10,7 @@ ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size st
     : inputSize(inputSize), fieldSize(fieldSize), filters(fieldSize.z),
       stride(stride), depth(fieldSize.z), channelCount(inputSize.z), padding(padding)
 {
-    neurons.reserve(depth * channelCount * getFieldCountPerChannel());
+    neurons.reserve(depth * getFieldCountPerChannel());
 
     auto pad = 2 * padding;
     if (2 * padding + fieldSize.x > inputSize.x || 2 * padding + fieldSize.y > inputSize.y) {
@@ -73,7 +73,7 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
 
     std::cout << std::format("CL | {} neurons, {} params, {}x{}x{} -> {}x{}x{}\n",
         depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel(),
-        inputSize.x, inputSize.y, inputSize.z, fieldSize.x, fieldSize.y, fieldSize.z);
+        inputSize.x, inputSize.y, inputSize.z, outputSize().x, outputSize().y, fieldSize.z);
 }
 
 const Size ConvolutionalLayer::outputSize() const {

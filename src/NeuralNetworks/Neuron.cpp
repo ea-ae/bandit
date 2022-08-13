@@ -76,11 +76,11 @@ void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValu
 
 void Neuron::update(float learningRate) {
     if (bias->done) return;
+    bias->done = true; // prevents multiple updates on the same shared weights from being applied
 
     float biasGradient = (bias->gradient / BATCH_SIZE) * learningRate;
     bias->bias -= costFunction.getMomentum(bias->momentum, biasGradient);
     bias->gradient = 0;
-    bias->done = true; // prevents multiple updates on shared weights
 
     for (auto& weight : weights) {
         auto regularizationTerm = costFunction.getRegularizationDerivative(weight->weight);
