@@ -12,9 +12,9 @@
 void cifar100() {
     // Configuration
 
-    const auto LEARNING_RATE_ETA = 0.1f; // default: 0.1-0.2
-    const auto MOMENTUM_COEFFICIENT_MU = 0.0f; // no momentum: 0
-    const auto REGULARIZATION_LAMBDA = 0.000f; // no regularization: 0, default: 0.001
+    const auto LEARNING_RATE_ETA = 0.02f; // default: 0.1-0.2
+    const auto MOMENTUM_COEFFICIENT_MU = 0.9f; // no momentum: 0
+    const auto REGULARIZATION_LAMBDA = 0.001f; // no regularization: 0, default: 0.001
     const auto RELU_LEAK = 0.01f; // no leak: 0
 
     const auto USE_COARSE_LABELS = true;
@@ -31,12 +31,11 @@ void cifar100() {
     // todo instead of [Input]Size() + channels, create 2DSize() and 3DSize() or use eigen
     //net.addLayer(new ConvolutionalLayer(Size(3, 3), Size(2, 2), Size(1, 1), 1, 2));
     Layer* layer;
-    layer = net.addLayer(new ConvolutionalLayer(Size3(32, 32, 3), Size3(5, 5, 10)));
-    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(5, 5, 5)));
-    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(5, 5, 5)));
-    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(5, 5, 5)));
-    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(4, 4, 5), Size(3, 3)));
-    //net.addLayer(new DenseLayer(30));
+    layer = net.addLayer(new ConvolutionalLayer(Size3(32, 32, 3), Size3(5, 5, 20)));
+    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(4, 4, 10), Size(2, 2)));
+    layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(5, 5, 5), Size(2, 2)));
+    //layer = net.addLayer(new ConvolutionalLayer(layer->outputSize(), Size3(4, 4, 5)));
+    net.addLayer(new DenseLayer(50));
     net.buildLayers(activationFunction, costFunction);
 
     auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
@@ -51,7 +50,7 @@ void cifar100() {
 
     // Begin learning
 
-    std::cout << std::format("eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
+    std::cout << std::format("NN | eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
         LEARNING_RATE_ETA, BATCH_SIZE, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     trainer.train();

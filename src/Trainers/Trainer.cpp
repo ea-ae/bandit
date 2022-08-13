@@ -18,7 +18,7 @@ void Trainer::addDataSource(DataLoader* dataSource, DataSourceType dataSourceTyp
         throw std::runtime_error("Validation data type is unsupported");
     }
 
-    std::cout << std::format("Finished reading {} {} data items into memory\n", dataSource->size(), type);
+    std::cout << std::format("DS | Finished reading {} {} data items into memory\n", dataSource->size(), type);
     // std::cout << "Finished reading " << dataSource->size() << " " << type << " data items into memory\n";
 }
 

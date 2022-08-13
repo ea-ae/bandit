@@ -44,7 +44,7 @@ void mnist() {
     
     // Begin learning
 
-    std::cout << std::format("eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
+    std::cout << std::format("NN | eta = {} | batch = {} | lambda = {} | mu = {} | leak = {}\n",
         LEARNING_RATE_ETA, BATCH_SIZE, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     trainer.train();

@@ -39,7 +39,7 @@ void imagenet() {
 
     // Begin learning
 
-    std::cout << std::format("eta = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
+    std::cout << std::format("NN | eta = {} | HL = {} | lambda = {} | mu = {} | leak = {}\n",
         LEARNING_RATE_ETA, REGULARIZATION_LAMBDA, MOMENTUM_COEFFICIENT_MU, RELU_LEAK);
 
     trainer.train();

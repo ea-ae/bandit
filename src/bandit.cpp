@@ -4,7 +4,6 @@
 //#include "imagenet.h"
 
 void main() {
-    std::cout << "Initializing\n";
     // mnist();
     cifar100();
     // imagenet();

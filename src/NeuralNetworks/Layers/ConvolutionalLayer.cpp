@@ -67,9 +67,10 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         }
     }
 
-    std::cout << std::format("CL | {} neurons, {} params, {}x{}x{} -> {}x{}x{}\n",
+    std::cout << std::format("CL | {} neurons, {} params\t {:02}x{:02}x{:02} & f{}x{} s{}x{} -> {:02}x{:02}x{:02}\n",
         depth * getFieldCountPerChannel(), depth * channelCount * getParamsPerKernel(),
-        inputSize.x, inputSize.y, inputSize.z, outputSize().x, outputSize().y, outputSize().z);
+        inputSize.x, inputSize.y, inputSize.z, fieldSize.x, fieldSize.y, stride.x, stride.y, 
+        outputSize().x, outputSize().y, outputSize().z);
 }
 
 const Size3 ConvolutionalLayer::outputSize() const {

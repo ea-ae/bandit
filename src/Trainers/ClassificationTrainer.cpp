@@ -8,7 +8,10 @@
 using namespace std::chrono;
 
 ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate) 
-    : net(net), learningRate(learningRate) {}
+    : net(net), learningRate(learningRate) 
+{
+    std::cout << "NN | Initializing classification trainer\n";
+}
 
 void ClassificationTrainer::train() {
     // Begin learning
@@ -84,7 +87,7 @@ void ClassificationTrainer::train() {
 
             float testingProgress = 100.0f * testsDone / testingDataSet->size();
             auto progressBar = std::string(static_cast<int32_t>(std::floor(testingProgress * 0.3)), '=');
-            std::cout << std::format("\rEpoch {:03} | {:05.2f}% done | {:30} |", 
+            std::cout << std::format("\rNN | Epoch {:03} | {:05.2f}% done | {:30} |", 
                 epoch, testingProgress, progressBar);
         }
 
@@ -102,7 +105,7 @@ void ClassificationTrainer::train() {
         auto epochDuration = duration_cast<seconds>(epochEnd - epochStart).count();
         auto totalDuration = duration_cast<seconds>(epochEnd - trainingStart).count();
 
-        std::cout << std::format("\rEpoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
+        std::cout << std::format("\rNN | Epoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
             epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
 
         epoch++;
