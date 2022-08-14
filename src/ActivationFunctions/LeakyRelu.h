@@ -2,9 +2,10 @@
 #include "Relu.h"
 
 class LeakyRelu : public Relu {
-private:
+   private:
     float leakRate;
-public:
+
+   public:
     LeakyRelu();
     LeakyRelu(float leakRate);
     float map(float input) const;

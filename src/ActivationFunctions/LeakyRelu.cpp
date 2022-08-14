@@ -1,4 +1,5 @@
 #include "LeakyRelu.h"
+
 #include <cmath>
 
 LeakyRelu::LeakyRelu() : LeakyRelu(0.1f) {}

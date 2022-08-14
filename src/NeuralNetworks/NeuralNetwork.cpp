@@ -1,5 +1,7 @@
 #include "NeuralNetwork.h"
+
 #include <algorithm>
+
 #include "Neurons/DenseNeuron.h"
 
 NeuralNetwork::NeuralNetwork(int32_t inputs, int32_t outputs) {
@@ -12,7 +14,7 @@ Layer* NeuralNetwork::addLayer(Layer* layer) {
     layer->previousLayer = previousLayer;
     hiddenLayers.push_back(std::unique_ptr<Layer>(layer));
     previousLayer->nextLayer = hiddenLayers.back().get();
-    
+
     return layer;
 }
 
@@ -24,7 +26,7 @@ void NeuralNetwork::buildLayers(const ActivationFunction& activation, const Cost
 
     // initialize neurons of input layer
     std::generate(inputLayer->getNeurons().begin(), inputLayer->getNeurons().end(), [&]() {
-        return std::make_unique<DenseNeuron>(nullptr, activation, cost); // input layer has no inputNeurons
+        return std::make_unique<DenseNeuron>(nullptr, activation, cost);  // input layer has no inputNeurons
     });
 
     // initialize neurons inside the layers (each layer sets its inputNeurons from previous layer)
@@ -51,7 +53,7 @@ void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
 
     for (auto& layer : hiddenLayers) {
         for (int32_t i = 0; i < layer->getNeurons().size(); i++) {
-            bool backpropagateGradients = layer->previousLayer->previousLayer != nullptr; // input layer?
+            bool backpropagateGradients = layer->previousLayer->previousLayer != nullptr;  // input layer?
             layer->getNeurons()[i]->backpropagate(backpropagateGradients);
         }
     }

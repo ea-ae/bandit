@@ -2,12 +2,14 @@
 #include "Neuron.h"
 
 class SharedNeuron : public Neuron {
-private:
+   private:
     std::vector<Neuron*> inputNeurons;
-public:
+
+   public:
     SharedNeuron(std::vector<Neuron*> inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
-        std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias);
-private:
+                 std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias);
+
+   private:
     Neuron& getInputNeuron(size_t i);
     size_t getInputNeuronCount();
 };

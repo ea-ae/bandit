@@ -12,7 +12,7 @@ std::optional<int16_t> MnistDataLoader::loadDataItem(NeuralNetwork& neuralNetwor
     if (dataItemsIt == dataItems.end() || ++dataItemsIt == dataItems.end()) return {};
 
     for (int i = 0; i < dataItemsIt->pixels.size(); i++) {
-        float value = dataItemsIt->pixels[i] / 255.0f; // [0, 1]
+        float value = dataItemsIt->pixels[i] / 255.0f;  // [0, 1]
         neuralNetwork.setInputNode(i, nthBatchItem, value);
     }
 
@@ -40,14 +40,14 @@ void MnistDataLoader::createDataItems(std::ifstream& data, std::ifstream& labels
 
     dataItems = MnistDataVector(dataCount);
     for (auto& dataItem : dataItems) {
-        for (int i = 0; i < (dataRows * dataColumns); i++) { // for each pixel
+        for (int i = 0; i < (dataRows * dataColumns); i++) {  // for each pixel
             read<uint8_t>(&dataItem.pixels[i], data);
             /*if (nodeValue > 0.8) std::cout << "X";
             else if (nodeValue > 0.2) std::cout << "x";
             else std::cout << "_";
             if (i % dataRows == 0) std::cout << "\n";*/
         }
-        //std::cout << "\n\n";
+        // std::cout << "\n\n";
         read<uint8_t>(&dataItem.label, labels);
     }
 }

@@ -1,10 +1,11 @@
 #pragma once
-#include "DataLoader.h"
 #include <array>
-#include <optional>
 #include <fstream>
+#include <optional>
 #include <string>
 #include <vector>
+
+#include "DataLoader.h"
 
 struct MnistDataItem {
     std::array<uint8_t, 784> pixels;
@@ -14,14 +15,16 @@ struct MnistDataItem {
 using MnistDataVector = std::vector<MnistDataItem>;
 
 class MnistDataLoader : public DataLoader {
-private:
+   private:
     MnistDataVector dataItems;
     MnistDataVector::const_iterator dataItemsIt;
-public:
+
+   public:
     MnistDataLoader(std::string dataFileName, std::string labelsFileName);
     std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
-private:
+
+   private:
     void createDataItems(std::ifstream& data, std::ifstream& labels);
 };

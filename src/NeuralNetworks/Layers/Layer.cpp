@@ -1,4 +1,5 @@
 #include "Layer.h"
+
 #include <algorithm>
 #include <numeric>
 
@@ -16,11 +17,11 @@ void Layer::calculateNodeValues() {
 }
 
 void Layer::update(float learningRate) {
-    if (!previousLayer) return; // don't update input nodes
+    if (!previousLayer) return;  // don't update input nodes
 
     for (auto& neuron : getNeurons()) neuron->update(learningRate);
 
-    previousLayer->update(learningRate); // move onto next layer
+    previousLayer->update(learningRate);  // move onto next layer
 }
 
 size_t Layer::getWeightCount() {

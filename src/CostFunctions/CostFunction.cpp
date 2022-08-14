@@ -1,9 +1,10 @@
 #include "CostFunction.h"
+
 #include <cmath>
 #include <numeric>
 
-CostFunction::CostFunction(float regularizationLambda, float momentumCoefficientMu) 
-    : regularizationLambda(regularizationLambda), momentumCoefficientMu(momentumCoefficientMu) { }
+CostFunction::CostFunction(float regularizationLambda, float momentumCoefficientMu)
+    : regularizationLambda(regularizationLambda), momentumCoefficientMu(momentumCoefficientMu) {}
 
 BatchArray CostFunction::getActivationDerivatives(BatchArray& activations, BatchArray& expected) const {
     return activations - expected;

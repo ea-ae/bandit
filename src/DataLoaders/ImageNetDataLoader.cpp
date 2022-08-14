@@ -1,8 +1,9 @@
 #include "ImageNetDataLoader.h"
+
 #include <iostream>
 
 ImageNetDataLoader::ImageNetDataLoader(std::string filePrefix, std::string fileSuffix, int32_t count) {
-    count = 1; // temp
+    count = 1;  // temp
     for (int i = 0; i < count; i++) {
         std::string fileName = filePrefix + std::to_string(i) + fileSuffix;
         auto data = std::ifstream(fileName, std::ios::binary);
@@ -17,7 +18,7 @@ std::optional<int16_t> ImageNetDataLoader::loadDataItem(NeuralNetwork& neuralNet
 
     for (int i = 0; i < dataItemsIt->pixels->size(); i++) {
         auto pixels = *dataItemsIt->pixels.get();
-        float value = pixels[i] / 255.0f; // [0, 1]
+        float value = pixels[i] / 255.0f;  // [0, 1]
         neuralNetwork.setInputNode(i, nthBatchItem, value);
     }
 
@@ -40,7 +41,7 @@ void ImageNetDataLoader::createDataItems(std::ifstream& data) {
     while (true) {
         read<int32_t>(&magic, data);
         assert(magic == MAGIC || magic == 0);
-        if (magic == 0) break; // EoF
+        if (magic == 0) break;  // EoF
 
         dataItems->emplace_back();
         ImageNetDataItem& dataItem = dataItems->back();

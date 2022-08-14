@@ -1,13 +1,14 @@
 #pragma once
-#include "DataLoader.h"
 #include <array>
-#include <vector>
+#include <memory>
 #include <optional>
 #include <string>
-#include <memory>
+#include <vector>
+
+#include "DataLoader.h"
 
 constexpr int32_t CHANNELS = 3;
-constexpr int32_t PIXELS_PC = 32 * 32; // * 3
+constexpr int32_t PIXELS_PC = 32 * 32;  // * 3
 constexpr int32_t PIXELS = CHANNELS * PIXELS_PC;
 
 struct CifarDataItem {
@@ -18,14 +19,16 @@ struct CifarDataItem {
 using CifarDataVector = std::vector<CifarDataItem>;
 
 class CifarDataLoader : public DataLoader {
-private:
+   private:
     std::unique_ptr<CifarDataVector> dataItems;
     CifarDataVector::const_iterator dataItemsIt;
-public:
+
+   public:
     CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels = false);
     std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
-private:
+
+   private:
     void createDataItems(std::ifstream& data, bool useCoarseLabels);
 };

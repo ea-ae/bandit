@@ -1,9 +1,10 @@
 #pragma once
-#include <vector>
 #include <memory>
-#include "../Neurons/Neuron.h"
+#include <vector>
+
 #include "../../ActivationFunctions/ActivationFunction.h"
 #include "../../CostFunctions/CostFunction.h"
+#include "../Neurons/Neuron.h"
 
 class Neuron;
 class CostFunction;
@@ -22,10 +23,11 @@ struct Size3 {
 };
 
 class Layer {
-public:
+   public:
     Layer* previousLayer = nullptr;
     Layer* nextLayer = nullptr;
-public:
+
+   public:
     virtual std::vector<std::unique_ptr<Neuron>>& getNeurons() = 0;
     virtual void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) = 0;
     virtual const Size3 outputSize() const = 0;

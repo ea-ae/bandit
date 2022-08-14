@@ -1,12 +1,13 @@
 #pragma once
-#include "Trainer.h"
 #include "../NeuralNetworks/ClassificationNeuralNetwork.h"
+#include "Trainer.h"
 
 class ClassificationTrainer : public Trainer {
-public:
+   public:
     ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate);
     void train();
-private:
+
+   private:
     ClassificationNeuralNetwork& net;
     const float learningRate;
 };

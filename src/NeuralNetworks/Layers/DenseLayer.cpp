@@ -1,9 +1,11 @@
 #include "DenseLayer.h"
+
 #include <algorithm>
-#include <memory>
-#include <vector>
 #include <format>
 #include <iostream>
+#include <memory>
+#include <vector>
+
 #include "../Neurons/DenseNeuron.h"
 
 DenseLayer::DenseLayer(int32_t neuronCount) : neurons(neuronCount) {}
@@ -19,7 +21,7 @@ const Size3 DenseLayer::outputSize() const {
 void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {
     if (previousLayer == nullptr) return;
 
-    std::generate(neurons.begin(), neurons.end(), [&]() { // dense layer, pass full vector
+    std::generate(neurons.begin(), neurons.end(), [&]() {  // dense layer, pass full vector
         return std::make_unique<DenseNeuron>(&previousLayer->getNeurons(), activation, cost);
     });
 

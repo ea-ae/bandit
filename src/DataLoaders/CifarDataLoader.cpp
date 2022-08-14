@@ -1,6 +1,6 @@
 #include "CifarDataLoader.h"
 
-CifarDataLoader::CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels) 
+CifarDataLoader::CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels)
     : dataItems(std::make_unique<CifarDataVector>(amount)) {
     auto data = std::ifstream(dataFileName, std::ios::binary);
 
@@ -13,7 +13,7 @@ std::optional<int16_t> CifarDataLoader::loadDataItem(NeuralNetwork& neuralNetwor
 
     for (int i = 0; i < dataItemsIt->pixels->size(); i++) {
         auto pixels = *dataItemsIt->pixels.get();
-        float value = static_cast<float>(pixels[i]) / 255.0f; // [0, 1]
+        float value = static_cast<float>(pixels[i]) / 255.0f;  // [0, 1]
         neuralNetwork.setInputNode(i, nthBatchItem, value);
     }
 

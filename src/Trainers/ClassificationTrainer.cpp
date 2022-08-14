@@ -1,15 +1,16 @@
 #include "ClassificationTrainer.h"
+
 #include <chrono>
 #include <cmath>
-#include <iostream>
 #include <format>
+#include <iostream>
+
 #include "../NeuralNetworks/Neurons/Neuron.h"
 
 using namespace std::chrono;
 
-ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate) 
-    : net(net), learningRate(learningRate) 
-{
+ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate)
+    : net(net), learningRate(learningRate) {
     std::cout << "NN | Initializing classification trainer\n";
 }
 
@@ -18,7 +19,7 @@ void ClassificationTrainer::train() {
 
     int32_t epoch = 1;
     auto trainingStart = steady_clock::now();
-    auto trainingDataSet = trainingDataSources[0]; // OK for now
+    auto trainingDataSet = trainingDataSources[0];  // OK for now
     // auto testingDataSet = trainingDataSources[0]; // !
     auto testingDataSet = testingDataSources[0];
 
@@ -51,7 +52,7 @@ void ClassificationTrainer::train() {
                         batchLabels[batchItemsDone] = label.value();
                     }
 
-                    if (!trainingDataLeft) { // make sure we got a full batch of labels and inputs
+                    if (!trainingDataLeft) {  // make sure we got a full batch of labels and inputs
                         break;
                     }
 
@@ -75,7 +76,7 @@ void ClassificationTrainer::train() {
                     batchLabels[batchItemsDone] = label.value();
                 }
 
-                if (trainingDataLeft) { // make sure we got a full batch of labels and inputs
+                if (trainingDataLeft) {  // make sure we got a full batch of labels and inputs
                     net.calculateOutput();
                     for (int32_t i = 0; i < batchLabels.size(); i++) {
                         if (net.getHighestOutputNode(i) == batchLabels[i]) testingCorrect++;
@@ -87,8 +88,8 @@ void ClassificationTrainer::train() {
 
             float testingProgress = 100.0f * testsDone / testingDataSet->size();
             auto progressBar = std::string(static_cast<int32_t>(std::floor(testingProgress * 0.3)), '=');
-            std::cout << std::format("\rNN | Epoch {:03} | {:05.2f}% done | {:30} |", 
-                epoch, testingProgress, progressBar);
+            std::cout << std::format("\rNN | Epoch {:03} | {:05.2f}% done | {:30} |",
+                                     epoch, testingProgress, progressBar);
         }
 
         // Iterate over the same data again on next epoch
@@ -106,7 +107,7 @@ void ClassificationTrainer::train() {
         auto totalDuration = duration_cast<seconds>(epochEnd - trainingStart).count();
 
         std::cout << std::format("\rNN | Epoch {:03} | training: {:.2f}%, testing: {:.2f}% | took: {}s, total: {}s\n",
-            epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
+                                 epoch, trainPassRate, testPassRate, epochDuration, totalDuration);
 
         epoch++;
     }

@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(push, 0)
 #include <eigen/Eigen/Dense>
-#pragma warning( pop )
+#pragma warning(pop)
 
 const auto BATCH_SIZE = 16;
 

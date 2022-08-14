@@ -2,11 +2,13 @@
 #include "Neuron.h"
 
 class DenseNeuron : public Neuron {
-private:
+   private:
     std::vector<std::unique_ptr<Neuron>>* inputNeurons;
-public:
+
+   public:
     DenseNeuron(std::vector<std::unique_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost);
-private:
+
+   private:
     Neuron& getInputNeuron(size_t i);
     size_t getInputNeuronCount();
 };

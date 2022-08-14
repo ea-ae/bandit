@@ -1,14 +1,15 @@
 #pragma once
 #pragma warning(push, 0)
 #include <eigen/Eigen/Dense>
-#pragma warning( pop )
-#include <vector>
-#include <utility>
+#pragma warning(pop)
 #include <optional>
-#include "../../bandit.h"
-#include "../Layers/Layer.h"
+#include <utility>
+#include <vector>
+
 #include "../../ActivationFunctions/ActivationFunction.h"
 #include "../../CostFunctions/CostFunction.h"
+#include "../../bandit.h"
+#include "../Layers/Layer.h"
 
 class Layer;
 
@@ -26,24 +27,27 @@ struct Bias {
 };
 
 class Neuron {
-public:
+   public:
     BatchArray values = BatchArray(BatchArray::Zero());
-protected:
+
+   protected:
     std::shared_ptr<Bias> bias = nullptr;
 
-    std::vector<std::shared_ptr<Weight>> weights; // useful in case of shared weights
+    std::vector<std::shared_ptr<Weight>> weights;  // useful in case of shared weights
     BatchArray activationGradients = BatchArray(BatchArray::Zero());
-    
+
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;
-private:
-public:
+
+   private:
+   public:
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);
     void update(float learningRate);
     size_t getWeightCount();
-protected:
+
+   protected:
     Neuron(const ActivationFunction& activation, const CostFunction& cost);
     virtual Neuron& getInputNeuron(size_t i) = 0;
     virtual size_t getInputNeuronCount() = 0;

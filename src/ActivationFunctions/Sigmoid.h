@@ -1,6 +1,7 @@
 #pragma once
-#include "ActivationFunction.h"
 #include <stdint.h>
+
+#include "ActivationFunction.h"
 
 class Sigmoid : public ActivationFunction {
     float map(float input) const;
