@@ -1,6 +1,6 @@
 #include "NeuralNetwork.h"
 #include <algorithm>
-#include "DenseNeuron.h"
+#include "Neurons/DenseNeuron.h"
 
 NeuralNetwork::NeuralNetwork(int32_t inputs, int32_t outputs) {
     inputLayer = std::make_unique<DenseLayer>(inputs);

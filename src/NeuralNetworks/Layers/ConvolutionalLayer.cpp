@@ -1,7 +1,8 @@
 #include "ConvolutionalLayer.h"
 #include <algorithm>
 #include <format>
-#include "../SharedNeuron.h"
+#include <iostream>
+#include "../Neurons/SharedNeuron.h"
 
 ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride, int32_t padding)
     : inputSize(inputSize), fieldSize(fieldSize), filters(fieldSize.z),

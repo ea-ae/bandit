@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "../Neuron.h"
+#include "../Neurons/Neuron.h"
 #include "../../ActivationFunctions/ActivationFunction.h"
 #include "../../CostFunctions/CostFunction.h"
 

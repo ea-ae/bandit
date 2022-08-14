@@ -146,8 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\NeuralNetworks\DenseNeuron.cpp" />
-    <ClCompile Include="src\NeuralNetworks\SharedNeuron.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Neurons\DenseNeuron.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Neurons\SharedNeuron.cpp" />
     <ClCompile Include="src\DataLoaders\CifarDataLoader.cpp" />
     <ClCompile Include="src\cifar100.cpp" />
     <ClCompile Include="src\NeuralNetworks\Layers\ConvolutionalLayer.cpp" />
@@ -163,7 +163,7 @@
     <ClCompile Include="src\imagenet.cpp" />
     <ClCompile Include="src\NeuralNetworks\Layers\Layer.cpp" />
     <ClCompile Include="src\NeuralNetworks\NeuralNetwork.cpp" />
-    <ClCompile Include="src\NeuralNetworks\Neuron.cpp" />
+    <ClCompile Include="src\NeuralNetworks\Neurons\Neuron.cpp" />
     <ClCompile Include="src\ActivationFunctions\Relu.cpp" />
     <ClCompile Include="src\mnist.cpp" />
     <ClCompile Include="src\NeuralNetworks\ClassificationNeuralNetwork.cpp" />
@@ -172,6 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NeuralNetworks\DenseNeuron.h" />
+    <ClInclude Include="src\NeuralNetworks\Neurons\DenseNeuron.h" />
+    <ClInclude Include="src\NeuralNetworks\Neurons\SharedNeuron.h" />
     <ClInclude Include="src\NeuralNetworks\SharedNeuron.h" />
     <ClInclude Include="src\DataLoaders\CifarDataLoader.h" />
     <ClInclude Include="src\cifar100.h" />
@@ -190,7 +192,7 @@
     <ClInclude Include="src\imagenet.h" />
     <ClInclude Include="src\NeuralNetworks\Layers\Layer.h" />
     <ClInclude Include="src\NeuralNetworks\NeuralNetwork.h" />
-    <ClInclude Include="src\NeuralNetworks\Neuron.h" />
+    <ClInclude Include="src\NeuralNetworks\Neurons\Neuron.h" />
     <ClInclude Include="src\ActivationFunctions\Relu.h" />
     <ClInclude Include="src\mnist.h" />
     <ClInclude Include="src\NeuralNetworks\ClassificationNeuralNetwork.h" />

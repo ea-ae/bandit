@@ -3,7 +3,8 @@
 #include <memory>
 #include <vector>
 #include <format>
-#include "../DenseNeuron.h"
+#include <iostream>
+#include "../Neurons/DenseNeuron.h"
 
 DenseLayer::DenseLayer(int32_t neuronCount) : neurons(neuronCount) {}
 

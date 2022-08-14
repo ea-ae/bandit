@@ -5,10 +5,10 @@
 #include <vector>
 #include <utility>
 #include <optional>
-#include "../bandit.h"
-#include "Layers/Layer.h"
-#include "../ActivationFunctions/ActivationFunction.h"
-#include "../CostFunctions/CostFunction.h"
+#include "../../bandit.h"
+#include "../Layers/Layer.h"
+#include "../../ActivationFunctions/ActivationFunction.h"
+#include "../../CostFunctions/CostFunction.h"
 
 class Layer;
 
@@ -33,7 +33,6 @@ protected:
 
     std::vector<std::shared_ptr<Weight>> weights; // useful in case of shared weights
     BatchArray activationGradients = BatchArray(BatchArray::Zero());
-    BatchArray preTransformedValues;
     
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;

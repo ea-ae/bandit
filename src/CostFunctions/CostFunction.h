@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <stdint.h>
-#include "../NeuralNetworks/Neuron.h"
+#include "../NeuralNetworks/Neurons/Neuron.h"
 
 class Layer;
 

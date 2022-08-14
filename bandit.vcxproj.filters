@@ -24,7 +24,7 @@
     <ClCompile Include="src\NeuralNetworks\NeuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\NeuralNetworks\Neuron.cpp">
+    <ClCompile Include="src\NeuralNetworks\Neurons\Neuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ActivationFunctions\Relu.cpp">
@@ -78,10 +78,13 @@
     <ClCompile Include="src\DataLoaders\CifarDataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\NeuralNetworks\SharedNeuron.cpp">
+    <ClCompile Include="src\NeuralNetworks\Neurons\SharedNeuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\NeuralNetworks\DenseNeuron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NeuralNetworks\Neurons\DenseNeuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +95,7 @@
     <ClInclude Include="src\NeuralNetworks\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\NeuralNetworks\Neuron.h">
+    <ClInclude Include="src\NeuralNetworks\Neurons\Neuron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ActivationFunctions\ActivationFunction.h">
@@ -159,6 +162,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\NeuralNetworks\DenseNeuron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetworks\Neurons\SharedNeuron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NeuralNetworks\Neurons\DenseNeuron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

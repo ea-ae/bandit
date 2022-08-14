@@ -1,7 +1,7 @@
 #pragma once
 #include <utility>
 #include "Layer.h"
-#include "../Neuron.h"
+#include "../Neurons/Neuron.h"
 
 struct Filter {
     std::vector<std::shared_ptr<Weight>> weights;

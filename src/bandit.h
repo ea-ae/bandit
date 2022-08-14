@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #pragma warning(push, 0)
 #include <eigen/Eigen/Dense>
 #pragma warning( pop )

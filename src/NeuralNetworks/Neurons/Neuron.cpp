@@ -10,7 +10,6 @@ void Neuron::calculate() {
     for (int i = 0; i < getInputNeuronCount(); i++) { // a*w dot product
         values += getInputNeuron(i).values * weights[i]->weight; // scalar multiplication
     }
-    preTransformedValues = values;
     values = values.unaryExpr([this](float preValue) { return activationFunction.map(preValue); });
 }
 

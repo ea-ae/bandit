@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <format>
-#include "../NeuralNetworks/Neuron.h"
+#include "../NeuralNetworks/Neurons/Neuron.h"
 
 using namespace std::chrono;
 

@@ -1,5 +1,6 @@
 #include "cifar100.h"
-#include <format.>
+#include <iostream>
+#include <format>
 #include "DataLoaders/CifarDataLoader.h"
 #include "NeuralNetworks/ClassificationNeuralNetwork.h"
 #include "NeuralNetworks/Layers/DenseLayer.h"
@@ -7,7 +8,7 @@
 #include "Trainers/ClassificationTrainer.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
-#include "NeuralNetworks/Neuron.h"
+#include "NeuralNetworks/Neurons/Neuron.h"
 
 void cifar100() {
     // Configuration

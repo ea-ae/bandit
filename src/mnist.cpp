@@ -8,7 +8,7 @@
 #include "Trainers/ClassificationTrainer.h"
 #include "ActivationFunctions/LeakyRelu.h"
 #include "CostFunctions/QuadraticCost.h"
-#include "NeuralNetworks/Neuron.h"
+#include "NeuralNetworks/Neurons/Neuron.h"
 
 void mnist() {
     // Configuration

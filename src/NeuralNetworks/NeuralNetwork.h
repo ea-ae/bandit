@@ -5,7 +5,7 @@
 #include "../CostFunctions/CostFunction.h"
 #include "Layers/Layer.h"
 #include "Layers/DenseLayer.h"
-#include "Neuron.h"
+#include "Neurons/Neuron.h"
 
 class NeuralNetwork {
 protected:
