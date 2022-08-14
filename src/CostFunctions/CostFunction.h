@@ -5,8 +5,6 @@
 
 #include "../bandit.h"
 
-class Layer;
-
 class CostFunction {
    public:
     CostFunction(float regularizationLambda = 0, float momentumCoefficientMu = 0);

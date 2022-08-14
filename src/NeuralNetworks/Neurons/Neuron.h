@@ -9,9 +9,6 @@
 #include "../../ActivationFunctions/ActivationFunction.h"
 #include "../../CostFunctions/CostFunction.h"
 #include "../../bandit.h"
-#include "../Layers/Layer.h"
-
-class Layer;
 
 struct Weight {
     float weight = 0.0f;
@@ -41,6 +38,7 @@ class Neuron {
 
    private:
    public:
+    virtual ~Neuron() = default;
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);

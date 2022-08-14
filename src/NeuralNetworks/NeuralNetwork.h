@@ -17,6 +17,7 @@ class NeuralNetwork {
 
    public:
     NeuralNetwork(int32_t inputs, int32_t outputs);
+    virtual ~NeuralNetwork() = default;
     Layer* addLayer(Layer* layer);
     void buildLayers(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void setInputNode(int32_t inputNode, int32_t nthBatchItem, float value);

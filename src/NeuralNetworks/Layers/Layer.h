@@ -28,6 +28,7 @@ class Layer {
     Layer* nextLayer = nullptr;
 
    public:
+    virtual ~Layer() = default;
     virtual std::vector<std::unique_ptr<Neuron>>& getNeurons() = 0;
     virtual void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) = 0;
     virtual const Size3 outputSize() const = 0;
