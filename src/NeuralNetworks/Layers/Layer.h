@@ -26,7 +26,7 @@ public:
     Layer* previousLayer = nullptr;
     Layer* nextLayer = nullptr;
 public:
-    virtual std::vector<std::shared_ptr<Neuron>>& getNeurons() = 0;
+    virtual std::vector<std::unique_ptr<Neuron>>& getNeurons() = 0;
     virtual void connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) = 0;
     virtual const Size3 outputSize() const = 0;
     void calculateNodeValues();

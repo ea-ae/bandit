@@ -4,7 +4,7 @@
 //#include "imagenet.h"
 
 void main() {
-    // mnist();
-    cifar100();
-    // imagenet();
+    mnist();
+    //cifar100();
+    //imagenet();
 }

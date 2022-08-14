@@ -3,39 +3,12 @@
 #include <cmath>
 #include <iostream>
 
-Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost)
-    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost)
-{
-    if (inputNeurons != nullptr) {
-        weights = std::vector<std::shared_ptr<Weight>>(inputNeurons->size());
-
-        std::generate(weights.begin(), weights.end(), [&]() { // initialize weights
-            Weight* weight = new Weight();
-            weight->weight = activationFunction.generateRandomWeight(inputNeurons->size());
-            return std::shared_ptr<Weight>(weight);
-        });
-        bias = std::make_shared<Bias>();
-    }
-}
-
-Neuron::Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
-    std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias)
-    : inputNeurons(inputNeurons), activationFunction(activation), costFunction(cost) 
-{
-    std::copy(sharedWeights->begin(), sharedWeights->end(), std::back_inserter(weights));
-    
-    //for (auto& weight : *sharedWeights) {
-    for (auto& weight : weights) {
-        weight->weight = activationFunction.generateRandomWeight(inputNeurons->size()); // initialize weights (todo: only once!!)
-        //weights.push_back(weight);
-    }
-    bias = std::shared_ptr<Bias>(sharedBias);
-}
+Neuron::Neuron(const ActivationFunction& activation, const CostFunction& cost) : activationFunction(activation), costFunction(cost) {}
 
 void Neuron::calculate() {
     values = values.setConstant(bias->bias);
-    for (int i = 0; i < inputNeurons->size(); i++) { // a*w dot product
-        values += (*inputNeurons)[i]->values * weights[i]->weight; // scalar multiplication
+    for (int i = 0; i < getInputNeuronCount(); i++) { // a*w dot product
+        values += getInputNeuron(i).values * weights[i]->weight; // scalar multiplication
     }
     preTransformedValues = values;
     values = values.unaryExpr([this](float preValue) { return activationFunction.map(preValue); });
@@ -58,8 +31,8 @@ void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValu
     bias->gradient += costDerivedByPreValues.sum(); // dC/dz = dC/db
     bias->done = false;
 
-    for (int i = 0; i < inputNeurons->size(); i++) { // calculate weights and biases for each neuron in previous layer
-        auto& preValuesDerivedByWeight = (*inputNeurons)[i]->values;
+    for (int i = 0; i < getInputNeuronCount(); i++) { // calculate weights and biases for each neuron in previous layer
+        auto& preValuesDerivedByWeight = getInputNeuron(i).values;
         auto weightGradient = (preValuesDerivedByWeight * costDerivedByPreValues).sum();
         weights[i]->gradient += weightGradient;
 
@@ -67,7 +40,7 @@ void Neuron::backpropagate(bool backpropagateGradients, BatchArray* expectedValu
             // find the new activation derivative for the next layer of backpropagation
             auto preValuesDerivedByActivation = weights[i]->weight;
             auto costDerivedByActivations = preValuesDerivedByActivation * costDerivedByPreValues;
-            (*inputNeurons)[i]->addActivationGradients(costDerivedByActivations); // add the gradient
+            getInputNeuron(i).addActivationGradients(costDerivedByActivations); // add the gradient
         }
     }
 

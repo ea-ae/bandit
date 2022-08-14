@@ -28,24 +28,24 @@ struct Bias {
 class Neuron {
 public:
     BatchArray values = BatchArray(BatchArray::Zero());
-private:
+protected:
     std::shared_ptr<Bias> bias = nullptr;
 
-    std::vector<std::shared_ptr<Neuron>>* inputNeurons;
-    //std::vector<Weight> selfWeights;
     std::vector<std::shared_ptr<Weight>> weights; // useful in case of shared weights
     BatchArray activationGradients = BatchArray(BatchArray::Zero());
     BatchArray preTransformedValues;
     
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;
+private:
 public:
-    Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost);
-    Neuron(std::vector<std::shared_ptr<Neuron>>* inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
-        std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias);
     void calculate();
     void addActivationGradients(const BatchArray& gradients);
     void backpropagate(bool backpropagateGradients, BatchArray* expectedValues = nullptr);
     void update(float learningRate);
     size_t getWeightCount();
+protected:
+    Neuron(const ActivationFunction& activation, const CostFunction& cost);
+    virtual Neuron& getInputNeuron(size_t i) = 0;
+    virtual size_t getInputNeuronCount() = 0;
 };

@@ -1,6 +1,7 @@
 #include "ConvolutionalLayer.h"
 #include <algorithm>
 #include <format>
+#include "../SharedNeuron.h"
 
 ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size stride, int32_t padding)
     : inputSize(inputSize), fieldSize(fieldSize), filters(fieldSize.z),
@@ -18,7 +19,7 @@ ConvolutionalLayer::ConvolutionalLayer(Size3 inputSize, Size3 fieldSize, Size st
     }
 }
 
-std::vector<std::shared_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
+std::vector<std::unique_ptr<Neuron>>& ConvolutionalLayer::getNeurons() {
     return neurons;
 }
 
@@ -42,7 +43,7 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
             for (int32_t row = y; row < y + fieldSize.y; row++) {
                 for (int32_t col = x; col < x + fieldSize.x; col++) {
                     auto i = inputSize.x * row + col + channelOffset; // calculate coordinate pos within channel + offset by channel n
-                    fields[field].push_back(std::shared_ptr<Neuron>(prevNeurons[i])); // add input neuron for field
+                    fields[field].push_back(prevNeurons[i].get()); // add input neuron for field
                 }
             }
 
@@ -63,7 +64,7 @@ void ConvolutionalLayer::connectPreviousLayer(const ActivationFunction& activati
         }
 
         for (auto& field : fields) { // each field has inputs from every channel
-            neurons.push_back(std::make_shared<Neuron>(&field, activation, cost, &filter.weights, &filter.bias));
+            neurons.push_back(std::make_unique<SharedNeuron>(field, activation, cost, &filter.weights, &filter.bias));
         }
     }
 
