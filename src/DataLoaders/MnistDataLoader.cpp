@@ -8,12 +8,12 @@ MnistDataLoader::MnistDataLoader(std::string dataFileName, std::string labelsFil
     resetDataIterator();
 }
 
-std::optional<int16_t> MnistDataLoader::loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem) {
+std::optional<int16_t> MnistDataLoader::loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem) {
     if (dataItemsIt == dataItems.end() || ++dataItemsIt == dataItems.end()) return {};
 
     for (int i = 0; i < dataItemsIt->pixels.size(); i++) {
         float value = dataItemsIt->pixels[i] / 255.0f;  // [0, 1]
-        neuralNetwork.setInputNode(i, nthBatchItem, value);
+        neuralNetwork->setInputNode(i, nthBatchItem, value);
     }
 
     return dataItemsIt->label;

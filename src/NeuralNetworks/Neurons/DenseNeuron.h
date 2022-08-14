@@ -1,4 +1,8 @@
 #pragma once
+
+#include <memory>
+#include <vector>
+
 #include "Neuron.h"
 
 class DenseNeuron : public Neuron {

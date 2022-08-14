@@ -21,7 +21,7 @@ class MnistDataLoader : public DataLoader {
 
    public:
     MnistDataLoader(std::string dataFileName, std::string labelsFileName);
-    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
+    std::optional<int16_t> loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "125011ef6332e98e9954e0d9f709c2ea1e84704b7e9a8179cb18559d4124c98c"
+            "sha256": "405409f3a15eb540c97133324795181cc8cdefe03c3efc1fcf5d37c82edbc931"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -37,6 +37,14 @@
             ],
             "index": "pypi",
             "version": "==0.13"
+        },
+        "cpplint": {
+            "hashes": [
+                "sha256:8af99f95ed1af2d18e60467cdc13ee0441c2a14d693b7d2dbb71ad427074e491",
+                "sha256:d12db1251bb7450e36285ca9d6736ec1b961286c8a4444208eeadb9dc84c4bf9"
+            ],
+            "index": "pypi",
+            "version": "==1.6.0"
         },
         "distlib": {
             "hashes": [

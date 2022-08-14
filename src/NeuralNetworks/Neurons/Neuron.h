@@ -1,7 +1,5 @@
 #pragma once
-#pragma warning(push, 0)
-#include <eigen/Eigen/Dense>
-#pragma warning(pop)
+#include <memory>
 #include <optional>
 #include <utility>
 #include <vector>
@@ -36,7 +34,6 @@ class Neuron {
     const ActivationFunction& activationFunction;
     const CostFunction& costFunction;
 
-   private:
    public:
     virtual ~Neuron() = default;
     void calculate();

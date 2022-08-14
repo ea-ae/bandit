@@ -1,5 +1,7 @@
 #pragma once
+#include <memory>
 #include <utility>
+#include <vector>
 
 #include "../Neurons/Neuron.h"
 #include "Layer.h"

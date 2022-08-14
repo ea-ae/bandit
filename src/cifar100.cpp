@@ -41,7 +41,7 @@ void cifar100() {
     net.addLayer(new DenseLayer(50));
     net.buildLayers(activationFunction, costFunction);
 
-    auto trainer = ClassificationTrainer(net, LEARNING_RATE_ETA);
+    auto trainer = ClassificationTrainer(&net, LEARNING_RATE_ETA);
 
     // Load datasets
 

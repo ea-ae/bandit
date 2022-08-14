@@ -20,12 +20,11 @@ using ImageNetDataVector = std::vector<ImageNetDataItem>;
 class ImageNetDataLoader : public DataLoader {
    private:
     std::unique_ptr<ImageNetDataVector> dataItems = std::make_unique<ImageNetDataVector>();
-    ;
     ImageNetDataVector::const_iterator dataItemsIt;
 
    public:
     ImageNetDataLoader(std::string filePrefix, std::string fileSuffix, int32_t count);
-    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
+    std::optional<int16_t> loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
 

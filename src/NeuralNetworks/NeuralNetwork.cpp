@@ -42,7 +42,7 @@ void NeuralNetwork::calculateOutput() {
     inputLayer->calculateNodeValues();
 }
 
-void NeuralNetwork::backpropagate(BatchLabelArray& labels) {
+void NeuralNetwork::backpropagate(const BatchLabelArray& labels) {
     auto expectedValues = BatchArray(BatchArray::Zero());
     for (int32_t i = 0; i < outputLayer->getNeurons().size(); i++) {
         expectedValues = labels.unaryExpr([this, &i](int32_t label) {

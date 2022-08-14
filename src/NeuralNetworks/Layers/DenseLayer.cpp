@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <format>
 #include <iostream>
-#include <memory>
 #include <vector>
 
 #include "../Neurons/DenseNeuron.h"
@@ -15,7 +14,7 @@ std::vector<std::unique_ptr<Neuron>>& DenseLayer::getNeurons() {
 }
 
 const Size3 DenseLayer::outputSize() const {
-    return Size3(neurons.size(), 1, 1);
+    return Size3(static_cast<int32_t>(neurons.size()), 1, 1);
 }
 
 void DenseLayer::connectPreviousLayer(const ActivationFunction& activation, const CostFunction& cost) {

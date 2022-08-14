@@ -25,7 +25,8 @@ void Layer::update(float learningRate) {
 }
 
 size_t Layer::getWeightCount() {
-    return std::accumulate(getNeurons().begin(), getNeurons().end(), (size_t)0, [](size_t sum, auto& neuron) {
-        return sum + neuron->getWeightCount();
-    });
+    return std::accumulate(getNeurons().begin(), getNeurons().end(), static_cast<size_t>(0),
+                           [](size_t sum, auto& neuron) {
+                               return sum + neuron->getWeightCount();
+                           });
 }

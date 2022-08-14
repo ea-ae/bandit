@@ -2,14 +2,26 @@ exclude: ^include/
 fail_fast: false
 repos:
   - repo: https://github.com/pocc/pre-commit-hooks
-    rev: master
+    rev: v1.3.5
     hooks:
       - id: clang-format
         args: [-i]
+      - id: cpplint
+        args: [
+            '--filter=-legal/copyright,
+            -readability/todo,
+            -whitespace/indent,
+            -whitespace/line_length,
+            -build/include,
+            -build/include_subdir,
+            -build/include_order,
+            -build/namespaces,
+            -build/c++11'
+            ]
     #   - id: clang-tidy
     #     exclude: ^include/
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.3.0
     hooks:
     -   id: check-added-large-files
     -   id: trailing-whitespace

@@ -25,7 +25,7 @@ class CifarDataLoader : public DataLoader {
 
    public:
     CifarDataLoader(std::string dataFileName, size_t amount, bool useCoarseLabels = false);
-    std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem);
+    std::optional<int16_t> loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem);
     void resetDataIterator();
     size_t size();
 

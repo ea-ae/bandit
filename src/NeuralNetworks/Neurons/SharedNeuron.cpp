@@ -1,5 +1,7 @@
 #include "SharedNeuron.h"
 
+#include <algorithm>
+
 SharedNeuron::SharedNeuron(std::vector<Neuron*> inputNeurons, const ActivationFunction& activation, const CostFunction& cost,
                            std::vector<std::shared_ptr<Weight>>* sharedWeights, Bias* sharedBias)
     : Neuron(activation, cost), inputNeurons(inputNeurons) {

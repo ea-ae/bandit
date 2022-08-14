@@ -7,8 +7,8 @@
 
 class CostFunction {
    public:
-    CostFunction(float regularizationLambda = 0, float momentumCoefficientMu = 0);
-    BatchArray getActivationDerivatives(BatchArray& activations, BatchArray& expected) const;
+    explicit CostFunction(float regularizationLambda = 0, float momentumCoefficientMu = 0);
+    BatchArray getActivationDerivatives(const BatchArray& activations, const BatchArray& expected) const;
     float getRegularizationCost(std::vector<float> weights) const;
     float getRegularizationDerivative(float weight) const;
     float getMomentum(float previousMomentum, float weightGradient) const;

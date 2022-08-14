@@ -4,13 +4,14 @@
 #include <cmath>
 #include <format>
 #include <iostream>
+#include <string>
 
 #include "../NeuralNetworks/Neurons/Neuron.h"
 #include "../bandit.h"
 
 using namespace std::chrono;
 
-ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork& net, float learningRate)
+ClassificationTrainer::ClassificationTrainer(ClassificationNeuralNetwork* net, float learningRate)
     : net(net), learningRate(learningRate) {
     std::cout << "NN | Initializing classification trainer\n";
 }
@@ -57,12 +58,12 @@ void ClassificationTrainer::train() {
                         break;
                     }
 
-                    net.calculateOutput();
-                    net.backpropagate(batchLabels);
+                    net->calculateOutput();
+                    net->backpropagate(batchLabels);
                     for (int32_t i = 0; i < batchLabels.size(); i++) {
-                        if (net.getHighestOutputNode(i) == batchLabels[i]) trainingCorrect++;
+                        if (net->getHighestOutputNode(i) == batchLabels[i]) trainingCorrect++;
                     }
-                    net.update(learningRate);
+                    net->update(learningRate);
                 }
             }
 
@@ -78,9 +79,9 @@ void ClassificationTrainer::train() {
                 }
 
                 if (trainingDataLeft) {  // make sure we got a full batch of labels and inputs
-                    net.calculateOutput();
+                    net->calculateOutput();
                     for (int32_t i = 0; i < batchLabels.size(); i++) {
-                        if (net.getHighestOutputNode(i) == batchLabels[i]) testingCorrect++;
+                        if (net->getHighestOutputNode(i) == batchLabels[i]) testingCorrect++;
                     }
                 }
             }

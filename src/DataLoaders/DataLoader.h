@@ -6,7 +6,7 @@
 class DataLoader {
    public:
     virtual ~DataLoader() = default;
-    virtual std::optional<int16_t> loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem) = 0;
+    virtual std::optional<int16_t> loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem) = 0;
     virtual void resetDataIterator() = 0;
     virtual size_t size() = 0;
 

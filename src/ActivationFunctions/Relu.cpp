@@ -1,5 +1,6 @@
 #include "Relu.h"
 
+#include <algorithm>
 #include <cmath>
 #include <random>
 #include <utility>

@@ -1,5 +1,6 @@
 #include "Trainer.h"
 
+#include <algorithm>
 #include <format>
 #include <iostream>
 #include <sstream>

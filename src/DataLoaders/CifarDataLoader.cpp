@@ -8,13 +8,13 @@ CifarDataLoader::CifarDataLoader(std::string dataFileName, size_t amount, bool u
     resetDataIterator();
 }
 
-std::optional<int16_t> CifarDataLoader::loadDataItem(NeuralNetwork& neuralNetwork, int32_t nthBatchItem) {
+std::optional<int16_t> CifarDataLoader::loadDataItem(NeuralNetwork* neuralNetwork, int32_t nthBatchItem) {
     if (dataItemsIt == dataItems->end() || ++dataItemsIt == dataItems->end()) return {};
 
     for (int i = 0; i < dataItemsIt->pixels->size(); i++) {
         auto pixels = *dataItemsIt->pixels.get();
         float value = static_cast<float>(pixels[i]) / 255.0f;  // [0, 1]
-        neuralNetwork.setInputNode(i, nthBatchItem, value);
+        neuralNetwork->setInputNode(i, nthBatchItem, value);
     }
 
     return dataItemsIt->label;

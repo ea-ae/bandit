@@ -22,7 +22,7 @@ class NeuralNetwork {
     void buildLayers(const ActivationFunction& activationFunction, const CostFunction& costFunction);
     void setInputNode(int32_t inputNode, int32_t nthBatchItem, float value);
     void calculateOutput();
-    void backpropagate(BatchLabelArray& labels);
+    void backpropagate(const BatchLabelArray& labels);
     void update(float learningRate);
 
    private:

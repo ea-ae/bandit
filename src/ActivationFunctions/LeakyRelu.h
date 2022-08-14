@@ -7,7 +7,7 @@ class LeakyRelu : public Relu {
 
    public:
     LeakyRelu();
-    LeakyRelu(float leakRate);
+    explicit LeakyRelu(float leakRate);
     float map(float input) const;
     float getPreValueDerivative(float input) const;
 };
