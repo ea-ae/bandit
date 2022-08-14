@@ -4,6 +4,7 @@
 
 #include "../ActivationFunctions/ActivationFunction.h"
 #include "../CostFunctions/CostFunction.h"
+#include "../bandit.h"
 #include "Layers/DenseLayer.h"
 #include "Layers/Layer.h"
 #include "Neurons/Neuron.h"

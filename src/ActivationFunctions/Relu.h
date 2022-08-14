@@ -1,6 +1,5 @@
 #pragma once
 #include "ActivationFunction.h"
-#include "stdint.h"
 
 class Relu : public ActivationFunction {
     float map(float input) const;

@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "../NeuralNetworks/Neurons/Neuron.h"
+#include "../bandit.h"
 
 using namespace std::chrono;
 

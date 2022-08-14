@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "../NeuralNetworks/Neurons/Neuron.h"
+#include "../bandit.h"
 
 class Layer;
 
